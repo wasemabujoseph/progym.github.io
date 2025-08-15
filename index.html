@@ -1,646 +1,967 @@
-```html
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محترف التدريب الرياضي</title>
-    <!-- Removed Three.js / 3D model scripts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #e6e6e6; min-height: 100vh; transition: all 0.3s ease; }
-        body.dark { background: linear-gradient(135deg, #0f0f1a, #111827); color: #f3f4f6; }
-        body.light { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); color: #1e293b; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-        header { text-align: center; padding: 30px 0; margin-bottom: 30px; }
-        h1 { font-size: 2.8rem; background: linear-gradient(45deg, #ff6b6b, #ee5a24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        .subtitle { font-size: 1.2rem; color: #ddd; margin-bottom: 20px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="مدربك الذكي | Smart Trainer Pro — تطبيق تدريبي احترافي يعمل دون اتصال مع مكتبة تمارين كاملة وتوليد خطط عبر Gemini." />
+  <meta name="referrer" content="no-referrer" />
+  <title>💪 مدربك الذكي | Smart Trainer Pro</title>
 
-        .controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .tabs { display: flex; background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px; }
-        .tab { padding: 12px 25px; cursor: pointer; border-radius: 50px; transition: .3s; font-weight:600; color:#ddd; }
-        .tab.active { background: linear-gradient(45deg,#ff6b6b,#ee5a24); color:#fff; box-shadow:0 4px 15px rgba(238,90,36,0.4); }
-        .tab:hover:not(.active){ background:rgba(255,255,255,0.2); }
+  <!-- Favicon -->
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">💪</text></svg>' />
 
-        .settings { display: flex; gap:15px; align-items:center; }
-        .btn { padding:10px 20px; border:none; border-radius:50px; cursor:pointer; font-weight:600; transition:.3s; display:flex; align-items:center; gap:8px; }
-        .btn-primary { background:linear-gradient(45deg,#ff6b6b,#ee5a24); color:#fff; box-shadow:0 4px 15px rgba(238,90,36,0.4); }
-        .btn-outline { background:transparent; border:2px solid #ff6b6b; color:#ff6b6b; }
-        .btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(238,90,36,0.5); }
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" integrity="sha512-1PKOgIY59xJ6+GY2a9Y+Y1FQK6W1n1Dp1V1LhWlQ8GvZ6xjlbUY8ailqDun3vsl0sbG3fjHb4GJ8V+CsVxC1BA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        .content { display:none; animation:fadeIn .5s ease; }
-        .content.active { display:block; }
+  <style>
+    :root{
+      /* tweaked palette to match Amani blue */
+      --bg1:#14213d; --bg2:#1d3557; --glass:rgba(255,255,255,.08); --border:rgba(255,255,255,.18);
+      --text:#f1f5f9; --muted:#cbd5e1; --accent:#2d8cff; --accent2:#6ad2ff;
+      --card:rgba(255,255,255,.07); --shadow:0 10px 30px rgba(0,0,0,.25);
+      --chip:#2d8cff; --chip2:#10b981; --chip3:#f59e0b;
+    }
+    [data-theme="light"]{
+      --bg1:#eef2ff; --bg2:#e2e8f0; --glass:rgba(255,255,255,.7); --border:rgba(0,0,0,.08);
+      --text:#0f172a; --muted:#334155; --accent:#2563eb; --accent2:#7c3aed;
+      --card:rgba(255,255,255,.9); --shadow:0 6px 18px rgba(0,0,0,.12);
+      --chip:#2563eb; --chip2:#16a34a; --chip3:#d97706;
+    }
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Cairo',system-ui,-apple-system,Segoe UI,Roboto; color:var(--text);
+      background:linear-gradient(135deg,var(--bg1),var(--bg2)); background-attachment:fixed;
+    }
+    .en{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto}
+    .container{max-width:1200px;margin:auto;padding:20px}
+    header{
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      padding:16px 20px; border-radius:18px; background:var(--glass); border:1px solid var(--border); box-shadow:var(--shadow);
+      position:sticky; top:12px; z-index:10; backdrop-filter:blur(12px);
+    }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:700; font-size:1.2rem}
+header{backdrop-filter:saturate(1.2) blur(8px); background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.25)); border-bottom:1px solid var(--border)}
+body.dark header{background:linear-gradient(180deg, rgba(10,12,16,.55), rgba(10,12,16,.25))}
+.persona-pro{display:flex; align-items:center; gap:10px; padding:6px 12px; border-radius:999px; background:linear-gradient(135deg,var(--chip),var(--chip2)); color:#00111a; border:1px solid var(--border); box-shadow:0 1px 2px rgba(0,0,0,.08); filter:saturate(.95)}
+.persona-pro .avatar{width:22px; height:22px; border-radius:999px; display:grid; place-items:center; font-weight:800; font-size:.8rem; background:#ffffff80; border:1px solid #00000020}
+.persona-pro .p-text{font-weight:700; font-size:.9rem}
+.btn{border-radius:12px; padding:10px 14px; border:1px solid var(--border); box-shadow:0 1px 2px rgba(0,0,0,.05); transition:.2s transform, .2s box-shadow}
+.btn:hover{transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,.10)}
+.card{border-radius:16px; box-shadow:0 2px 14px rgba(0,0,0,.08); border:1px solid var(--border); overflow:hidden; transition:.2s transform, .2s box-shadow}
+.card:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.media{position:relative; background:#000; aspect-ratio:16/9}
+.media .provider{position:absolute; top:10px; left:10px; padding:4px 8px; border-radius:999px; background:rgba(0,0,0,.55); color:#fff; font-size:.72rem}
 
-        .grid { display:grid; grid-template-columns:1fr 2fr; gap:30px; margin-bottom:30px; }
-        .sidebar { background:rgba(255,255,255,0.1); border-radius:15px; padding:20px; backdrop-filter:blur(10px); }
-        .sidebar h3 { margin-bottom:20px; color:#ff6b6b; font-size:1.3rem; text-align:right; }
-        .muscle-list { list-style:none; }
-        .muscle-item { padding:15px; margin-bottom:10px; background:rgba(255,255,255,0.1); border-radius:10px; cursor:pointer; transition:.3s; display:flex; align-items:center; text-align:right; }
-        .muscle-item:hover { background:rgba(255,107,107,0.2); transform:translateX(5px); }
-        .muscle-item.active { background:linear-gradient(45deg,#ff6b6b,#ee5a24); color:#fff; }
-
-        .main-content { background:rgba(255,255,255,0.1); border-radius:15px; padding:30px; backdrop-filter:blur(10px); }
-        .workout-day { margin-bottom:25px; padding:20px; background:rgba(255,255,255,0.05); border-radius:10px; border-right:4px solid #ff6b6b; }
-        .day-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; text-align:right; }
-        .day-title { font-size:1.5rem; color:#ff6b6b; }
-        .day-meta { display:flex; gap:15px; font-size:.9rem; color:#aaa; flex-direction:column; align-items:flex-end; }
-
-        .exercise-list { list-style:none; }
-        .exercise-item { padding:15px; margin-bottom:10px; background:rgba(255,255,255,0.05); border-radius:8px; display:flex; justify-content:space-between; align-items:center; text-align:right; }
-        .exercise-info { flex:1; }
-        .exercise-name { font-weight:600; margin-bottom:5px; }
-        .exercise-details { font-size:.9rem; color:#aaa; }
-        .exercise-stats { display:flex; gap:15px; font-size:.9rem; text-align:center; }
-        .stat { background:rgba(255,107,107,0.2); padding:5px 10px; border-radius:20px; }
-        .youtube-btn { background:#ff0000; color:#fff; padding:10px 20px; border:none; border-radius:50px; cursor:pointer; display:flex; align-items:center; gap:10px; font-weight:600; }
-        .youtube-btn:hover { background:#cc0000; transform:translateY(-2px); }
-
-        .exercise-details-container { margin-top:30px; }
-        .exercise-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; text-align:right; }
-        .exercise-title { font-size:1.8rem; color:#ff6b6b; }
-        .exercise-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:30px; }
-        .info-card { background:rgba(255,255,255,0.1); padding:20px; border-radius:10px; }
-        .info-card h4 { color:#ff6b6b; margin-bottom:15px; font-size:1.1rem; text-align:right; }
-        .info-list { list-style:none; }
-        .info-item { padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:10px; text-align:right; }
-        .info-item:last-child { border-bottom:none; }
-        .info-item::before { content:"•"; color:#ff6b6b; font-weight:bold; }
-
-        .filter-container { display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap; justify-content:flex-end; }
-        .filter-btn { padding:8px 15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:50px; cursor:pointer; transition:.3s; }
-        .filter-btn.active { background:#ff6b6b; color:#fff; }
-        .filter-btn:hover { background:rgba(255,107,107,0.3); }
-
-        .timer-container { display:flex; gap:15px; margin-bottom:20px; }
-        .timer { background:rgba(255,255,255,0.1); padding:15px; border-radius:10px; text-align:center; flex:1; }
-        .timer h4 { margin-bottom:10px; color:#ff6b6b; }
-        .timer-display { font-size:1.8rem; font-weight:bold; }
-
-        @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        @media(max-width:900px){ .grid{grid-template-columns:1fr;} .exercise-info-grid{grid-template-columns:1fr;} .timer-container{flex-direction:column;} }
-    </style>
+.persona{font-size:.88rem; font-weight:700; padding:4px 10px; border-radius:999px; background:linear-gradient(135deg,var(--chip),var(--chip2)); color:#00111a; border:1px solid var(--border);}
+    .brand .logo{
+      width:36px;height:36px;display:grid;place-items:center;background:var(--card);border-radius:12px;
+      box-shadow:0 6px 20px rgba(45,140,255,.35) inset;
+    }
+    .brand .logo svg{width:22px;height:22px;display:block;color:var(--accent)}
+    .controls{display:flex; gap:8px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px;
+      background:var(--card); border:1px solid var(--border); cursor:pointer; box-shadow:var(--shadow);
+      transition:.2s transform,.2s opacity,.2s background; text-decoration:none; color:inherit; font-weight:600;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#00111a}
+    .tabs{display:flex; gap:10px; margin:18px 0 10px}
+    .tab{padding:10px 14px; border-radius:12px; background:var(--card); border:1px solid var(--border); cursor:pointer; font-weight:700}
+    .tab.active{outline:2px solid var(--accent)}
+    .panel{display:none}
+    .panel.active{display:block}
+    .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px}
+    .card{background:var(--glass); border:1px solid var(--border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column}
+    .media{position:relative; background:rgba(0,0,0,.15); aspect-ratio:4/3; display:block; overflow:hidden}
+    .media .provider{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;font-size:.72rem;padding:2px 6px;border-radius:8px}
+    .media button.edit{position:absolute;right:8px;top:8px;background:rgba(255,255,255,.9);border:0;border-radius:999px;padding:6px;cursor:pointer}
+    .media button.edit:hover{background:#ffd166}
+    .media .overlay{
+      position:absolute; left:8px; bottom:8px;
+      display:flex; flex-direction:column; gap:4px;
+      background:linear-gradient(135deg, rgba(0,0,0,.65), rgba(0,0,0,.35));
+      border:1px solid var(--border);
+      border-radius:10px; padding:6px 8px;
+      backdrop-filter: blur(6px);
+      color:#fff; max-width:90%;
+      box-shadow: var(--shadow);
+    }
+    .media .overlay .name{ font-weight:800; font-size:.95rem; line-height:1.2 }
+    .media .overlay .muscle{ font-size:.8rem; opacity:.9 }
+    .media img,.media video,.media iframe{width:100%;height:100%;object-fit:cover;display:block;border:0; border-radius:0}
+    .content{padding:12px 14px; display:flex; flex-direction:column; gap:8px}
+    .title{display:flex; align-items:center; justify-content:space-between; gap:8px}
+    .badges{display:flex; gap:6px; flex-wrap:wrap}
+    .badge{font-size:.72rem; padding:4px 8px; border-radius:999px; background:var(--card); border:1px solid var(--border)}
+    .badge.best{background:linear-gradient(135deg,var(--chip),var(--chip2)); color:#00111a}
+    .badge.home{background:linear-gradient(135deg,var(--chip2),var(--chip3)); color:#00111a}
+    .meta{font-size:.9rem; color:var(--muted)}
+    .actions{display:flex; gap:8px; flex-wrap:wrap}
+    .actions .btn{padding:8px 10px; font-size:.9rem}
+    .searchbar{display:flex; gap:8px; margin:10px 0}
+    .searchbar input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:inherit}
+    .chips{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 14px}
+    .chip{padding:8px 12px; border-radius:999px; background:var(--card); border:1px solid var(--border); cursor:pointer}
+    .chip.active{outline:2px solid var(--accent)}
+    .fieldset{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:12px 0}
+    .field{display:flex; flex-direction:column; gap:6px}
+    .field input,.field select, textarea{
+      padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:inherit;
+    }
+    .plan{white-space:pre-wrap; background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px; line-height:1.8}
+    footer{opacity:.8; font-size:.9rem; margin:16px 0; text-align:center}
+    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+    .fadeIn{animation:fadeIn .35s ease both}
+    @media print{
+      header,.tabs,.chips,.searchbar,.actions-toolbar,.controls,.api-key{display:none!important}
+      body{background:#fff}
+      .card{break-inside:avoid}
+    }
+  </style>
 </head>
-<body class="dark">
-    <div class="container">
-        <header>
-            <h1>محترف التدريب الرياضي</h1>
-            <p class="subtitle">حل التدريب الرياضي الكامل الخاص بك</p>
-        </header>
-
-        <div class="controls">
-            <div class="tabs">
-                <div class="tab active" data-tab="weekly">الخطة الأسبوعية</div>
-                <div class="tab" data-tab="muscle">مجموعات العضلات</div>
-                <div class="tab" data-tab="database">قاعدة التمارين</div>
-            </div>
-            <div class="settings">
-                <button class="btn btn-outline" id="language-toggle">English/العربية</button>
-                <button class="btn btn-outline" id="theme-toggle">الوضع الليلي</button>
-                <button class="btn btn-primary" id="print-btn">طباعة الخطة</button>
-            </div>
+<body data-persona='Amani'>
+  <div class="container">
+    <header class="fadeIn">
+      <div class="brand">
+        <!-- Amani kettlebell-A logo (inline SVG) -->
+        <div class="logo" aria-label="Amani logo">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" fill="currentColor" role="img" aria-hidden="true">
+            <path d="M35 20 h50 a15 15 0 0 1 15 15 v6 a15 15 0 0 1 -15 15 h-50 a15 15 0 0 1 -15 -15 v-6 a15 15 0 0 1 15 -15 z"/>
+            <path d="M20 95 L44 50 H76 L100 95 Q101 100 95 100 H79 Q76 100 75 98 L66 82 H54 L45 98 Q44 100 41 100 H25 Q19 100 20 95 Z
+                     M57 63 L63 73 H51 L57 63 Z"/>
+          </svg>
         </div>
+        <div>مدربك الذكي <span class="en">| Smart Trainer Pro</span></div>
+        <div class="persona">مصمم خصيصًا لـ أماني <span class="en">| Custom-made for Amani</span></div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="langBtn"><i class="fa-solid fa-language"></i><span data-i18n="lang">English</span></button>
+        <button class="btn" id="themeBtn"><i class="fa-solid fa-circle-half-stroke"></i><span data-i18n="theme">وضع فاتح</span></button>
+        <button class="btn" id="installBtn" style="display:none"><i class="fa-solid fa-download"></i><span data-i18n="install">تثبيت PWA</span></button>
+        <button class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i><span data-i18n="print">طباعة</span></button>
+      </div>
+    </header>
 
-        <!-- Weekly Plan -->
-        <div class="content active" id="weekly-content">
-            <div class="grid">
-                <div class="sidebar">
-                    <h3>التركيز اليومي</h3>
-                    <ul class="muscle-list">
-                        <li class="muscle-item active" data-day="monday">الصدر وعضلات الذراع الخلفية</li>
-                        <li class="muscle-item" data-day="tuesday">الظهر وعضلات الذراع الأمامية</li>
-                        <li class="muscle-item" data-day="wednesday">الأرجل</li>
-                        <li class="muscle-item" data-day="thursday">الكتف</li>
-                        <li class="muscle-item" data-day="friday">الجسم بالكامل</li>
-                        <li class="muscle-item" data-day="saturday">الجذع والبطن</li>
-                        <li class="muscle-item" data-day="sunday">يوم الراحة</li>
-                    </ul>
-                </div>
-                <div class="main-content">
-                    <!-- Monday -->
-                    <div class="workout-day" id="monday-plan">
-                        <div class="day-header">
-                            <h3 class="day-title">الاثنين - الصدر وعضلات الذراع الخلفية</h3>
-                            <div class="day-meta"><span>المدة: 60 دقيقة</span><span>الشدة: عالية</span></div>
-                        </div>
-                        <ul class="exercise-list">
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Bench Press</div><div class="exercise-details">تمرين مركب لتطوير عضلات الصدر</div></div>
-                                <div class="exercise-stats"><span class="stat">4 مجموعات</span><span class="stat">8-12 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Bench Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Incline Dumbbell Press</div><div class="exercise-details">يستهدف ألياف الصدر العلوية</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">10-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Incline Dumbbell Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Cable Fly</div><div class="exercise-details">تمرين عزل لانقباض عضلات الصدر</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">12-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Cable Fly')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Triceps Dips</div><div class="exercise-details">تمرين بوزن الجسم لعضلات الذراع الخلفية</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">AMRAP</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Triceps Dips')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Tuesday -->
-                    <div class="workout-day" id="tuesday-plan" style="display:none">
-                        <div class="day-header">
-                            <h3 class="day-title">الثلاثاء - الظهر وعضلات الذراع الأمامية</h3>
-                            <div class="day-meta"><span>المدة: 65 دقيقة</span><span>الشدة: عالية</span></div>
-                        </div>
-                        <ul class="exercise-list">
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Pull-Ups</div><div class="exercise-details">تمرين مركب للظهر</div></div>
-                                <div class="exercise-stats"><span class="stat">4 مجموعات</span><span class="stat">6-10 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Pull-Ups')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Barbell Row</div><div class="exercise-details">حركة مركبة ثقيلة</div></div>
-                                <div class="exercise-stats"><span class="stat">4 مجموعات</span><span class="stat">8-12 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Barbell Row')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Lat Pulldown</div><div class="exercise-details">تمرين للظهر باستخدام الجهاز</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">10-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Lat Pulldown')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Bicep Curl</div><div class="exercise-details">عزل لقمة العضلة ذات الرأسين</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">12-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Bicep Curl')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Wednesday -->
-                    <div class="workout-day" id="wednesday-plan" style="display:none">
-                        <div class="day-header">
-                            <h3 class="day-title">الأربعاء - الأرجل</h3>
-                            <div class="day-meta"><span>المدة: 70 دقيقة</span><span>الشدة: عالية</span></div>
-                        </div>
-                        <ul class="exercise-list">
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Squat</div><div class="exercise-details">تمرين ملك الأرجل</div></div>
-                                <div class="exercise-stats"><span class="stat">4 مجموعات</span><span class="stat">6-10 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Squat')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Leg Press</div><div class="exercise-details">تمرين للرجل باستخدام الجهاز</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">10-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Leg Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Leg Curl</div><div class="exercise-details">عزل للعضلة ذات الرأسين الفخذية</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">12-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Leg Curl')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Thursday -->
-                    <div class="workout-day" id="thursday-plan" style="display:none">
-                        <div class="day-header">
-                            <h3 class="day-title">الخميس - الكتف</h3>
-                            <div class="day-meta"><span>المدة: 55 دقيقة</span><span>الشدة: متوسطة</span></div>
-                        </div>
-                        <ul class="exercise-list">
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Overhead Press</div><div class="exercise-details">تمرين مركب للكتف</div></div>
-                                <div class="exercise-stats"><span class="stat">4 مجموعات</span><span class="stat">8-12 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Overhead Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Lateral Raise</div><div class="exercise-details">عزل للكتف الجانبي</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">12-15 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Lateral Raise')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Face Pull</div><div class="exercise-details">تمرين للجزء الخلفي من الكتف</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">15-20 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Face Pull')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Friday -->
-                    <div class="workout-day" id="friday-plan" style="display:none">
-                        <div class="day-header">
-                            <h3 class="day-title">الجمعة - الجسم بالكامل</h3>
-                            <div class="day-meta"><span>المدة: 60 دقيقة</span><span>الشدة: عالية</span></div>
-                        </div>
-                        <ul class="exercise-list">
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Deadlift</div><div class="exercise-details">تمرين مركب للجسم بالكامل</div></div>
-                                <div class="exercise-stats"><span class="stat">4 مجموعات</span><span class="stat">5-8 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Deadlift')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Clean and Press</div><div class="exercise-details">تمرين ديناميكي للقوة</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">6-10 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Clean and Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Burpees</div><div class="exercise-details">تمرين تمارين القلب والقوة</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">AMRAP</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Burpees')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Saturday -->
-                    <div class="workout-day" id="saturday-plan" style="display:none">
-                        <div class="day-header">
-                            <h3 class="day-title">السبت - الجذع والبطن</h3>
-                            <div class="day-meta"><span>المدة: 45 دقيقة</span><span>الشدة: متوسطة</span></div>
-                        </div>
-                        <ul class="exercise-list">
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Plank</div><div class="exercise-details">تمرين ثبات للجذع</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">60 ثانية</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Plank')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Hanging Leg Raise</div><div class="exercise-details">تمرين للبطن السفلي</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">15-20 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Hanging Leg Raise')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                            <li class="exercise-item">
-                                <div class="exercise-info"><div class="exercise-name">Russian Twist</div><div class="exercise-details">تمرين للجذع الجانبي</div></div>
-                                <div class="exercise-stats"><span class="stat">3 مجموعات</span><span class="stat">20 تكرار</span></div>
-                                <button class="youtube-btn" onclick="searchYouTube('Russian Twist')"><i class="fab fa-youtube"></i>فيديو</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Sunday -->
-                    <div class="workout-day" id="sunday-plan" style="display:none">
-                        <div class="day-header">
-                            <h3 class="day-title">الأحد - يوم الراحة</h3>
-                            <div class="day-meta"><span>المدة: -</span><span>الشدة: منخفضة</span></div>
-                        </div>
-                        <p style="text-align:right; padding:15px; background:rgba(255,107,107,0.2); border-radius:8px;">
-                            اليوم مخصص للراحة والاستشفاء. يُنصح بالتمدد الخفيف والمشي.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Muscle Groups (no 3D) -->
-        <div class="content" id="muscle-content">
-            <div class="grid">
-                <div class="sidebar">
-                    <h3>مجموعات العضلات</h3>
-                    <ul class="muscle-list">
-                        <li class="muscle-item active" data-muscle="chest">الصدر</li>
-                        <li class="muscle-item" data-muscle="back">الظهر</li>
-                        <li class="muscle-item" data-muscle="legs">الأرجل</li>
-                        <li class="muscle-item" data-muscle="shoulders">الكتف</li>
-                        <li class="muscle-item" data-muscle="arms">الذراع</li>
-                        <li class="muscle-item" data-muscle="core">الجذع</li>
-                    </ul>
-                </div>
-                <div class="main-content">
-                    <!-- Chest Details -->
-                    <div class="exercise-details-container" id="chest-details">
-                        <div class="exercise-header">
-                            <h2 class="exercise-title">تمارين الصدر</h2>
-                            <button class="youtube-btn" onclick="searchYouTube('Bench Press')"><i class="fab fa-youtube"></i>ابحث على يوتيوب</button>
-                        </div>
-                        <div class="exercise-info-grid">
-                            <div class="info-card">
-                                <h4>تفاصيل التمرين</h4>
-                                <ul class="info-list">
-                                    <li class="info-item">العضلات الأساسية: العضلة الصدرية الكبرى</li>
-                                    <li class="info-item">العضلات الثانوية: الدالية الأمامية، العضلة ثلاثية الرؤوس</li>
-                                    <li class="info-item">المعدات: العارضة، banco</li>
-                                    <li class="info-item">الصعوبة: متوسط</li>
-                                    <li class="info-item">النوع: مركب</li>
-                                </ul>
-                            </div>
-                            <div class="info-card">
-                                <h4>معلمات التدريب</h4>
-                                <ul class="info-list">
-                                    <li class="info-item">المجموعات: 3-4</li>
-                                    <li class="info-item">التكرارات: 8-12</li>
-                                    <li class="info-item">الراحة: 90-120 ثانية</li>
-                                    <li class="info-item">الإيقاع: 2-1-2</li>
-                                    <li class="info-item">التكرار: 1-2 مرة/أسبوع</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="info-card">
-                            <h4>الشكل الصحيح والنصائح</h4>
-                            <ul class="info-list">
-                                <li class="info-item">احتفظ بقدميك مسطحة على الأرض وادفع من خلال كعبيك</li>
-                                <li class="info-item">أعد لوح الكتف وحافظ على انحناء طفيف في ظهرك</li>
-                                <li class="info-item">أنزل العارضة إلى منتصف الصدر، وليس إلى الرقبة</li>
-                                <li class="info-item">اضغط على العارضة في مسار قطري طفيف نحو وجهك</li>
-                                <li class="info-item">زفر أثناء رفع الوزن، واستنشق أثناء خفضه</li>
-                                <li class="info-item">احتفظ معصميك مستقيمة ومرفقيك بزاوية 75° تقريباً</li>
-                            </ul>
-                        </div>
-                        <div class="info-card">
-                            <h4>الأخطاء الشائعة</h4>
-                            <ul class="info-list">
-                                <li class="info-item">ارتداد العارضة على صدرك – تحكم في المرحلة السلبية</li>
-                                <li class="info-item">توسيع المرفقين بشكل مفرط – حافظ على زاوية مرفق صحيحة</li>
-                                <li class="info-item">رفع مؤخرتك عن banco – حافظ على التماس الكامل</li>
-                                <li class="info-item">استخدام وزن زائد بشكل سيء – أولي أهمية للتقنية</li>
-                                <li class="info-item">عدم استخدام مدى حركة كامل – أنزل إلى العمق المناسب</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Back Details -->
-                    <div class="exercise-details-container" id="back-details" style="display:none">
-                        <div class="exercise-header">
-                            <h2 class="exercise-title">تمارين الظهر</h2>
-                            <button class="youtube-btn" onclick="searchYouTube('Pull-Ups')"><i class="fab fa-youtube"></i>ابحث على يوتيوب</button>
-                        </div>
-                        <div class="exercise-info-grid">
-                            <div class="info-card">
-                                <h4>تفاصيل التمرين</h4>
-                                <ul class="info-list">
-                                    <li class="info-item">العضلات الأساسية: العضلة الظهرية العريضة</li>
-                                    <li class="info-item">العضلات الثانوية: العضلة ذات الرأسين، العضلة الرافعة للحافة</li>
-                                    <li class="info-item">المعدات: قضيب السحب</li>
-                                    <li class="info-item">الصعوبة: متوسط</li>
-                                    <li class="info-item">النوع: مركب</li>
-                                </ul>
-                            </div>
-                            <div class="info-card">
-                                <h4>معلمات التدريب</h4>
-                                <ul class="info-list">
-                                    <li class="info-item">المجموعات: 3-4</li>
-                                    <li class="info-item">التكرارات: 6-10</li>
-                                    <li class="info-item">الراحة: 90-120 ثانية</li>
-                                    <li class="info-item">الإيقاع: 2-1-2</li>
-                                    <li class="info-item">التكرار: 1-2 مرة/أسبوع</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="info-card">
-                            <h4>الشكل الصحيح والنصائح</h4>
-                            <ul class="info-list">
-                                <li class="info-item">شغل عضلات الظهر عند بدء الحركة</li>
-                                <li class="info-item">احفظ صدرك مرفوعاً والظهر مقوساً قليلاً</li>
-                                <li class="info-item">اسحب حتى تلمس قضيب السحب</li>
-                                <li class="info-item">تحكم في النزول، لا تترك الجسم يهبط بسرعة</li>
-                                <li class="info-item">تنفس: شهيق عند السحب، زفير عند النزول</li>
-                                <li class="info-item">احفظ الرأس في وضع محايد، لا ترفعه للأعلى</li>
-                            </ul>
-                        </div>
-                        <div class="info-card">
-                            <h4>الأخطاء الشائعة</h4>
-                            <ul class="info-list">
-                                <li class="info-item">التأرجح بالجسم – حافظ على التحكم</li>
-                                <li class="info-item">عدم الوصول للمدى الكامل للحركة</li>
-                                <li class="info-item">الاعتماد على الذراعين فقط – شغل عضلات الظهر</li>
-                                <li class="info-item">انحناء الظهر المفرط – حافظ على وضع محايد</li>
-                                <li class="info-item">التنفس غير الصحيح – تعلم التنفس المناسب</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Legs Details -->
-                    <div class="exercise-details-container" id="legs-details" style="display:none">
-                        <div class="exercise-header">
-                            <h2 class="exercise-title">تمارين الأرجل</h2>
-                            <button class="youtube-btn" onclick="searchYouTube('Squat')"><i class="fab fa-youtube"></i>ابحث على يوتيوب</button>
-                        </div>
-                        <div class="exercise-info-grid">
-                            <div class="info-card">
-                                <h4>تفاصيل التمرين</h4>
-                                <ul class="info-list">
-                                    <li class="info-item">العضلات الأساسية: ربلة الفخذ الأمامية</li>
-                                    <li class="info-item">العضلات الثانوية: الألوية، الربلة الخلفية</li>
-                                    <li class="info-item">المعدات: العارضة</li>
-                                    <li class="info-item">الصعوبة: متقدم</li>
-                                    <li class="info-item">النوع: مركب</li>
-                                </ul>
-                            </div>
-                            <div class="info-card">
-                                <h4>معلمات التدريب</h4>
-                                <ul class="info-list">
-                                    <li class="info-item">المجموعات: 4-5</li>
-                                    <li class="info-item">التكرارات: 6-10</li>
-                                    <li class="info-item">الراحة: 2-3 دقائق</li>
-                                    <li class="info-item">الإيقاع: 3-1-1</li>
-                                    <li class="info-item">التكرار: 1-2 مرة/أسبوع</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="info-card">
-                            <h4>الشكل الصحيح والنصائح</h4>
-                            <ul class="info-list">
-                                <li class="info-item">احفظ الصدر مرفوعاً والظهر مستقيم</li>
-                                <li class="info-item">انحنِ من الوركين والركبتين معاً</li>
-                                <li class="info-item">اجعل الركب فوق أصابع القدم</li>
-                                <li class="info-item">ادفع من الكعب عند الصعود</li>
-                                <li class="info-item">تنفس: شهيق عند النزول، زفير عند الصعود</li>
-                                <li class="info-item">ابدأ بوزن خفيف وركز على الشكل</li>
-                            </ul>
-                        </div>
-                        <div class="info-card">
-                            <h4>الأخطاء الشائعة</h4>
-                            <ul class="info-list">
-                                <li class="info-item">انحناء الركبة أكثر من اللازم – حافظ على التوازن</li>
-                                <li class="info-item">رفع الكعب عن الأرض – ابقَ على كعبيك</li>
-                                <li class="info-item">انحناء الظهر – حافظ على استقامة الظهر</li>
-                                <li class="info-item">النزول بسرعة – تحكم في الحركة</li>
-                                <li class="info-item">عدم الوصول للعمق المناسب – نزّل حتى تصبح الفخذ موازي للأرض</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- You can add shoulders, arms, core similarly -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Exercise Database -->
-        <div class="content" id="database-content">
-            <div class="filter-container">
-                <button class="filter-btn active">جميع التمارين</button>
-                <button class="filter-btn">الصدر</button>
-                <button class="filter-btn">الظهر</button>
-                <button class="filter-btn">الأرجل</button>
-                <button class="filter-btn">الكتف</button>
-                <button class="filter-btn">الذراع</button>
-                <button class="filter-btn">الجذع</button>
-            </div>
-            <div class="timer-container">
-                <div class="timer">
-                    <h4>مؤقت التمرين</h4>
-                    <div class="timer-display">00:00</div>
-                    <button class="btn btn-primary" style="width:100%; margin-top:10px;">ابدأ</button>
-                </div>
-                <div class="timer">
-                    <h4>مؤقت الراحة</h4>
-                    <div class="timer-display">00:00</div>
-                    <button class="btn btn-outline" style="width:100%; margin-top:10px;">ابدأ</button>
-                </div>
-            </div>
-            <div class="main-content">
-                <h3 style="color:#ff6b6b; margin-bottom:20px; text-align:right;">مكتبة التمارين</h3>
-                <div class="exercise-list">
-                    <div class="exercise-item">
-                        <div class="exercise-info"><div class="exercise-name">Bench Press</div><div class="exercise-details">تمرين مركب لتطوير عضلات الصدر</div></div>
-                        <div class="exercise-stats"><span class="stat">متوسط</span><span class="stat">عارضة</span></div>
-                        <button class="youtube-btn" onclick="searchYouTube('Bench Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                    </div>
-                    <div class="exercise-item">
-                        <div class="exercise-info"><div class="exercise-name">Squat</div><div class="exercise-details">ملك تمارين الأرجل</div></div>
-                        <div class="exercise-stats"><span class="stat">متقدم</span><span class="stat">عارضة</span></div>
-                        <button class="youtube-btn" onclick="searchYouTube('Squat')"><i class="fab fa-youtube"></i>فيديو</button>
-                    </div>
-                    <div class="exercise-item">
-                        <div class="exercise-info"><div class="exercise-name">Deadlift</div><div class="exercise-details">تمرين مركب للجسم بالكامل</div></div>
-                        <div class="exercise-stats"><span class="stat">متقدم</span><span class="stat">عارضة</span></div>
-                        <button class="youtube-btn" onclick="searchYouTube('Deadlift')"><i class="fab fa-youtube"></i>فيديو</button>
-                    </div>
-                    <div class="exercise-item">
-                        <div class="exercise-info"><div class="exercise-name">Pull-Up</div><div class="exercise-details">تمرين بوزن الجسم للظهر</div></div>
-                        <div class="exercise-stats"><span class="stat">متوسط</span><span class="stat">وزن الجسم</span></div>
-                        <button class="youtube-btn" onclick="searchYouTube('Pull-Up')"><i class="fab fa-youtube"></i>فيديو</button>
-                    </div>
-                    <div class="exercise-item">
-                        <div class="exercise-info"><div class="exercise-name">Overhead Press</div><div class="exercise-details">تمرين مركب للكتف</div></div>
-                        <div class="exercise-stats"><span class="stat">متوسط</span><span class="stat">عارضة</span></div>
-                        <button class="youtube-btn" onclick="searchYouTube('Overhead Press')"><i class="fab fa-youtube"></i>فيديو</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 📝 Custom Plan Section -->
-        <section id="custom-plan-section" class="container" style="margin-top:40px; text-align:right;">
-          <h2>📝 أنشئ خطة تدريب مخصصة</h2>
-          <form id="custom-plan-form" style="display:flex; flex-direction:column; gap:10px; max-width:400px;">
-            <label>الطول (سم): <input type="number" id="height" required></label>
-            <label>الوزن (كغ): <input type="number" id="weight" required></label>
-            <label>أيام التدريب/أسبوع: <input type="number" id="daysPerWeek" min="1" max="7" required></label>
-            <label>الهدف:
-              <select id="goal">
-                <option value="lose">فقدان الوزن</option>
-                <option value="gain">زيادة العضلات</option>
-              </select>
-            </label>
-            <button type="submit" class="btn btn-primary" style="width:fit-content;">احسب الخطة</button>
-          </form>
-          <div id="plan-results" style="margin-top:20px;"></div>
-        </section>
+    <!-- API Key -->
+    <div class="api-key fadeIn" style="margin:14px 0; background:var(--glass); border:1px solid var(--border); padding:10px 12px; border-radius:14px; display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+      <i class="fa-solid fa-key"></i>
+      <input id="apiKey" type="password" placeholder="Gemini API Key" style="flex:1; min-width:220px" />
+      <button class="btn" id="saveKey"><i class="fa-regular fa-floppy-disk"></i><span data-i18n="saveKey">حفظ المفتاح</span></button>
+      <small class="meta" data-i18n="keyHint">لن يتم حفظ المفتاح على الخادم. يتم تخزينه محليًا فقط.</small>
     </div>
 
-    <script>
-      // API config
-      const GYMINA_API_KEY = 'AIzaSyC832CDl3HkVVxxYmop4svwwEOII3zjREs';
-      const GYMINA_API_URL = 'https://api.gymina.example.com/v1/plan'; // ← استبدل بالرابط الحقيقي لخدمتك
+    <!-- Tabs -->
+    <div class="tabs actions-toolbar">
+      <button class="tab active" data-tab="library" data-i18n="tabLibrary">مكتبة التمارين</button>
+      <button class="tab" data-tab="planner" data-i18n="tabPlanner">مُخطِّط التمارين (الذكاء الاصطناعي)</button>
+      <button class="tab" data-tab="plans" data-i18n="tabMyPlans">خططي المحفوظة</button>
+    </div>
 
-      // Tab navigation
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-          tab.classList.add('active');
-          document.getElementById(`${tab.dataset.tab}-content`).classList.add('active');
-        });
-      });
+    <!-- Library Panel -->
+    <section id="panel-library" class="panel active fadeIn">
+      <div class="searchbar">
+        <input id="search" placeholder="ابحث باسم التمرين بالعربية أو بالإنجليزية…" />
+        <button class="btn" id="clearSearch"><i class="fa-solid fa-xmark"></i><span data-i18n="clear">مسح</span></button>
+      </div>
+      <div class="chips" id="groupChips"></div>
+      <div class="grid" id="exerciseGrid"></div>
+    </section>
 
-      // Weekly plan day switch
-      document.querySelectorAll('.muscle-item[data-day]').forEach(item => {
-        item.addEventListener('click', () => {
-          document.querySelectorAll('.muscle-item[data-day]').forEach(i => i.classList.remove('active'));
-          item.classList.add('active');
-          document.querySelectorAll('.workout-day').forEach(d => d.style.display = 'none');
-          document.getElementById(`${item.dataset.day}-plan`).style.display = 'block';
-        });
-      });
+    <!-- Planner Panel -->
+    <section id="panel-planner" class="panel fadeIn">
+      <div class="fieldset">
+        <div class="field">
+          <label data-i18n="goal">الهدف</label>
+          <select id="goal">
+            <option value="hypertrophy" selected>بناء العضلات</option>
+            <option value="fatloss">حرق الدهون</option>
+            <option value="strength">القوة</option>
+            <option value="endurance">التّحمّل</option>
+            <option value="focus">تركيز على منطقة</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-i18n="equipment">المعدات</label>
+          <select id="equipment" multiple size="5">
+            <option value="gym" selected>جيم كامل</option>
+            <option value="dumbbells">دمبلز</option>
+            <option value="bands">مطاط/رباط</option>
+            <option value="bodyweight">وزن الجسم</option>
+            <option value="kettlebell">كاتل بيل</option>
+          </select>
+          <small class="meta" data-i18n="equipHint">يمكن اختيار أكثر من خيار (Ctrl/⌘)</small>
+        </div>
+        <div class="field">
+          <label data-i18n="days">الأيام/الأسبوع</label>
+          <select id="days">
+            <option>3</option>
+            <option selected>4</option>
+            <option>5</option>
+            <option>6</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-i18n="level">المستوى</label>
+          <select id="level">
+            <option>مبتدئ</option>
+            <option selected>متوسط</option>
+            <option>متقدم</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-i18n="focusArea">منطقة التركيز (اختياري)</label>
+          <input id="focusArea" placeholder="مثال: صدر، ظهر، أرداف…" />
+        </div>
+      </div>
+      <div class="actions" style="margin:8px 0 14px">
+        <button class="btn primary" id="genGemini"><i class="fa-solid fa-wand-magic-sparkles"></i><span data-i18n="genGemini">توليد بواسطة Gemini</span></button>
+        <button class="btn" id="genLocal"><i class="fa-solid fa-bolt"></i><span data-i18n="genLocal">توليد محلي (بدون مفتاح)</span></button>
+        <button class="btn" id="savePlan"><i class="fa-regular fa-bookmark"></i><span data-i18n="savePlan">حفظ الخطة</span></button>
+      </div>
+      <div class="plan" id="planOutput" aria-live="polite"></div>
+    </section>
 
-      // Muscle detail switch
-      document.querySelectorAll('.muscle-item[data-muscle]').forEach(item => {
-        item.addEventListener('click', () => {
-          document.querySelectorAll('.muscle-item[data-muscle]').forEach(i => i.classList.remove('active'));
-          item.classList.add('active');
-          document.querySelectorAll('.exercise-details-container').forEach(c => c.style.display = 'none');
-          document.getElementById(`${item.dataset.muscle}-details`).style.display = 'block';
-          document.querySelector('.exercise-title').textContent = `تمارين ${item.textContent}`;
-        });
-      });
+    <!-- My Plans Panel -->
+    <section id="panel-plans" class="panel fadeIn">
+      <div id="plansList" class="grid"></div>
+    </section>
 
-      // Theme toggle
-      document.getElementById('theme-toggle').addEventListener('click', () => {
-        document.body.classList.toggle('light');
-        document.body.classList.toggle('dark');
-        document.getElementById('theme-toggle').textContent = document.body.classList.contains('light') ? 'الوضع الليلي' : 'الوضع النهاري';
-      });
+    <footer>
+      <div>© <span id="year"></span> مدربك الذكي — <span class="en">Smart Trainer Pro</span>. <span data-i18n="foot">تطبيق ويب تقدمي يعمل دون اتصال.</span></div>
+    </footer>
+  </div>
 
-      // Language toggle
-      document.getElementById('language-toggle').addEventListener('click', () => {
-        const html = document.documentElement;
-        if (html.lang === 'ar') {
-          html.lang = 'en'; html.dir = 'ltr';
-          document.querySelector('h1').textContent = 'GymPro Trainer';
-          document.querySelector('.subtitle').textContent = 'Your Complete Fitness Training Solution';
-          document.querySelector('[data-tab="weekly"]').textContent = 'Weekly Plan';
-          document.querySelector('[data-tab="muscle"]').textContent = 'Muscle Groups';
-          document.querySelector('[data-tab="database"]').textContent = 'Exercise Database';
-          document.getElementById('theme-toggle').textContent = 'Dark Mode';
-          document.getElementById('print-btn').textContent = 'Print Plan';
-        } else {
-          html.lang = 'ar'; html.dir = 'rtl';
-          document.querySelector('h1').textContent = 'محترف التدريب الرياضي';
-          document.querySelector('.subtitle').textContent = 'حل التدريب الرياضي الكامل الخاص بك';
-          document.querySelector('[data-tab="weekly"]').textContent = 'الخطة الأسبوعية';
-          document.querySelector('[data-tab="muscle"]').textContent = 'مجموعات العضلات';
-          document.querySelector('[data-tab="database"]').textContent = 'قاعدة التمارين';
-          document.getElementById('theme-toggle').textContent = 'الوضع الليلي';
-          document.getElementById('print-btn').textContent = 'طباعة الخطة';
-        }
-      });
+  <script>
+    /* ---------------- I18N ---------------- */
+    const STR = {
+      ar:{lang:'English', theme:'وضع فاتح', install:'تثبيت PWA', print:'طباعة',
+          tabLibrary:'مكتبة التمارين', tabPlanner:'مُخطِّط التمارين (الذكاء الاصطناعي)', tabMyPlans:'خططي المحفوظة',
+          clear:'مسح', goal:'الهدف', equipment:'المعدات', equipHint:'يمكن اختيار أكثر من خيار (Ctrl/⌘)', days:'الأيام/الأسبوع', level:'المستوى',
+          focusArea:'منطقة التركيز (اختياري)', genGemini:'توليد بواسطة Gemini', genLocal:'توليد محلي (بدون مفتاح)', savePlan:'حفظ الخطة',
+          foot:'تطبيق ويب تقدمي يعمل دون اتصال. الوسائط تُحمّل تلقائيًا من مصادر متعددة.', saveKey:'حفظ المفتاح', keyHint:'لن يتم حفظ المفتاح على الخادم. يتم تخزينه محليًا فقط.'},
+      en:{lang:'العربية', theme:'Light Mode', install:'Install PWA', print:'Print',
+          tabLibrary:'Exercise Library', tabPlanner:'AI Workout Planner', tabMyPlans:'My Plans',
+          clear:'Clear', goal:'Goal', equipment:'Equipment', equipHint:'You can select multiple (Ctrl/⌘)', days:'Days/Week', level:'Experience',
+          focusArea:'Focus Area (optional)', genGemini:'Generate with Gemini', genLocal:'Generate Locally (No Key)', savePlan:'Save Plan',
+          foot:'Progressive Web App. Media loads from multiple sources.', saveKey:'Save Key', keyHint:'Key is stored locally only.'}
+    };
+    let LANG = localStorage.getItem('lang') || 'ar';
+    function applyLang(){
+      const dict = STR[LANG];
+      document.documentElement.lang = LANG === 'ar' ? 'ar' : 'en';
+      document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
+      document.body.classList.toggle('en', LANG==='en');
+      document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = dict[el.dataset.i18n] || el.textContent; });
+      const s = document.getElementById('search'); if(s) s.placeholder = LANG==='ar'? 'ابحث باسم التمرين بالعربية أو بالإنجليزية…':'Search exercises in Arabic or English…';
+      renderGroupChips(); renderExercises();
+    }
 
-      // Print
-      document.getElementById('print-btn').addEventListener('click', () => window.print());
+    /* ---------------- Media system ---------------- */
+    const MEDIA_OVERRIDES_KEY = 'media_overrides_v1';
+    const mediaOverrides = JSON.parse(localStorage.getItem(MEDIA_OVERRIDES_KEY)||'{}');
+    const exerciseCache = {};
 
-      // YouTube helper
-      function searchYouTube(q) {
-        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(q + ' Demic Story')}`, '_blank');
+    function slugName(name){
+      return name.replace(/\((.*?)\)/g,'').replace(/[^A-Za-z0-9 ]+/g,' ').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+    }
+    function ytSearchUrl(name){
+      return `https://www.youtube.com/results?search_query=${encodeURIComponent(name+' form tutorial '+(LANG==='ar'?'ar':'en'))}`;
+    }
+    function ytSearchEmbedUrl(name){
+      const q = name + ' exercise form ' + (LANG==='ar'?'arabic':'english');
+      return `https://www.youtube-nocookie.com/embed?rel=0&modestbranding=1&playsinline=1&listType=search&list=${encodeURIComponent(q)}`;
+    }
+    async function getFromExerciseDB(name){
+      try{
+        const r = await fetch(`https://exercisedb.dev/api/v1/exercises/search?q=${encodeURIComponent(name)}&limit=1`, {mode:'cors'});
+        if(!r.ok) return null; const j = await r.json(); return j?.data?.[0]?.gifUrl || null;
+      }catch{ return null; }
+    }
+    function fpCandidates(name){
+      const base='https://fitnessprogramer.com/wp-content/uploads/';
+      const s = slugName(name);
+      const c = [`2021/02/${s}.gif`,`2022/02/${s}.gif`,`2021/05/${s}.gif`].map(p=>base+p);
+      const prox = c.map(u=> 'https://images.weserv.nl/?url='+encodeURIComponent(u.replace(/^https?:\/\//,'')));
+      return [...c, ...prox];
+    }
+    async function resolveMedia(name){
+      const key=name.toLowerCase(); if(exerciseCache[key]) return exerciseCache[key];
+
+      if(mediaOverrides[key]){
+        const url=mediaOverrides[key];
+        exerciseCache[key]={kind:/\.(mp4|webm)(\?|$)/i.test(url)?'video':'image', url, provider:'Custom'};
+        return exerciseCache[key];
       }
 
-      // Custom plan form handler
-      document.getElementById('custom-plan-form').addEventListener('submit', async e => {
-        e.preventDefault();
-        const height = +document.getElementById('height').value;
-        const weight = +document.getElementById('weight').value;
-        const days   = +document.getElementById('daysPerWeek').value;
-        const goal   = document.getElementById('goal').value;
-        const out    = document.getElementById('plan-results');
+      const exdb=await getFromExerciseDB(name);
+      if(exdb){ exerciseCache[key]={kind:'image', url:exdb, provider:'ExerciseDB'}; return exerciseCache[key]; }
 
-        out.textContent = 'جاري الحساب...';
-        try {
-          const res = await fetch(`${GYMINA_API_URL}?key=${GYMINA_API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ height, weight, days, goal })
-          });
-          if (!res.ok) throw new Error('خطأ في الاستجابة');
-          const { bmr, caloriesPerDay, trainingPlan } = await res.json();
-          out.innerHTML = `
-            <h3>⚙️ نتائج الحساب</h3>
-            <p>معدل الأيض الأساسي (BMR): <strong>${bmr.toFixed(0)}</strong> ككال/يوم</p>
-            <p>السعرات اليومية الموصى بها: <strong>${caloriesPerDay.toFixed(0)}</strong> ككال/يوم</p>
-            <h4>خطة التدريب الأسبوعية</h4>
-            <ul>
-              ${trainingPlan.map(d =>
-                `<li><strong>${d.day}</strong>: ${d.exercises.map(ex =>
-                  `${ex.name} (${ex.sets}×${ex.reps})`
-                ).join(', ')}</li>`
-              ).join('')}
-            </ul>
-          `;
-        } catch (err) {
-          out.textContent = 'حدث خطأ أثناء الحساب. حاول مرة أخرى.';
-          console.error(err);
-        }
+      const fps=fpCandidates(name);
+      if(fps.length){ exerciseCache[key]={kind:'image', url:fps[0], provider:'FitnessProgramer (guess)', fallbackList:fps.slice(1)}; return exerciseCache[key]; }
+
+      exerciseCache[key]={kind:'yt', url:ytSearchEmbedUrl(name), provider:'YouTube'};
+      return exerciseCache[key];
+    }
+    function editMedia(name, onSaved){
+      const key=name.toLowerCase(); const cur=mediaOverrides[key]||'';
+      const msg = LANG==='ar'?'ألصق رابط GIF/MP4 لهذا التمرين:':'Paste GIF/MP4 URL for this exercise:';
+      const u = prompt(msg, cur);
+      if(u!==null){ const v=u.trim(); if(v) mediaOverrides[key]=v; else delete mediaOverrides[key]; localStorage.setItem(MEDIA_OVERRIDES_KEY, JSON.stringify(mediaOverrides)); onSaved&&onSaved(); }
+    }
+    function mountYTEmbed(container, name){
+  container.innerHTML='';
+
+  // Header UI
+  const prov=document.createElement('div'); prov.className='provider'; prov.textContent='YouTube';
+  const bar=document.createElement('div'); bar.style.display='flex'; bar.style.gap='8px'; bar.style.alignItems='center';
+  bar.appendChild(prov);
+
+  const setBtn=document.createElement('button'); 
+  setBtn.className='edit'; 
+  setBtn.title=LANG==='ar'?'تحديد فيديو يوتيوب مباشرة':'Set direct YouTube video';
+  setBtn.textContent='🎬';
+  setBtn.onclick=()=>{
+    const prev = localStorage.getItem(`yt:videoId:${name}`) || (window.YT_VIDEO_IDS && window.YT_VIDEO_IDS[name]) || '';
+    const val = prompt(LANG==='ar'?'ألصق رابط/معرّف YouTube':'Paste YouTube URL/ID', prev||'');
+    if(!val) return;
+    const id = extractYouTubeId(val);
+    if(id){
+      localStorage.setItem(`yt:videoId:${name}`, id);
+      mountMedia(container, name);
+    }else{
+      alert(LANG==='ar'?'تعذّر استخراج المعرف من الإدخال.':'Could not extract a video ID from your input.');
+    }
+  };
+  bar.appendChild(setBtn);
+
+  const edit=document.createElement('button'); 
+  edit.className='edit'; 
+  edit.title=LANG==='ar'?'استبدال الوسائط':'Override media';
+  edit.innerHTML='⚙️'; 
+  edit.onclick=()=>editMedia(name,()=>mountMedia(container,name)); 
+  bar.appendChild(edit);
+  container.appendChild(bar);
+
+  // Determine the best videoId to embed
+  const directId = (window.YT_VIDEO_IDS && window.YT_VIDEO_IDS[name]) || localStorage.getItem(`yt:videoId:${name}`);
+
+  function extractYouTubeId(input){
+    if(!input) return null;
+    const str = String(input).trim();
+    // plain 11-char ID
+    const idMatch = str.match(/^[a-zA-Z0-9_-]{11}$/);
+    if(idMatch) return idMatch[0];
+    // common URL patterns
+    const patterns = [
+      /[?&]v=([a-zA-Z0-9_-]{11})/,               // watch?v=
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/,           // youtu.be/<id>
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/, // embed/<id>
+      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/ // shorts/<id>
+    ];
+    for(const p of patterns){
+      const m = str.match(p);
+      if(m) return m[1];
+    }
+    return null;
+  }
+
+  function youtubeEmbedSrcFromId(id){
+    const origin = encodeURIComponent(location.origin);
+    return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1&origin=${origin}`;
+  }
+
+  const frame = document.createElement('iframe');
+  frame.loading='lazy';
+  frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  frame.referrerPolicy='origin';
+  frame.style.width='100%';
+  frame.style.height='100%';
+  container.appendChild(frame);
+
+  // If a direct ID is available, use it immediately (no search/fallback)
+  const directResolved = extractYouTubeId(directId);
+  if(directResolved){
+    frame.src = youtubeEmbedSrcFromId(directResolved);
+    return;
+  }
+
+  // Otherwise, best-effort search based on the exercise name
+  const q = name + ' exercise form ' + (LANG==='ar'?'arabic':'english');
+
+  async function fetchFirstYoutubeId(query){
+    const enc = encodeURIComponent(query);
+    // 1) Piped
+    try{
+      const r = await fetch(`https://piped.video/api/v1/search?q=${enc}&region=US`, {mode:'cors'});
+      if(r.ok){
+        const j = await r.json();
+        const vid = (j?.items||[]).find(x=>x.type==='video')?.id || null;
+        if(vid && typeof vid === 'string' && vid.length<=15) return vid;
+      }
+    }catch{}
+    // 2) Invidious
+    try{
+      const r = await fetch(`https://yewtu.be/api/v1/search?q=${enc}&type=video`, {mode:'cors'});
+      if(r.ok){
+        const j = await r.json();
+        const vid = (Array.isArray(j) && j.length) ? (j[0].videoId || null) : null;
+        if(vid && typeof vid === 'string' && vid.length<=15) return vid;
+      }
+    }catch{}
+    // 3) HTML proxy
+    try{
+      const r = await fetch(`https://r.jina.ai/http://www.youtube.com/results?search_query=${enc}`, {mode:'cors'});
+      if(r.ok){
+        const t = await r.text();
+        const m = t.match(/watch\\?v=([a-zA-Z0-9_-]{11})/);
+        if(m) return m[1];
+      }
+    }catch{}
+    return null;
+  }
+
+  (async ()=>{
+    try{
+      const id = await fetchFirstYoutubeId(q);
+      if(id){ frame.src = youtubeEmbedSrcFromId(id); return; }
+    }catch{}
+    // Fallback: clickable search link
+    frame.remove();
+    const link = document.createElement('a');
+    link.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`;
+    link.target = '_blank'; link.rel='noopener';
+    link.style.display='grid'; link.style.placeItems='center'; link.style.height='100%'; link.style.textDecoration='none';
+    link.textContent = LANG==='ar' ? 'فتح نتائج يوتيوب في تبويب' : 'Open YouTube results';
+    container.appendChild(link);
+  })();
+}
+
+  async function mountMedia(container, name){
+      container.innerHTML='';
+      const prov=document.createElement('div'); prov.className='provider'; prov.textContent='…'; container.appendChild(prov);
+      const edit=document.createElement('button'); edit.className='edit'; edit.title= LANG==='ar'?'استبدال الوسائط':'Override media'; edit.innerHTML='⚙️'; edit.onclick=()=>editMedia(name,()=>mountMedia(container,name)); container.appendChild(edit);
+
+      const info = await resolveMedia(name);
+      prov.textContent = info.provider;
+
+      
+      if(info.kind==='video'){
+        const v=document.createElement('video');
+        v.controls=true;
+        v.muted=true;            // allow autoplay on most browsers
+        v.autoplay=true;
+        v.loop=true;
+        v.playsInline=true;
+        v.setAttribute('playsinline','');
+        v.preload='metadata';
+        v.referrerPolicy='no-referrer';
+        v.loading='lazy';
+        v.src=info.url;
+        v.onerror=()=>mountYTEmbed(container,name);
+        container.appendChild(v);
+        return;
+      }
+      if(info.kind==='yt'){ mountYTEmbed(container,name); return; }
+
+      const img=document.createElement('img'); img.referrerPolicy='no-referrer'; img.loading='lazy';
+      const list=[info.url,...(info.fallbackList||[])]; let i=0;
+      img.onerror=()=>{ i++; if(i<list.length){ img.src=list[i]; try{prov.textContent=new URL(list[i].split('?')[0]).hostname.replace('www.','');}catch{} } else { mountYTEmbed(container,name); } };
+      img.onload = ()=>{ try{prov.textContent=new URL(list[i].split('?')[0]).hostname.replace('www.','');}catch{} };
+      img.src=list[i]; container.appendChild(img);
+    }
+
+    /* -------------- Groups & Exercises (70+ items) -------------- */
+    const TYPE_META = {
+      compound:{ sets:'4×6–8', tempo:'2-1-2', rest:'120s', tip:'شد لوحي الكتف وثبّت الجذع', warn:'تجنّب تقوّس أسفل الظهر' },
+      strength:{ sets:'5×3–5', tempo:'2-0-2', rest:'150s', tip:'ادفع بالأقدام وأبقِ العمود محايدًا', warn:'لا تستخدم الاندفاع' },
+      isolation:{ sets:'3×10–15', tempo:'2-1-2', rest:'60–75s', tip:'تحكّم بالمجال الكامل واعصر في القمة', warn:'لا ترفع كتفيك' }
+    };
+    const GROUPS = [
+      {id:'chest', ar:'الصدر', en:'Chest'},
+      {id:'back', ar:'الظهر', en:'Back'},
+      {id:'legs', ar:'الأرجل', en:'Legs'},
+      {id:'shoulders', ar:'الكتف', en:'Shoulders'},
+      {id:'arms', ar:'الذراع', en:'Arms'},
+      {id:'core', ar:'الجذع', en:'Core'},
+      {id:'bonus', ar:'أرداف/منزلي', en:'Glutes & Home'}
+    ];
+    function groupIdFrom(ar){ return GROUPS.find(g=>g.ar===ar)?.id || 'other'; }
+    function ex(groupAr, groupEn, nameAr, nameEn, type='compound', badges=['مهم'], sourcePath='', equip=['gym']){
+      const meta = TYPE_META[type] || TYPE_META.compound;
+      return {
+        groupId: groupIdFrom(groupAr), groupAr, groupEn, nameAr, nameEn,
+        sets: meta.sets, reps: '', tempo: meta.tempo, rest: meta.rest, type, badges,
+        equip, source: sourcePath ? `https://fitnessprogramer.com/${sourcePath}` : '#'
+      };
+    }
+
+    const EX = [
+      /* --- Chest --- */ ex('الصدر','Chest','ضغط الصدر بالبار','Barbell Bench Press','compound',['الأفضل'],'exercise/bench-press/'),
+      ex('الصدر','Chest','ضغط مائل بالدمبل','Incline Dumbbell Press','compound',['مهم'],'exercise/incline-dumbbell-press/',['gym','dumbbells']),
+      ex('الصدر','Chest','ضغط الصدر بالآلة','Machine Chest Press','compound',['مهم'],'exercise/chest-press-machine/'),
+      ex('الصدر','Chest','ضغط مائل بالبار','Incline Barbell Bench Press','compound',['مهم'],'exercise/incline-bench-press/'),
+      ex('الصدر','Chest','ضغط منحدر بالدمبل','Decline Dumbbell Press','compound',['مهم'],'exercise/decline-dumbbell-bench-press/',['gym','dumbbells']),
+      ex('الصدر','Chest','فلاي بالدمبل','Dumbbell Chest Fly','isolation',['عزل'],'exercise/dumbbell-fly/',['gym','dumbbells']),
+      ex('الصدر','Chest','فلاي كابل','Cable Crossover','isolation',['عزل'],'exercise/cable-crossover/'),
+      ex('الصدر','Chest','ضغط أرضي بالدمبل','Dumbbell Floor Press','compound',['منزلي'], '', ['dumbbells']),
+      ex('الصدر','Chest','تمرين الضغط','Push-Up','compound',['منزلي','جسمك'], '', ['bodyweight']),
+      ex('الصدر','Chest','تمرين الضغط مائل','Incline Push-Up','compound',['منزلي','جسمك'], '', ['bodyweight']),
+      ex('الصدر','Chest','تمرين الضغط ديكلين','Decline Push-Up','compound',['منزلي','جسمك'], '', ['bodyweight']),
+      ex('الصدر','Chest','ديبس للصدر','Chest Dips','compound',['مهم'], 'exercise/chest-dips/',['gym','bodyweight']),
+      ex('الصدر','Chest','بولوفر دمبل','Dumbbell Pullover','isolation',['عزل'], 'exercise/dumbbell-pullover/',['gym','dumbbells']),
+      ex('الصدر','Chest','فلاي آلة','Pec Deck Fly','isolation',['عزل'],'exercise/pec-deck/'),
+
+      /* --- Back --- */ ex('الظهر','Back','الرفعة الميتة','Conventional Deadlift','strength',['الأفضل'],'exercise/deadlift/'),
+      ex('الظهر','Back','سحب أرضي بالبار','Barbell Bent-Over Row','compound',['مهم'],'exercise/bent-over-row/'),
+      ex('الظهر','Back','سحب علوي','Lat Pulldown','compound',['مهم'],'exercise/lat-pulldown/'),
+      ex('الظهر','Back','عقلة عريضة','Wide-Grip Pull-Up','compound',['جسمك'], '', ['bodyweight','gym']),
+      ex('الظهر','Back','عقلة معكوسة','Chin-Up','compound',['جسمك'], '', ['bodyweight','gym']),
+      ex('الظهر','Back','سحب جالس كابل','Seated Cable Row','compound',['مهم'],'exercise/seated-cable-row/'),
+      ex('الظهر','Back','T-Bar رو','T-Bar Row','compound',['مهم'],'exercise/t-bar-row/'),
+      ex('الظهر','Back','سحب ذراع واحدة دمبل','One-Arm Dumbbell Row','compound',['منزلي'],'exercise/one-arm-dumbbell-row/',['gym','dumbbells']),
+      ex('الظهر','Back','سحب ذراع مستقيمة','Straight-Arm Pulldown','isolation',['عزل'],'exercise/straight-arm-pulldown/'),
+      ex('الظهر','Back','سحب صدر مدعّم','Chest-Supported Row','compound',['مهم'],'exercise/chest-supported-row/'),
+      ex('الظهر','Back','رو معكوسة','Inverted Row','compound',['جسمك'], '', ['bodyweight','gym']),
+      ex('الظهر','Back','جود مورنينج','Good Morning','strength',['تقوية'], 'exercise/good-morning/'),
+      ex('الظهر','Back','رو ميدوز','Meadows Row','compound',['متقدم'], '', ['gym','dumbbells']),
+      ex('الظهر','Back','سحب حبل للوجه','Face Pull','isolation',['عزل'],'exercise/face-pull/'),
+
+      /* --- Legs --- */ ex('الأرجل','Legs','سكوات ظهر','Back Squat','strength',['الأفضل'],'exercise/squat/'),
+      ex('الأرجل','Legs','سكوات أمامي','Front Squat','strength',['مهم'],'exercise/front-squat/'),
+      ex('الأرجل','Legs','سومو ديد لفت','Sumo Deadlift','strength',['مهم'],'exercise/sumo-deadlift/'),
+      ex('الأرجل','Legs','لانجز مشي','Walking Lunges','compound',['مهم'],'exercise/walking-lunge/',['gym','dumbbells','bodyweight']),
+      ex('الأرجل','Legs','لانجز بلغاري','Bulgarian Split Squat','compound',['منزلي'],'exercise/bulgarian-split-squat/',['gym','dumbbells','bodyweight']),
+      ex('الأرجل','Legs','هاك سكوات','Hack Squat','strength',['مهم'],'exercise/hack-squat/'),
+      ex('الأرجل','Legs','ليج برس','Leg Press','compound',['مهم'],'exercise/leg-press/'),
+      ex('الأرجل','Legs','رومانيان ديدلفت','Romanian Deadlift','strength',['مهم'],'exercise/romanian-deadlift/'),
+      ex('الأرجل','Legs','اكستنشن الأرجل','Leg Extension','isolation',['عزل'],'exercise/leg-extension/'),
+      ex('الأرجل','Legs','كيرل هامسترنج','Lying Leg Curl','isolation',['عزل'],'exercise/lying-leg-curl/'),
+      ex('الأرجل','Legs','كيرل هامسترنج جالس','Seated Leg Curl','isolation',['عزل'],'exercise/seated-leg-curl/'),
+      ex('الأرجل','Legs','رفع السمانة واقف','Standing Calf Raise','isolation',['عزل'],'exercise/standing-calf-raise/'),
+      ex('الأرجل','Legs','رفع السمانة جالس','Seated Calf Raise','isolation',['عزل'],'exercise/seated-calf-raise/'),
+      ex('الأرجل','Legs','نوردك كيرل','Nordic Hamstring Curl','strength',['جسمك'], '', ['bodyweight','gym']),
+      ex('الأرجل','Legs','قفزة الصندوق','Box Jump','compound',['منزلي'], '', ['bodyweight']),
+      ex('الأرجل','Legs','سيسي سكوات','Sissy Squat','isolation',['منزلي'], '', ['bodyweight','gym']),
+
+      /* --- Shoulders --- */ ex('الكتف','Shoulders','ضغط كتف بار','Barbell Overhead Press','compound',['الأفضل'],'exercise/overhead-press/'),
+      ex('الكتف','Shoulders','ضغط كتف دمبل','Dumbbell Shoulder Press','compound',['مهم'],'exercise/dumbbell-shoulder-press/',['gym','dumbbells']),
+      ex('الكتف','Shoulders','رفرفة جانبية','Lateral Raise','isolation',['عزل'],'exercise/dumbbell-lateral-raise/',['gym','dumbbells']),
+      ex('الكتف','Shoulders','رفرفة خلفية','Rear Delt Fly','isolation',['عزل'],'exercise/reverse-pec-deck/',['gym','dumbbells']),
+      ex('الكتف','Shoulders','فرونت ريز','Front Raise','isolation',['عزل'],'exercise/front-raise/',['gym','dumbbells']),
+      ex('الكتف','Shoulders','أرنولد برس','Arnold Press','compound',['متوسط'],'exercise/arnold-press/',['gym','dumbbells']),
+      ex('الكتف','Shoulders','كابل رفرفة جانبية','Cable Lateral Raise','isolation',['عزل'],'exercise/cable-lateral-raise/'),
+      ex('الكتف','Shoulders','سحب للوجه (كابل)','Face Pull (Cable)','isolation',['عزل'],'exercise/face-pull/'),
+      ex('الكتف','Shoulders','يو برايت رو','Upright Row','compound',['مهم'],'exercise/upright-row/'),
+      ex('الكتف','Shoulders','رفرفة جانبية واقف باكتل بيل','KB Lateral Raise','isolation',['منزلي'], '', ['kettlebell']),
+      ex('الكتف','Shoulders','دوران كتف كوبي','Cuban Rotation','isolation',['صحة كتف'], '', ['dumbbells','bands','gym']),
+      ex('الكتف','Shoulders','ضغط كتف كاتل بيل','Kettlebell Press','compound',['منزلي'], '', ['kettlebell']),
+
+      /* --- Arms --- */ ex('الذراع','Arms','باربل كورل','Barbell Curl','isolation',['عزل'],'exercise/barbell-curl/'),
+      ex('الذراع','Arms','كورل دمبل تبادلي','Alternating DB Curl','isolation',['عزل'],'exercise/alternating-dumbbell-curl/',['gym','dumbbells']),
+      ex('الذراع','Arms','هامر كورل','Hammer Curl','isolation',['عزل'],'exercise/hammer-curl/',['gym','dumbbells']),
+      ex('الذراع','Arms','كونسنترشن كورل','Concentration Curl','isolation',['عزل'],'exercise/concentration-curl/',['gym','dumbbells']),
+      ex('الذراع','Arms','زوتمن كورل','Zottman Curl','isolation',['عزل'], '', ['dumbbells']),
+      ex('الذراع','Arms','كورل كابل','Cable Curl','isolation',['عزل'],'exercise/cable-curl/'),
+      ex('الذراع','Arms','سكول كراشر','Skull Crushers','isolation',['مهم'],'exercise/skull-crusher/'),
+      ex('الذراع','Arms','ضغط ثلاثي حبل','Rope Pushdown','isolation',['عزل'],'exercise/triceps-pushdown/'),
+      ex('الذراع','Arms','أوفرهيد اكستنشن','Overhead Triceps Extension','isolation',['عزل'],'exercise/overhead-cable-triceps-extension/',['gym','dumbbells']),
+      ex('الذراع','Arms','ديبس للعضد الخلفية','Triceps Dips','compound',['جسمك'],'exercise/triceps-dips/',['bodyweight','gym']),
+      ex('الذراع','Arms','ضغط ضيق بالبار','Close-Grip Bench Press','compound',['مهم'],'exercise/close-grip-bench-press/'),
+      ex('الذراع','Arms','بنش ديبس','Bench Dips','compound',['منزلي','جسمك'], '', ['bodyweight']),
+
+      /* --- Core --- */ ex('الجذع','Core','بلانك','Plank','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','بلانك جانبي','Side Plank','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','كرنش','Crunch','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','رفع أرجل معلّق','Hanging Leg Raise','isolation',['مهم'], '', ['bodyweight','gym']),
+      ex('الجذع','Core','بايسكل كرنش','Bicycle Crunch','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','روسيان تويست','Russian Twist','isolation',['منزلي'], '', ['bodyweight','dumbbells','kettlebell']),
+      ex('الجذع','Core','رول آوت Ab Wheel','Ab Wheel Rollout','isolation',['متوسط'], '', ['gym']),
+      ex('الجذع','Core','ديد بغ','Dead Bug','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','هولو هولد','Hollow Hold','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','بيرد دوغ','Bird Dog','isolation',['جسمك'], '', ['bodyweight']),
+      ex('الجذع','Core','بالوف برس','Pallof Press','isolation',['عزل'], '', ['bands','gym']),
+      ex('الجذع','Core','وود تشوب كابل','Cable Woodchop','isolation',['عزل'],'exercise/wood-chop/'),
+
+      /* --- Glutes & Home --- */ ex('أرداف/منزلي','Glutes & Home','هيب ثرست','Barbell Hip Thrust','compound',['الأفضل'],'exercise/hip-thrust/'),
+      ex('أرداف/منزلي','Glutes & Home','جلووت بريدج','Glute Bridge','compound',['منزلي'], '', ['bodyweight','dumbbells','gym']),
+      ex('أرداف/منزلي','Glutes & Home','رفعة رومانية رجل واحدة','Single-Leg RDL','isolation',['منزلي'], '', ['dumbbells','kettlebell','bodyweight']),
+      ex('أرداف/منزلي','Glutes & Home','كيك باك','Glute Kickback','isolation',['عزل'], '', ['bands','gym']),
+      ex('أرداف/منزلي','Glutes & Home','فاير هايدرانت','Fire Hydrant','isolation',['منزلي'], '', ['bodyweight','bands']),
+      ex('أرداف/منزلي','Glutes & Home','كلامشيل','Clamshell','isolation',['منزلي'], '', ['bands']),
+      ex('أرداف/منزلي','Glutes & Home','ستيب أب','Step-Up','compound',['منزلي'], '', ['dumbbells','bodyweight']),
+      ex('أرداف/منزلي','Glutes & Home','غوبلت سكوات','Goblet Squat','compound',['منزلي'], '', ['dumbbells','kettlebell']),
+      ex('أرداف/منزلي','Glutes & Home','كاتل بيل سوينغ','Kettlebell Swing','compound',['منزلي'], '', ['kettlebell']),
+      ex('أرداف/منزلي','Glutes & Home','مشي جانبي بالرباط','Banded Lateral Walk','isolation',['منزلي'], '', ['bands']),
+      ex('أرداف/منزلي','Glutes & Home','وال سِت','Wall Sit','isolation',['جسمك'], '', ['bodyweight']),
+      ex('أرداف/منزلي','Glutes & Home','لانجس كيرتسي','Curtsy Lunge','compound',['منزلي'], '', ['bodyweight','dumbbells'])
+    ];
+
+    /* ---------------- UI State ---------------- */
+    let currentGroup = 'all';
+    let searchTerm = '';
+    const yearEl = document.getElementById('year'); yearEl.textContent = new Date().getFullYear();
+
+    // Group chips
+    function renderGroupChips(){
+      const wrap = document.getElementById('groupChips'); wrap.innerHTML='';
+      const all = document.createElement('div'); all.className='chip'+(currentGroup==='all'?' active':''); all.textContent = (LANG==='ar'?'الكل':'All');
+      all.onclick=()=>{currentGroup='all'; renderGroupChips(); renderExercises();};
+      wrap.appendChild(all);
+      GROUPS.forEach(g=>{
+        const count = EX.filter(e=>e.groupId===g.id).length;
+        const chip=document.createElement('div'); chip.className='chip'+(currentGroup===g.id?' active':'');
+        chip.textContent = (LANG==='ar'? g.ar:g.en) + ` (${count})`;
+        chip.onclick=()=>{currentGroup=g.id; renderGroupChips(); renderExercises();};
+        wrap.appendChild(chip);
       });
-    </script>
+    }
+
+    // Exercise cards
+    function renderExercises(){
+      const grid = document.getElementById('exerciseGrid'); grid.innerHTML='';
+      const q = searchTerm.trim().toLowerCase();
+      let list = EX.filter(e => currentGroup==='all' || e.groupId===currentGroup);
+      if(q){
+        list = list.filter(e=>
+          e.nameAr.toLowerCase().includes(q) ||
+          e.nameEn.toLowerCase().includes(q) ||
+          e.groupAr.toLowerCase().includes(q) ||
+          e.groupEn.toLowerCase().includes(q)
+        );
+      }
+      list.forEach(item=>{
+        const card=document.createElement('div'); card.className='card fadeIn';
+
+        const media=document.createElement('div'); media.className='media'; card.appendChild(media);
+        mountMedia(media, item.nameEn);
+        const overlay=document.createElement('div'); overlay.className='overlay';
+        overlay.innerHTML = `<div class="name">${item.nameAr}<span class="en"> | ${item.nameEn}</span></div>
+                             <div class="muscle">${item.groupAr}<span class="en"> | ${item.groupEn}</span></div>`;
+        media.appendChild(overlay);
+
+        const content=document.createElement('div'); content.className='content';
+        const title=document.createElement('div'); title.className='title';
+        title.innerHTML = `<strong>${item.nameAr}</strong> <span class="en">| ${item.nameEn}</span>`;
+        content.appendChild(title);
+
+        const badges=document.createElement('div'); badges.className='badges';
+        item.badges.forEach(b=>{
+          const s=document.createElement('span'); s.className='badge'+(b==='الأفضل'?' best':(b==='منزلي'?' home':'')); s.textContent=b; badges.appendChild(s);
+        });
+        const t=document.createElement('span'); t.className='badge'; t.textContent = item.type==='compound'?(LANG==='ar'?'أساسي':'Compound'): item.type==='strength'?(LANG==='ar'?'قوة':'Strength'):(LANG==='ar'?'عزل':'Isolation');
+        badges.appendChild(t);
+        content.appendChild(badges);
+
+        const meta=document.createElement('div'); meta.className='meta';
+        meta.textContent = `${LANG==='ar'?'المجموعات':'Sets'}: ${item.sets} • ${LANG==='ar'?'التمبو':'Tempo'}: ${item.tempo} • ${LANG==='ar'?'راحة':'Rest'}: ${item.rest}`;
+        content.appendChild(meta);
+
+        const actions=document.createElement('div'); actions.className='actions';
+        const yt = document.createElement('a'); yt.href=ytSearchUrl(item.nameEn); yt.target='_blank'; yt.rel='noopener'; yt.className='btn'; yt.innerHTML='<i class="fa-brands fa-youtube"></i> YouTube';
+        const src = document.createElement('a'); src.href=item.source||'#'; src.target='_blank'; src.rel='noopener'; src.className='btn'; src.innerHTML='<i class="fa-solid fa-book-open"></i> Source';
+        actions.appendChild(yt); actions.appendChild(src);
+        content.appendChild(actions);
+
+        card.appendChild(content);
+        grid.appendChild(card);
+      });
+    }
+
+    // Search
+    document.getElementById('search').addEventListener('input', e=>{ searchTerm=e.target.value; renderExercises(); });
+    document.getElementById('clearSearch').addEventListener('click', ()=>{ document.getElementById('search').value=''; searchTerm=''; renderExercises(); });
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+        document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Theme toggle
+    const THEME_KEY='stp_theme';
+    function applyTheme(){
+      const t=localStorage.getItem(THEME_KEY)||'dark';
+      document.documentElement.setAttribute('data-theme', t==='light'?'light':'dark');
+      document.querySelector('#themeBtn span').textContent = LANG==='ar'?(t==='light'?'وضع داكن':'وضع فاتح'):(t==='light'?'Dark Mode':'Light Mode');
+    }
+    document.getElementById('themeBtn').addEventListener('click', ()=>{
+      const cur=localStorage.getItem(THEME_KEY)||'dark';
+      localStorage.setItem(THEME_KEY, cur==='light'?'dark':'light'); applyTheme();
+    });
+
+    // Lang toggle
+    document.getElementById('langBtn').addEventListener('click', ()=>{ LANG = (LANG==='ar'?'en':'ar'); localStorage.setItem('lang',LANG); applyLang(); });
+
+    // API key
+    const KEY_STORE='gemini_api_key';
+    document.getElementById('saveKey').addEventListener('click', ()=>{
+      localStorage.setItem(KEY_STORE, document.getElementById('apiKey').value.trim());
+      alert(LANG==='ar'?'تم حفظ المفتاح محليًا.':'Key saved locally.');
+    });
+    const savedKey = localStorage.getItem(KEY_STORE); if(savedKey) document.getElementById('apiKey').value = savedKey;
+
+    /* -------------- Planner (AI or local) -------------- */
+    function getPlannerOptions(){
+      const equipment = Array.from(document.getElementById('equipment').selectedOptions).map(o=>o.value);
+      return {
+        goal: document.getElementById('goal').value,
+        days: parseInt(document.getElementById('days').value,10),
+        level: document.getElementById('level').value,
+        focusArea: document.getElementById('focusArea').value.trim(),
+        equipment: equipment.length? equipment : ['gym'],
+        lang: LANG
+      };
+    }
+    function buildPrompt(opts){
+      const label = (LANG==='ar'
+        ? `أنت مدرّب محترف. أنشئ خطة تدريب لمدة ${opts.days} أيام/أسبوع لهدف "${opts.goal}" ومستوى "${opts.level}"` + (opts.focusArea? ` مع تركيز على: ${opts.focusArea}.`:'') + ` المعدات المتاحة: ${opts.equipment.join(', ')}. أعط أسماء التمارين بالعربية والإنجليزية، مجموعات×تكرارات، تمبو وراحة، وملاحظات تقنية قصيرة.`
+        : `You are a pro coach. Create a ${opts.days}-day/week plan for goal "${opts.goal}" and level "${opts.level}"` + (opts.focusArea? ` with focus on: ${opts.focusArea}.`:'') + ` Available equipment: ${opts.equipment.join(', ')}. Return exercise names in Arabic & English, sets×reps, tempo, rest, and brief technique notes.`
+      );
+      return label + (LANG==='ar' ? `\nصيغة منظمة:\nاليوم 1 — العنوان\n• تمرين — 4×8–12 | تمبو: 2-1-2 | راحة: 90s\n…` : `\nFormat:\nDay 1 — Title\n• Exercise — 4×8–12 | Tempo: 2-1-2 | Rest: 90s\n…`);
+    }
+    function repRange(goal, type){
+      if(goal==='strength') return (type==='isolation')?'3×6–8':'5×3–5';
+      if(goal==='endurance') return '3×15–20';
+      if(goal==='fatloss') return '3–4×10–15';
+      if(goal==='focus') return (type==='isolation')?'3×12–15':'4×8–12';
+      return (type==='isolation')?'3×12–15':'4×8–12';
+    }
+    function findGroupIdFromText(text){
+      const t=text.toLowerCase();
+      if(/صدر|chest/.test(t)) return 'chest';
+      if(/ظهر|back/.test(t)) return 'back';
+      if(/ساق|رجل|legs|quads|hamstring|calf/.test(t)) return 'legs';
+      if(/كتف|shoulder/.test(t)) return 'shoulders';
+      if(/ذراع|arm|bicep|tricep/.test(t)) return 'arms';
+      if(/بطن|كور|جذع|abs|core/.test(t)) return 'core';
+      if(/أرداف|glute|منزل/.test(t)) return 'bonus';
+      return null;
+    }
+    function pickExercises(groupIds, count, equipSet, biasId){
+      let pool = EX.filter(e=> groupIds.includes(e.groupId) && e.equip.some(t=>equipSet.has(t) || equipSet.has('gym')));
+      if(biasId){ const biased = pool.filter(e=>e.groupId===biasId); pool = [...biased, ...pool]; }
+      const best = pool.filter(e=>e.badges.includes('الأفضل'));
+      const rest = pool.filter(e=>!e.badges.includes('الأفضل'));
+      const chosen=[];
+      function take(arr){ while(arr.length && chosen.length<count){ const i=Math.floor(Math.random()*arr.length); chosen.push(arr.splice(i,1)[0]); } }
+      take(best); take(rest);
+      return chosen.slice(0,count);
+    }
+    function dayTitle(id){ const d=id+1; return LANG==='ar' ? `اليوم ${d}` : `Day ${d}`; }
+    function buildLocalPlan(opts){
+      const eq = new Set(opts.equipment);
+      const bias = findGroupIdFromText(opts.focusArea||'');
+      const blocks = [];
+      let split;
+
+      if(opts.days===3){ split = ['push','pull','legs']; }
+      else if(opts.days===4){ split = ['upper','lower','upper','lower']; }
+      else if(opts.days===5){ split = ['upper','lower','push','pull','full']; }
+      else { split = ['push','pull','legs','push','pull','legs']; }
+
+      split.forEach((type, i)=>{
+        let groups, title;
+        if(type==='push'){ groups=['chest','shoulders','arms']; title = LANG==='ar'?'دفع (صدر/كتف/تراي)':'Push (Chest/Shoulders/Triceps)'; }
+        else if(type==='pull'){ groups=['back','shoulders','arms']; title = LANG==='ar'?'سحب (ظهر/بايسبس)':'Pull (Back/Biceps)'; }
+        else if(type==='legs'){ groups=['legs','bonus','core']; title = LANG==='ar'?'أرجل وأرداف':'Legs & Glutes'; }
+        else if(type==='upper'){ groups=['chest','back','shoulders','arms']; title = LANG==='ar'?'الجزء العلوي':'Upper'; }
+        else if(type==='lower'){ groups=['legs','bonus','core']; title = LANG==='ar'?'الجزء السفلي':'Lower'; }
+        else { groups=['chest','back','legs','shoulders','arms','core']; title = LANG==='ar'?'فل بودي':'Full Body'; }
+
+        const main = pickExercises(groups, 5, eq, bias);
+        const lines = [];
+        lines.push((LANG==='ar'?`— ${title}`:`— ${title}`));
+        main.forEach(exe=>{
+          const r = repRange(opts.goal, exe.type);
+          const tempo = exe.tempo;
+          const rest = exe.rest;
+          const name = `${exe.nameAr} | ${exe.nameEn}`;
+          lines.push(`• ${name} — ${r} | ${LANG==='ar'?'تمبو':'Tempo'}: ${tempo} | ${LANG==='ar'?'راحة':'Rest'}: ${rest}`);
+        });
+        if(!groups.includes('core')){
+          const corePick = pickExercises(['core'], 1, eq, bias)[0];
+          if(corePick){
+            lines.push(`• ${LANG==='ar'?'منهيّة كور':'Core Finisher'}: ${corePick.nameAr} | ${corePick.nameEn} — ${repRange(opts.goal, corePick.type)}`);
+          }
+        }
+        blocks.push(`${dayTitle(i)} ${lines.join('\n')}`);
+      });
+
+      const head = (LANG==='ar'
+        ? `خطة تدريب (${opts.days} أيام/الأسبوع) — الهدف: ${opts.goal}${opts.focusArea?` — تركيز: ${opts.focusArea}`:''}\nالمعدات: ${opts.equipment.join('، ')}\n`
+        : `Training Plan (${opts.days} days/week) — Goal: ${opts.goal}${opts.focusArea?` — Focus: ${opts.focusArea}`:''}\nEquipment: ${opts.equipment.join(', ')}\n`
+      );
+      const notes = (LANG==='ar'
+        ? `\nملاحظات:\n• ابدأ إحماء عام 5–10 دقائق + إحماء خاص للتمرين الأول.\n• زِد الأحمال تدريجيًا مع الحفاظ على التقنية.\n• سجّل التقدّم أسبوعيًا.`
+        : `\nNotes:\n• Begin with 5–10 min general warm-up + ramp-up sets.\n• Progressive overload with clean form.\n• Log progress weekly.`
+      );
+      return head + blocks.join('\n\n') + notes;
+    }
+
+    const planOut = document.getElementById('planOutput');
+
+    document.getElementById('genLocal').addEventListener('click', ()=>{
+      const opts = getPlannerOptions();
+      planOut.textContent = LANG==='ar'?'جاري التوليد محليًا…':'Generating locally…';
+      setTimeout(()=>{ planOut.textContent = buildLocalPlan(opts); }, 50);
+    });
+
+    document.getElementById('genGemini').addEventListener('click', async ()=>{
+      const opts = getPlannerOptions();
+      const apiKey = (document.getElementById('apiKey').value||'').trim();
+      const prompt = buildPrompt(opts);
+
+      if(!window.AI || typeof window.AI.generatePlan!=='function'){
+        planOut.textContent = (LANG==='ar'
+          ? 'لم يتم العثور على ملف ai.js. أضف ملفًا باسم "ai.js" في نفس المجلد لتعريف window.AI.generatePlan(). يمكنك استخدام القالب المرفق في التعليمات.'
+          : 'ai.js not found. Add a local "ai.js" next to this file that defines window.AI.generatePlan(). Use the template provided below.');
+        return;
+      }
+      if(!apiKey){
+        planOut.textContent = LANG==='ar'?'الرجاء إدخال مفتاح API (أو استخدم التوليد المحلي).':'Please enter an Gemini API key (or use local generation).';
+        return;
+      }
+      planOut.textContent = LANG==='ar'?'يتم التوليد عبر الذكاء الاصطناعي…':'Generating via AI…';
+      try{
+        const text = await window.AI.generatePlan({opts, prompt, apiKey});
+        planOut.textContent = (text && typeof text==='string') ? text : (LANG==='ar'?'تعذر تفسير استجابة الذكاء الاصطناعي.':'Could not parse AI response.');
+      }catch(err){
+        console.error(err);
+        planOut.textContent = (LANG==='ar'?'حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.':'AI request failed.') + ' ' + (err?.message||'');
+      }
+    });
+
+    // Save / Load Plans
+    const PLANS_KEY='plans_v1';
+    function loadPlans(){ return JSON.parse(localStorage.getItem(PLANS_KEY)||'[]'); }
+    function savePlans(lst){ localStorage.setItem(PLANS_KEY, JSON.stringify(lst)); }
+    function renderPlans(){
+      const wrap=document.getElementById('plansList'); wrap.innerHTML='';
+      const lst=loadPlans().sort((a,b)=>b.created-a.created);
+      if(!lst.length){ wrap.innerHTML = `<div class="meta">${LANG==='ar'?'لا توجد خطط محفوظة بعد.':'No saved plans yet.'}</div>`; return; }
+      lst.forEach(p=>{
+        const card=document.createElement('div'); card.className='card fadeIn';
+        const content=document.createElement('div'); content.className='content';
+        const title=document.createElement('div'); title.className='title';
+        title.innerHTML=`<strong>${p.name}</strong>`;
+        const meta=document.createElement('div'); meta.className='meta';
+        meta.textContent = new Date(p.created).toLocaleString();
+        const text=document.createElement('pre'); text.style.whiteSpace='pre-wrap'; text.textContent=p.text;
+        const actions=document.createElement('div'); actions.className='actions';
+        const copy=document.createElement('button'); copy.className='btn'; copy.innerHTML='<i class="fa-regular fa-copy"></i> Copy'; copy.onclick=()=>{ navigator.clipboard.writeText(p.text); };
+        const del=document.createElement('button'); del.className='btn'; del.innerHTML='<i class="fa-regular fa-trash-can"></i> Delete'; del.onclick=()=>{ const all=loadPlans().filter(x=>x.id!==p.id); savePlans(all); renderPlans(); };
+        actions.appendChild(copy); actions.appendChild(del);
+        content.appendChild(title); content.appendChild(meta); content.appendChild(text); content.appendChild(actions);
+        card.appendChild(content); wrap.appendChild(card);
+      });
+    }
+    document.getElementById('savePlan').addEventListener('click', ()=>{
+      const txt = planOut.textContent.trim();
+      if(!txt){ alert(LANG==='ar'?'لا توجد خطة لحفظها.':'Nothing to save.'); return; }
+      const opts = getPlannerOptions();
+      const id = Date.now().toString(36);
+      const name = (LANG==='ar'?'خطة ':'Plan ') + `${opts.days}d-${opts.goal}`;
+      const lst=loadPlans(); lst.push({id, name, text:txt, created:Date.now(), opts}); savePlans(lst); renderPlans();
+      alert(LANG==='ar'?'تم الحفظ.':'Saved.');
+    });
+
+    // PWA install
+    let deferredPrompt=null;
+    window.addEventListener('beforeinstallprompt', (e)=>{
+      e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='inline-flex';
+    });
+    document.getElementById('installBtn').addEventListener('click', async ()=>{
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; deferredPrompt=null;
+    });
+
+    // Offline SW
+    (function registerSW(){
+      if(!('serviceWorker' in navigator)) return;
+      const code = `
+        const CACHE='stp-v1';
+        self.addEventListener('install', e=>{ self.skipWaiting(); });
+        self.addEventListener('activate', e=>{ e.waitUntil(self.clients.claim()); });
+        self.addEventListener('message', e=>{ if(e.data&&e.data.type==='CACHE_URLS'){ caches.open(CACHE).then(c=>c.addAll(e.data.urls)); } });
+        self.addEventListener('fetch', e=>{
+          const req=e.request;
+          if(req.method!=='GET') return;
+          if(req.mode==='navigate'){
+            e.respondWith(fetch(req).then(r=>{ const c=r.clone(); caches.open(CACHE).then(cc=>cc.put(req,c)); return r; }).catch(()=>caches.match(req)));
+            return;
+          }
+          const url=new URL(req.url);
+          if(url.origin===location.origin){
+            e.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(r=>{ const c=r.clone(); caches.open(CACHE).then(cc=>cc.put(req,c)); return r; }).catch(()=>hit)));
+          }else{
+            e.respondWith(fetch(req).catch(()=>caches.match(req)));
+          }
+        });
+      `;
+      const blob = new Blob([code], {type:'text/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(blob)).then(()=>{
+        if(navigator.serviceWorker.controller){
+          navigator.serviceWorker.controller.postMessage({type:'CACHE_URLS', urls:[location.href]});
+        }else{
+          navigator.serviceWorker.addEventListener('controllerchange', ()=>{
+            if(navigator.serviceWorker.controller){
+              navigator.serviceWorker.controller.postMessage({type:'CACHE_URLS', urls:[location.href]});
+            }
+          });
+        }
+      }).catch(console.warn);
+    })();
+
+    // Initial render
+    applyTheme(); applyLang(); renderPlans();
+  </script>
+
+  <!-- Inline AI (Gemini): provides window.AI.generatePlan({opts, prompt, apiKey}) -->
+  <script>
+  (function(){
+    function t(s){ return (document.documentElement.lang === 'ar') ? s.ar : s.en; }
+    async function geminiCall(apiKey, systemText, userText, model){
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model || 'gemini-1.5-flash'}:generateContent`;
+      const body = {
+        systemInstruction: { role: "system", parts: [{ text: systemText }] },
+        contents: [{ role: "user", parts: [{ text: userText }]}],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 1200 }
+      };
+      const r = await fetch(url + `?key=${encodeURIComponent(apiKey)}`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+      });
+      if(!r.ok){
+        const txt = await r.text().catch(()=>'');
+        throw new Error(t({
+          ar: "فشل الاتصال بـ Gemini. تأكد من المفتاح والطراز. التفاصيل: " + txt,
+          en: "Failed calling Gemini. Check key/model. Details: " + txt
+        }));
+      }
+      const j = await r.json();
+      const parts = j?.candidates?.[0]?.content?.parts || [];
+      const text = parts.map(p=>p.text||"").join("").trim();
+      if(!text) throw new Error(t({ar:"لم أتلقَّ نصًا من النموذج.", en:"No content returned by model."}));
+      return text;
+    }
+
+    window.AI = window.AI || {};
+    window.AI.generatePlan = async function({opts, prompt, apiKey}){
+      if(!apiKey || typeof apiKey!=='string'){
+        throw new Error(t({ar:"مطلوب مفتاح Gemini API.", en:"Gemini API key is required."}));
+      }
+      const sys = t({
+        ar: "أنت مدرب لياقة يكتب خططًا واضحة بالعربية والإنجليزية، منظمة حسب الأيام، مع مجموعات×تكرارات، تمبو، راحة، وملاحظات تقنية قصيرة. استخدم نقاطًا مرتبة وسهلة القراءة.",
+        en: "You are a fitness coach producing clear, day-structured plans with sets×reps, tempo, rest, and brief technique notes, bilingual (Arabic & English). Use tidy bullet lists."
+      });
+      return await geminiCall(apiKey, sys, prompt, "gemini-1.5-flash");
+    };
+  })();
+  </script>
 </body>
 </html>
-```
