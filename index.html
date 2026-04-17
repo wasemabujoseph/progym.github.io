@@ -804,12 +804,12 @@
          */
         const translations = {
             en: {
-                brandName: "Smart Trainer Pro",
+                brandName: "Abu Fowzan Trainer",
                 tabLibrary: "Exercise Library",
                 tabPlanner: "AI Planner",
                 tabSaved: "Saved Plans",
-                heroTitle: "Elevate Your Training",
-                heroSub: "Your ultimate AI-powered fitness companion. Browse exercises, generate intelligent plans, and track your growth.",
+                heroTitle: "Customized for Abu Fowzan",
+                heroSub: "Your ultimate home fitness companion. Plans perfectly matched to your Multi-Gym, Bench, Bar, and Dumbbells.",
                 searchPlaceholder: "Search exercises...",
                 filterAll: "All Muscles",
                 btnYT: "Watch Tutorial",
@@ -844,12 +844,12 @@
                 errorNetwork: "Failed to connect to AI. Trying local fallback..."
             },
             ar: {
-                brandName: "مدربك الذكي",
+                brandName: "مدرب أبو فوزان",
                 tabLibrary: "مكتبة التمارين",
                 tabPlanner: "الخطة الذكية",
                 tabSaved: "الخطط المحفوظة",
-                heroTitle: "ارتقِ بتدريبك",
-                heroSub: "رفيقك الرياضي المدعوم بالذكاء الاصطناعي. تصفح التمارين، استخرج خطط ذكية، وتابع تطورك.",
+                heroTitle: "مخصص لأبو فوزان",
+                heroSub: "رفيقك الرياضي المنزلي. خطط مخصصة تتناسب تماماً مع أجهزتك المنزلية والدمبلز.",
                 searchPlaceholder: "ابحث عن تمرين...",
                 filterAll: "جميع العضلات",
                 btnYT: "شرح الفيديو",
@@ -889,65 +889,65 @@
          * 2. MOCK EXERCISE DATABASE
          */
         const exercises = [
-            // CHEST
-            { id: 1, nameEn: "Barbell Bench Press", nameAr: "ضغط الصدر بالبار", groupEn: "Chest", groupAr: "صدر", sets: "4x8-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 2, nameEn: "Incline Dumbbell Press", nameAr: "ضغط صدر عالي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 3, nameEn: "Push-ups", nameAr: "تمرين الضغط", groupEn: "Chest", groupAr: "صدر", sets: "3x15-20", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 4, nameEn: "Cable Crossover", nameAr: "تفتيح بالكيبل", groupEn: "Chest", groupAr: "صدر", sets: "4x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 5, nameEn: "Dumbbell Flyes", nameAr: "تفتيح بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 6, nameEn: "Decline Bench Press", nameAr: "ضغط صدر سفلي", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 7, nameEn: "Chest Dips", nameAr: "متوازي صدر", groupEn: "Chest", groupAr: "صدر", sets: "3x10-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 8, nameEn: "Machine Chest Press", nameAr: "جهاز ضغط الصدر", groupEn: "Chest", groupAr: "صدر", sets: "4x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 9, nameEn: "Pec Deck Machine", nameAr: "جهاز الفراشة", groupEn: "Chest", groupAr: "صدر", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
-            { id: 10, nameEn: "Dumbbell Pullover", nameAr: "بلوفر بالدمبل", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            // CHEST (Using Bench, Dumbbells, Machine)
+            { id: 1, nameEn: "Dumbbell Flat Bench Press", nameAr: "ضغط صدر مستوي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "4x8-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 2, nameEn: "Dumbbell Incline Press", nameAr: "ضغط صدر عالي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 3, nameEn: "Dumbbell Flat Flyes", nameAr: "تفتيح صدر مستوي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 4, nameEn: "Home Machine Chest Press", nameAr: "ضغط صدر بالجهاز", groupEn: "Chest", groupAr: "صدر", sets: "4x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 5, nameEn: "Home Machine Pec Deck Fly", nameAr: "فراشة صدر بالجهاز", groupEn: "Chest", groupAr: "صدر", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 6, nameEn: "Dumbbell Decline Press", nameAr: "ضغط صدر سفلي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 7, nameEn: "Dumbbell Pullover", nameAr: "بلوفر بالدمبل", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 8, nameEn: "Push-ups", nameAr: "تمرين الضغط", groupEn: "Chest", groupAr: "صدر", sets: "3x15-20", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 9, nameEn: "Close-Grip Dumbbell Press", nameAr: "ضغط صدر ضيق بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 10, nameEn: "Dumbbell Floor Press", nameAr: "ضغط صدر على الأرض بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
 
-            // BACK
-            { id: 11, nameEn: "Lat Pulldown", nameAr: "سحب ظهر واسع", groupEn: "Back", groupAr: "ظهر", sets: "4x12", icon: "fa-arrows-down-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 12, nameEn: "Barbell Row", nameAr: "تجديف بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 13, nameEn: "Pull-ups", nameAr: "عقلة", groupEn: "Back", groupAr: "ظهر", sets: "4x8-12", icon: "fa-arrows-up-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 14, nameEn: "Seated Cable Row", nameAr: "سحب أرضي", groupEn: "Back", groupAr: "ظهر", sets: "4x10-12", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 15, nameEn: "T-Bar Row", nameAr: "تجديف تي بار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 16, nameEn: "Single-Arm Dumbbell Row", nameAr: "تجديف دمبل ذراع واحدة", groupEn: "Back", groupAr: "ظهر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 17, nameEn: "Straight-Arm Pulldown", nameAr: "سحب مستقيم بالكيبل", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 18, nameEn: "Face Pulls", nameAr: "سحب للوجه", groupEn: "Back", groupAr: "ظهر", sets: "4x12-15", icon: "fa-arrow-left", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 19, nameEn: "Deadlift", nameAr: "رفعة مميتة", groupEn: "Back", groupAr: "ظهر", sets: "4x5-8", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 20, nameEn: "Hyperextensions", nameAr: "قطنية", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-person-praying", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            // BACK (Using Doorway bar, Dumbbells, Barbell, Machine)
+            { id: 11, nameEn: "Doorway Bar Pull-ups", nameAr: "عقلة بالبار المنزلي", groupEn: "Back", groupAr: "ظهر", sets: "4x8-12", icon: "fa-arrows-up-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 12, nameEn: "Doorway Bar Chin-ups", nameAr: "عقلة قبضة ضيقة", groupEn: "Back", groupAr: "ظهر", sets: "4x8-12", icon: "fa-arrows-up-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 13, nameEn: "Machine Lat Pulldown", nameAr: "سحب ظهر واسع بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "4x12", icon: "fa-arrows-down-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 14, nameEn: "Dumbbell Bent-Over Row", nameAr: "تجديف بالدمبلز", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 15, nameEn: "Barbell Bent-Over Row", nameAr: "تجديف بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 16, nameEn: "Single-Arm Dumbbell Row", nameAr: "تجديف دمبل ذراع واحدة على البنش", groupEn: "Back", groupAr: "ظهر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 17, nameEn: "Machine Seated Cable Row", nameAr: "سحب أرضي بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "4x10-12", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 18, nameEn: "Barbell Deadlift", nameAr: "رفعة مميتة بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x5-8", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 19, nameEn: "Dumbbell Deadlift", nameAr: "رفعة مميتة بالدمبلز", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 20, nameEn: "Machine Straight-Arm Pulldown", nameAr: "سحب مستقيم بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
 
-            // SHOULDERS
-            { id: 21, nameEn: "Overhead Press", nameAr: "ضغط أكتاف بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 22, nameEn: "Lateral Raises", nameAr: "رفرفة جانبية دمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 23, nameEn: "Front Raises", nameAr: "رفرفة أمامية", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 24, nameEn: "Reverse Pec Deck", nameAr: "فراشة عكسي للأكتاف", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 25, nameEn: "Arnold Press", nameAr: "ضغط أرنولد", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 26, nameEn: "Upright Row", nameAr: "سحب عمودي بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 27, nameEn: "Cable Lateral Raises", nameAr: "رفرفة جانبية بالكيبل", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 28, nameEn: "Dumbbell Shrugs", nameAr: "ترابيس دمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 29, nameEn: "Seated Dumbbell Press", nameAr: "ضغط أكتاف بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 30, nameEn: "Push Press", nameAr: "دفع بالبار للأكتاف", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x6-8", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            // SHOULDERS (Using Bench, Dumbbells, Barbell, Machine)
+            { id: 21, nameEn: "Seated Dumbbell Shoulder Press", nameAr: "ضغط أكتاف بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 22, nameEn: "Standing Barbell Overhead Press", nameAr: "ضغط أكتاف بالبار وقوفاً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 23, nameEn: "Dumbbell Lateral Raises", nameAr: "رفرفة جانبية بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 24, nameEn: "Dumbbell Front Raises", nameAr: "رفرفة أمامية بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 25, nameEn: "Barbell Upright Row", nameAr: "سحب عمودي بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 26, nameEn: "Seated Dumbbell Rear Delt Flyes", nameAr: "رفرفة خلفي بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 27, nameEn: "Dumbbell Shrugs", nameAr: "ترابيس بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 28, nameEn: "Barbell Shrugs", nameAr: "ترابيس بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 29, nameEn: "Cable Upright Row", nameAr: "سحب عمودي بالكيبل", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 30, nameEn: "Dumbbell Arnold Press", nameAr: "ضغط أرنولد بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
 
-            // LEGS
-            { id: 31, nameEn: "Barbell Squat", nameAr: "سكوات بالبار", groupEn: "Legs", groupAr: "أرجل", sets: "4x8-10", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 32, nameEn: "Leg Press", nameAr: "ضغط الأرجل بالجهاز", groupEn: "Legs", groupAr: "أرجل", sets: "4x12-15", icon: "fa-child-reaching", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 33, nameEn: "Romanian Deadlift", nameAr: "رفعة رومانية مميتة", groupEn: "Legs", groupAr: "أرجل", sets: "4x10-12", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 34, nameEn: "Leg Extensions", nameAr: "رفرفة أرجل أمامية", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 35, nameEn: "Lying Leg Curls", nameAr: "رفرفة أرجل خلفية", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 36, nameEn: "Walking Lunges", nameAr: "طعن متحرك", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 37, nameEn: "Standing Calf Raises", nameAr: "سمانة وقوف", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 38, nameEn: "Hack Squat", nameAr: "هاك سكوات", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 39, nameEn: "Bulgarian Split Squat", nameAr: "سكوات بلغاري", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 40, nameEn: "Seated Calf Raises", nameAr: "سمانة جلوس", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            // LEGS (Using Bench Leg Developer, Dumbbells, Barbell)
+            { id: 31, nameEn: "Dumbbell Goblet Squat", nameAr: "سكوات أمامي بالدمبل", groupEn: "Legs", groupAr: "أرجل", sets: "4x8-10", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 32, nameEn: "Dumbbell Lunges", nameAr: "طعن بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "4x12-15", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 33, nameEn: "Bench Leg Extensions", nameAr: "رفرفة أرجل أمامية على البنش", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 34, nameEn: "Bench Lying Leg Curls", nameAr: "رفرفة أرجل خلفية على البنش", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 35, nameEn: "Dumbbell Bulgarian Split Squat", nameAr: "سكوات بلغاري بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 36, nameEn: "Barbell Romanian Deadlift", nameAr: "رفعة رومانية بالبار", groupEn: "Legs", groupAr: "أرجل", sets: "4x10-12", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 37, nameEn: "Standing Calf Raises with Dumbbells", nameAr: "سمانة وقوف بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 38, nameEn: "Dumbbell Step-ups on Bench", nameAr: "صعود على البنش بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x12", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 39, nameEn: "Dumbbell Sumo Squat", nameAr: "سومو سكوات بالدمبل", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 40, nameEn: "Dumbbell Glute Bridges", nameAr: "كوبري بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x15", icon: "fa-person-praying", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
 
-            // ARMS (Biceps + Triceps)
-            { id: 41, nameEn: "Tricep Pushdown", nameAr: "سحب تراي بالحبل", groupEn: "Arms", groupAr: "أذرع", sets: "4x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 42, nameEn: "Bicep Curls", nameAr: "مرجحة باي دمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "4x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 43, nameEn: "Skull Crushers", nameAr: "تكسير جمجمة", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 44, nameEn: "Hammer Curls", nameAr: "مرجحة مطرقة", groupEn: "Arms", groupAr: "أذرع", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 45, nameEn: "Overhead Tricep Extension", nameAr: "تراي خلف الرأس", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 46, nameEn: "Preacher Curls", nameAr: "مرجحة ارتكاز", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 47, nameEn: "Tricep Dips", nameAr: "متوازي تراي", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 48, nameEn: "Cable Bicep Curl", nameAr: "مرجحة باي بالكيبل", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 49, nameEn: "Close-Grip Bench Press", nameAr: "ضغط صدر ضيق للتراي", groupEn: "Arms", groupAr: "أذرع", sets: "3x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 50, nameEn: "Concentration Curls", nameAr: "مرجحة تركيز", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" }
+            // ARMS (Using Bench Preacher Pad, Dumbbells, Barbell, Machine)
+            { id: 41, nameEn: "Barbell Bicep Curl", nameAr: "مرجحة باي بالبار", groupEn: "Arms", groupAr: "أذرع", sets: "4x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 42, nameEn: "Dumbbell Alternate Bicep Curl", nameAr: "مرجحة باي تبادلي بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "4x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 43, nameEn: "Bench Preacher Curl", nameAr: "مرجحة ارتكاز على البنش", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 44, nameEn: "Machine Tricep Pushdown", nameAr: "سحب تراي بالجهاز", groupEn: "Arms", groupAr: "أذرع", sets: "4x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 45, nameEn: "Dumbbell Overhead Tricep Extension", nameAr: "تراي خلف الرأس بالدمبل", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 46, nameEn: "Dumbbell Concentration Curls", nameAr: "مرجحة تركيز بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 47, nameEn: "Dumbbell Hammer Curls", nameAr: "مرجحة مطرقة بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 48, nameEn: "Dumbbell Tricep Kickbacks", nameAr: "رفس تراي بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 49, nameEn: "Low Pulley Cable Bicep Curl", nameAr: "مرجحة باي بالكيبل السفلي", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 50, nameEn: "Bench Dips", nameAr: "متوازي تراي على البنش", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" }
         ];
 
         /**
