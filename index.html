@@ -1,967 +1,1339 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="مدربك الذكي | Smart Trainer Pro — تطبيق تدريبي احترافي يعمل دون اتصال مع مكتبة تمارين كاملة وتوليد خطط عبر Gemini." />
-  <meta name="referrer" content="no-referrer" />
-  <title>💪 مدربك الذكي | Smart Trainer Pro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Smart Trainer Pro | مدربك الذكي - Your ultimate AI fitness companion.">
+    <meta name="theme-color" content="#0b0f19">
+    <title>Smart Trainer Pro | مدربك الذكي</title>
+    
+    <!-- Google Fonts: Inter for English, Cairo for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Favicon -->
-  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">💪</text></svg>' />
+    <style>
+        /* ==========================================================================
+           CSS DESIGN TOKENS & VARIABLES
+           ========================================================================== */
+        :root[data-theme="dark"] {
+            --bg-base: #0b0f19;
+            --bg-gradient: radial-gradient(circle at top right, #1a2035 0%, #0b0f19 70%);
+            --surface-1: rgba(255, 255, 255, 0.03);
+            --surface-2: rgba(255, 255, 255, 0.06);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --surface-hover: rgba(255, 255, 255, 0.1);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --accent-primary: #00f2fe;
+            --accent-secondary: #4facfe;
+            --accent-gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --accent-glow: rgba(0, 242, 254, 0.3);
+            
+            --danger: #ef4444;
+            --success: #10b981;
+            
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.2);
+            --shadow-md: 0 8px 16px rgba(0,0,0,0.3);
+            --shadow-lg: 0 15px 35px rgba(0,0,0,0.4);
+        }
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" integrity="sha512-1PKOgIY59xJ6+GY2a9Y+Y1FQK6W1n1Dp1V1LhWlQ8GvZ6xjlbUY8ailqDun3vsl0sbG3fjHb4GJ8V+CsVxC1BA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        :root[data-theme="light"] {
+            --bg-base: #f8fafc;
+            --bg-gradient: radial-gradient(circle at top right, #ffffff 0%, #f1f5f9 70%);
+            --surface-1: #ffffff;
+            --surface-2: #f1f5f9;
+            --surface-border: #e2e8f0;
+            --surface-hover: #f8fafc;
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            
+            --accent-primary: #0284c7;
+            --accent-secondary: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --accent-glow: rgba(2, 132, 199, 0.2);
+            
+            --danger: #ef4444;
+            --success: #10b981;
+            
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 15px 35px rgba(0,0,0,0.1);
+        }
 
-  <style>
-    :root{
-      /* tweaked palette to match Amani blue */
-      --bg1:#14213d; --bg2:#1d3557; --glass:rgba(255,255,255,.08); --border:rgba(255,255,255,.18);
-      --text:#f1f5f9; --muted:#cbd5e1; --accent:#2d8cff; --accent2:#6ad2ff;
-      --card:rgba(255,255,255,.07); --shadow:0 10px 30px rgba(0,0,0,.25);
-      --chip:#2d8cff; --chip2:#10b981; --chip3:#f59e0b;
-    }
-    [data-theme="light"]{
-      --bg1:#eef2ff; --bg2:#e2e8f0; --glass:rgba(255,255,255,.7); --border:rgba(0,0,0,.08);
-      --text:#0f172a; --muted:#334155; --accent:#2563eb; --accent2:#7c3aed;
-      --card:rgba(255,255,255,.9); --shadow:0 6px 18px rgba(0,0,0,.12);
-      --chip:#2563eb; --chip2:#16a34a; --chip3:#d97706;
-    }
-    html,body{height:100%}
-    body{
-      margin:0; font-family:'Cairo',system-ui,-apple-system,Segoe UI,Roboto; color:var(--text);
-      background:linear-gradient(135deg,var(--bg1),var(--bg2)); background-attachment:fixed;
-    }
-    .en{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto}
-    .container{max-width:1200px;margin:auto;padding:20px}
-    header{
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-      padding:16px 20px; border-radius:18px; background:var(--glass); border:1px solid var(--border); box-shadow:var(--shadow);
-      position:sticky; top:12px; z-index:10; backdrop-filter:blur(12px);
-    }
-    .brand{display:flex; align-items:center; gap:12px; font-weight:700; font-size:1.2rem}
-header{backdrop-filter:saturate(1.2) blur(8px); background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.25)); border-bottom:1px solid var(--border)}
-body.dark header{background:linear-gradient(180deg, rgba(10,12,16,.55), rgba(10,12,16,.25))}
-.persona-pro{display:flex; align-items:center; gap:10px; padding:6px 12px; border-radius:999px; background:linear-gradient(135deg,var(--chip),var(--chip2)); color:#00111a; border:1px solid var(--border); box-shadow:0 1px 2px rgba(0,0,0,.08); filter:saturate(.95)}
-.persona-pro .avatar{width:22px; height:22px; border-radius:999px; display:grid; place-items:center; font-weight:800; font-size:.8rem; background:#ffffff80; border:1px solid #00000020}
-.persona-pro .p-text{font-weight:700; font-size:.9rem}
-.btn{border-radius:12px; padding:10px 14px; border:1px solid var(--border); box-shadow:0 1px 2px rgba(0,0,0,.05); transition:.2s transform, .2s box-shadow}
-.btn:hover{transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,.10)}
-.card{border-radius:16px; box-shadow:0 2px 14px rgba(0,0,0,.08); border:1px solid var(--border); overflow:hidden; transition:.2s transform, .2s box-shadow}
-.card:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.12)}
-.media{position:relative; background:#000; aspect-ratio:16/9}
-.media .provider{position:absolute; top:10px; left:10px; padding:4px 8px; border-radius:999px; background:rgba(0,0,0,.55); color:#fff; font-size:.72rem}
+        :root {
+            --font-en: 'Inter', sans-serif;
+            --font-ar: 'Cairo', sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-height: 80px;
+        }
 
-.persona{font-size:.88rem; font-weight:700; padding:4px 10px; border-radius:999px; background:linear-gradient(135deg,var(--chip),var(--chip2)); color:#00111a; border:1px solid var(--border);}
-    .brand .logo{
-      width:36px;height:36px;display:grid;place-items:center;background:var(--card);border-radius:12px;
-      box-shadow:0 6px 20px rgba(45,140,255,.35) inset;
-    }
-    .brand .logo svg{width:22px;height:22px;display:block;color:var(--accent)}
-    .controls{display:flex; gap:8px; flex-wrap:wrap}
-    .btn{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px;
-      background:var(--card); border:1px solid var(--border); cursor:pointer; box-shadow:var(--shadow);
-      transition:.2s transform,.2s opacity,.2s background; text-decoration:none; color:inherit; font-weight:600;
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#00111a}
-    .tabs{display:flex; gap:10px; margin:18px 0 10px}
-    .tab{padding:10px 14px; border-radius:12px; background:var(--card); border:1px solid var(--border); cursor:pointer; font-weight:700}
-    .tab.active{outline:2px solid var(--accent)}
-    .panel{display:none}
-    .panel.active{display:block}
-    .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px}
-    .card{background:var(--glass); border:1px solid var(--border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column}
-    .media{position:relative; background:rgba(0,0,0,.15); aspect-ratio:4/3; display:block; overflow:hidden}
-    .media .provider{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;font-size:.72rem;padding:2px 6px;border-radius:8px}
-    .media button.edit{position:absolute;right:8px;top:8px;background:rgba(255,255,255,.9);border:0;border-radius:999px;padding:6px;cursor:pointer}
-    .media button.edit:hover{background:#ffd166}
-    .media .overlay{
-      position:absolute; left:8px; bottom:8px;
-      display:flex; flex-direction:column; gap:4px;
-      background:linear-gradient(135deg, rgba(0,0,0,.65), rgba(0,0,0,.35));
-      border:1px solid var(--border);
-      border-radius:10px; padding:6px 8px;
-      backdrop-filter: blur(6px);
-      color:#fff; max-width:90%;
-      box-shadow: var(--shadow);
-    }
-    .media .overlay .name{ font-weight:800; font-size:.95rem; line-height:1.2 }
-    .media .overlay .muscle{ font-size:.8rem; opacity:.9 }
-    .media img,.media video,.media iframe{width:100%;height:100%;object-fit:cover;display:block;border:0; border-radius:0}
-    .content{padding:12px 14px; display:flex; flex-direction:column; gap:8px}
-    .title{display:flex; align-items:center; justify-content:space-between; gap:8px}
-    .badges{display:flex; gap:6px; flex-wrap:wrap}
-    .badge{font-size:.72rem; padding:4px 8px; border-radius:999px; background:var(--card); border:1px solid var(--border)}
-    .badge.best{background:linear-gradient(135deg,var(--chip),var(--chip2)); color:#00111a}
-    .badge.home{background:linear-gradient(135deg,var(--chip2),var(--chip3)); color:#00111a}
-    .meta{font-size:.9rem; color:var(--muted)}
-    .actions{display:flex; gap:8px; flex-wrap:wrap}
-    .actions .btn{padding:8px 10px; font-size:.9rem}
-    .searchbar{display:flex; gap:8px; margin:10px 0}
-    .searchbar input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:inherit}
-    .chips{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 14px}
-    .chip{padding:8px 12px; border-radius:999px; background:var(--card); border:1px solid var(--border); cursor:pointer}
-    .chip.active{outline:2px solid var(--accent)}
-    .fieldset{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:12px 0}
-    .field{display:flex; flex-direction:column; gap:6px}
-    .field input,.field select, textarea{
-      padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:inherit;
-    }
-    .plan{white-space:pre-wrap; background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px; line-height:1.8}
-    footer{opacity:.8; font-size:.9rem; margin:16px 0; text-align:center}
-    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-    .fadeIn{animation:fadeIn .35s ease both}
-    @media print{
-      header,.tabs,.chips,.searchbar,.actions-toolbar,.controls,.api-key{display:none!important}
-      body{background:#fff}
-      .card{break-inside:avoid}
-    }
-  </style>
+        /* ==========================================================================
+           GLOBAL RESET & TYPOGRAPHY
+           ========================================================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-en);
+            background: var(--bg-base);
+            background-image: var(--bg-gradient);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background var(--transition-smooth), color var(--transition-smooth);
+        }
+
+        /* Arabic Typography Override */
+        html[dir="rtl"] body { font-family: var(--font-ar); }
+        html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 { letter-spacing: 0; }
+
+        /* ==========================================================================
+           LAYOUT & CONTAINERS
+           ========================================================================== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .glass-panel {
+            background: var(--surface-1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+        }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION
+           ========================================================================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--header-height);
+            background: rgba(var(--bg-base), 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--surface-border);
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .brand-icon {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--surface-border);
+            color: var(--text-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 1.1rem;
+        }
+
+        .icon-btn:hover {
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        /* ==========================================================================
+           MAIN CONTENT & TABS
+           ========================================================================== */
+        main {
+            padding-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            color: var(--text-secondary);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-fast);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--surface-hover);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gradient);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            text-align: center;
+            padding: 40px 0 60px;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================================================
+           EXERCISE LIBRARY (CARDS & FILTERS)
+           ========================================================================== */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            inset-inline-start: 16px;
+            color: var(--text-muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border-radius: var(--radius-full);
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+        html[dir="rtl"] .search-input { padding: 14px 44px 14px 16px; }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+        
+        .chip {
+            padding: 8px 16px;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition-fast);
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .chip.active, .chip:hover {
+            background: var(--surface-hover);
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .card-media {
+            height: 180px;
+            background: var(--surface-2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--surface-border);
+            overflow: hidden;
+        }
+
+        .card-media i { font-size: 3rem; opacity: 0.5; position: absolute; z-index: 1; }
+
+        .card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: transform var(--transition-smooth);
+            z-index: 2;
+            position: relative;
+        }
+
+        .card:hover .card-media img {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .badge {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-primary);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--text-primary);
+            border: 1px solid var(--surface-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-secondary);
+        }
+
+        /* ==========================================================================
+           AI PLANNER SECTION
+           ========================================================================== */
+        .planner-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .planner-grid { grid-template-columns: 350px 1fr; }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+        }
+        html[dir="rtl"] select.form-control {
+            background-position: left 16px center;
+        }
+
+        .api-key-panel {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+
+        .planner-output {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .output-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--surface-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface-2);
+        }
+
+        .output-content {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 40px;
+            opacity: 0.6;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ==========================================================================
+           SAVED PLANS SECTION
+           ========================================================================== */
+        .saved-plan-card {
+            padding: 24px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .saved-plan-info h3 {
+            margin-bottom: 4px;
+        }
+        
+        .saved-plan-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .saved-plan-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--surface-border);
+            color: var(--text-muted);
+            margin-top: 40px;
+        }
+
+    </style>
 </head>
-<body data-persona='Amani'>
-  <div class="container">
-    <header class="fadeIn">
-      <div class="brand">
-        <!-- Amani kettlebell-A logo (inline SVG) -->
-        <div class="logo" aria-label="Amani logo">
-          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" fill="currentColor" role="img" aria-hidden="true">
-            <path d="M35 20 h50 a15 15 0 0 1 15 15 v6 a15 15 0 0 1 -15 15 h-50 a15 15 0 0 1 -15 -15 v-6 a15 15 0 0 1 15 -15 z"/>
-            <path d="M20 95 L44 50 H76 L100 95 Q101 100 95 100 H79 Q76 100 75 98 L66 82 H54 L45 98 Q44 100 41 100 H25 Q19 100 20 95 Z
-                     M57 63 L63 73 H51 L57 63 Z"/>
-          </svg>
+<body>
+
+    <!-- ==========================================================================
+         HEADER
+         ========================================================================== -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="brand">
+                <i class="fa-solid fa-dumbbell brand-icon"></i>
+                <span data-i18n="brandName">Smart Trainer Pro</span>
+            </a>
+            
+            <div class="header-controls">
+                <button class="icon-btn" id="langToggle" title="Toggle Language" aria-label="Toggle Language">
+                    <i class="fa-solid fa-language"></i>
+                </button>
+                <button class="icon-btn" id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="icon-btn" id="installBtn" style="display: none;" title="Install App" aria-label="Install App">
+                    <i class="fa-solid fa-download"></i>
+                </button>
+            </div>
         </div>
-        <div>مدربك الذكي <span class="en">| Smart Trainer Pro</span></div>
-        <div class="persona">مصمم خصيصًا لـ أماني <span class="en">| Custom-made for Amani</span></div>
-      </div>
-      <div class="controls">
-        <button class="btn" id="langBtn"><i class="fa-solid fa-language"></i><span data-i18n="lang">English</span></button>
-        <button class="btn" id="themeBtn"><i class="fa-solid fa-circle-half-stroke"></i><span data-i18n="theme">وضع فاتح</span></button>
-        <button class="btn" id="installBtn" style="display:none"><i class="fa-solid fa-download"></i><span data-i18n="install">تثبيت PWA</span></button>
-        <button class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i><span data-i18n="print">طباعة</span></button>
-      </div>
     </header>
 
-    <!-- API Key -->
-    <div class="api-key fadeIn" style="margin:14px 0; background:var(--glass); border:1px solid var(--border); padding:10px 12px; border-radius:14px; display:flex; gap:8px; align-items:center; flex-wrap:wrap">
-      <i class="fa-solid fa-key"></i>
-      <input id="apiKey" type="password" placeholder="Gemini API Key" style="flex:1; min-width:220px" />
-      <button class="btn" id="saveKey"><i class="fa-regular fa-floppy-disk"></i><span data-i18n="saveKey">حفظ المفتاح</span></button>
-      <small class="meta" data-i18n="keyHint">لن يتم حفظ المفتاح على الخادم. يتم تخزينه محليًا فقط.</small>
-    </div>
+    <!-- ==========================================================================
+         MAIN CONTENT
+         ========================================================================== -->
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title" data-i18n="heroTitle">Elevate Your Training</h1>
+            <p data-i18n="heroSub">Your ultimate AI-powered fitness companion. Browse exercises, generate intelligent plans, and track your growth.</p>
+        </section>
 
-    <!-- Tabs -->
-    <div class="tabs actions-toolbar">
-      <button class="tab active" data-tab="library" data-i18n="tabLibrary">مكتبة التمارين</button>
-      <button class="tab" data-tab="planner" data-i18n="tabPlanner">مُخطِّط التمارين (الذكاء الاصطناعي)</button>
-      <button class="tab" data-tab="plans" data-i18n="tabMyPlans">خططي المحفوظة</button>
-    </div>
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs" role="tablist" aria-label="Main Navigation">
+            <button class="tab-btn active" role="tab" aria-selected="true" data-target="library">
+                <i class="fa-solid fa-book-open"></i> <span data-i18n="tabLibrary">Exercise Library</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-target="planner">
+                <i class="fa-solid fa-robot"></i> <span data-i18n="tabPlanner">AI Planner</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-target="saved">
+                <i class="fa-solid fa-bookmark"></i> <span data-i18n="tabSaved">Saved Plans</span>
+            </button>
+        </nav>
 
-    <!-- Library Panel -->
-    <section id="panel-library" class="panel active fadeIn">
-      <div class="searchbar">
-        <input id="search" placeholder="ابحث باسم التمرين بالعربية أو بالإنجليزية…" />
-        <button class="btn" id="clearSearch"><i class="fa-solid fa-xmark"></i><span data-i18n="clear">مسح</span></button>
-      </div>
-      <div class="chips" id="groupChips"></div>
-      <div class="grid" id="exerciseGrid"></div>
-    </section>
+        <!-- TAB: EXERCISE LIBRARY -->
+        <section id="library" class="tab-content active" role="tabpanel">
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="searchPlaceholder" placeholder="Search exercises...">
+                </div>
+                <div class="filter-chips" id="filterContainer">
+                    <!-- Filters generated by JS -->
+                </div>
+            </div>
+            
+            <div class="grid-layout" id="exerciseGrid" aria-live="polite">
+                <!-- Cards generated by JS -->
+            </div>
+        </section>
 
-    <!-- Planner Panel -->
-    <section id="panel-planner" class="panel fadeIn">
-      <div class="fieldset">
-        <div class="field">
-          <label data-i18n="goal">الهدف</label>
-          <select id="goal">
-            <option value="hypertrophy" selected>بناء العضلات</option>
-            <option value="fatloss">حرق الدهون</option>
-            <option value="strength">القوة</option>
-            <option value="endurance">التّحمّل</option>
-            <option value="focus">تركيز على منطقة</option>
-          </select>
-        </div>
-        <div class="field">
-          <label data-i18n="equipment">المعدات</label>
-          <select id="equipment" multiple size="5">
-            <option value="gym" selected>جيم كامل</option>
-            <option value="dumbbells">دمبلز</option>
-            <option value="bands">مطاط/رباط</option>
-            <option value="bodyweight">وزن الجسم</option>
-            <option value="kettlebell">كاتل بيل</option>
-          </select>
-          <small class="meta" data-i18n="equipHint">يمكن اختيار أكثر من خيار (Ctrl/⌘)</small>
-        </div>
-        <div class="field">
-          <label data-i18n="days">الأيام/الأسبوع</label>
-          <select id="days">
-            <option>3</option>
-            <option selected>4</option>
-            <option>5</option>
-            <option>6</option>
-          </select>
-        </div>
-        <div class="field">
-          <label data-i18n="level">المستوى</label>
-          <select id="level">
-            <option>مبتدئ</option>
-            <option selected>متوسط</option>
-            <option>متقدم</option>
-          </select>
-        </div>
-        <div class="field">
-          <label data-i18n="focusArea">منطقة التركيز (اختياري)</label>
-          <input id="focusArea" placeholder="مثال: صدر، ظهر، أرداف…" />
-        </div>
-      </div>
-      <div class="actions" style="margin:8px 0 14px">
-        <button class="btn primary" id="genGemini"><i class="fa-solid fa-wand-magic-sparkles"></i><span data-i18n="genGemini">توليد بواسطة Gemini</span></button>
-        <button class="btn" id="genLocal"><i class="fa-solid fa-bolt"></i><span data-i18n="genLocal">توليد محلي (بدون مفتاح)</span></button>
-        <button class="btn" id="savePlan"><i class="fa-regular fa-bookmark"></i><span data-i18n="savePlan">حفظ الخطة</span></button>
-      </div>
-      <div class="plan" id="planOutput" aria-live="polite"></div>
-    </section>
+        <!-- TAB: AI PLANNER -->
+        <section id="planner" class="tab-content" role="tabpanel">
+            <div class="planner-grid">
+                
+                <!-- Planner Controls -->
+                <aside class="glass-panel" style="padding: 24px;">
+                    <h2 style="margin-bottom: 24px;" data-i18n="plannerTitle">Plan Parameters</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lblGoal">Fitness Goal</label>
+                        <select id="planGoal" class="form-control">
+                            <option value="muscle" data-i18n="optMuscle">Build Muscle</option>
+                            <option value="fatloss" data-i18n="optFatloss">Fat Loss</option>
+                            <option value="strength" data-i18n="optStrength">Strength</option>
+                        </select>
+                    </div>
 
-    <!-- My Plans Panel -->
-    <section id="panel-plans" class="panel fadeIn">
-      <div id="plansList" class="grid"></div>
-    </section>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lblLevel">Experience Level</label>
+                        <select id="planLevel" class="form-control">
+                            <option value="beginner" data-i18n="optBeginner">Beginner</option>
+                            <option value="intermediate" data-i18n="optIntermediate">Intermediate</option>
+                            <option value="advanced" data-i18n="optAdvanced">Advanced</option>
+                        </select>
+                    </div>
 
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lblDays">Days Per Week</label>
+                        <select id="planDays" class="form-control">
+                            <option value="3">3 Days</option>
+                            <option value="4">4 Days</option>
+                            <option value="5">5 Days</option>
+                            <option value="6">6 Days</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lblFocus">Focus Area</label>
+                        <select id="planFocus" class="form-control">
+                            <option value="fullbody" data-i18n="optFullBody">Full Body</option>
+                            <option value="upper" data-i18n="optUpper">Upper Body</option>
+                            <option value="lower" data-i18n="optLower">Lower Body</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lblEngine">Generation Engine</label>
+                        <select id="planEngine" class="form-control">
+                            <option value="local" data-i18n="optLocal">Local Algorithm (Fast)</option>
+                            <option value="gemini" data-i18n="optGemini">Gemini AI (Smart)</option>
+                        </select>
+                    </div>
+
+                    <div class="api-key-panel" id="apiPanel" style="display: none;">
+                        <label class="form-label" style="color: var(--danger);" data-i18n="lblApiKey">Gemini API Key</label>
+                        <input type="password" id="apiKeyInput" class="form-control" placeholder="AIzaSy...">
+                        <small style="color: var(--text-muted); margin-top: 8px; display: block;" data-i18n="apiHelp">Required for AI generation. Stored locally.</small>
+                    </div>
+
+                    <button id="generateBtn" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 14px;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btnGenerate">Generate Plan</span>
+                    </button>
+                </aside>
+
+                <!-- Planner Output -->
+                <article class="planner-output">
+                    <div class="output-header">
+                        <h3 data-i18n="outputTitle">Your Plan</h3>
+                        <button id="savePlanBtn" class="btn btn-secondary" style="width: auto; padding: 8px 16px;" disabled>
+                            <i class="fa-solid fa-save"></i> <span data-i18n="btnSave">Save</span>
+                        </button>
+                    </div>
+                    <div id="outputContent" class="output-content" aria-live="polite">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                            <p data-i18n="emptyOutput">Set your parameters and click Generate to create a structured fitness plan.</p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- TAB: SAVED PLANS -->
+        <section id="saved" class="tab-content" role="tabpanel">
+            <div id="savedContainer">
+                <!-- Saved Plans generated by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
     <footer>
-      <div>© <span id="year"></span> مدربك الذكي — <span class="en">Smart Trainer Pro</span>. <span data-i18n="foot">تطبيق ويب تقدمي يعمل دون اتصال.</span></div>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Smart Trainer Pro | مدربك الذكي</p>
+            <p style="font-size: 0.85rem; margin-top: 8px; opacity: 0.7;">Powered by Local Algorithms & Gemini AI</p>
+        </div>
     </footer>
-  </div>
 
-  <script>
-    /* ---------------- I18N ---------------- */
-    const STR = {
-      ar:{lang:'English', theme:'وضع فاتح', install:'تثبيت PWA', print:'طباعة',
-          tabLibrary:'مكتبة التمارين', tabPlanner:'مُخطِّط التمارين (الذكاء الاصطناعي)', tabMyPlans:'خططي المحفوظة',
-          clear:'مسح', goal:'الهدف', equipment:'المعدات', equipHint:'يمكن اختيار أكثر من خيار (Ctrl/⌘)', days:'الأيام/الأسبوع', level:'المستوى',
-          focusArea:'منطقة التركيز (اختياري)', genGemini:'توليد بواسطة Gemini', genLocal:'توليد محلي (بدون مفتاح)', savePlan:'حفظ الخطة',
-          foot:'تطبيق ويب تقدمي يعمل دون اتصال. الوسائط تُحمّل تلقائيًا من مصادر متعددة.', saveKey:'حفظ المفتاح', keyHint:'لن يتم حفظ المفتاح على الخادم. يتم تخزينه محليًا فقط.'},
-      en:{lang:'العربية', theme:'Light Mode', install:'Install PWA', print:'Print',
-          tabLibrary:'Exercise Library', tabPlanner:'AI Workout Planner', tabMyPlans:'My Plans',
-          clear:'Clear', goal:'Goal', equipment:'Equipment', equipHint:'You can select multiple (Ctrl/⌘)', days:'Days/Week', level:'Experience',
-          focusArea:'Focus Area (optional)', genGemini:'Generate with Gemini', genLocal:'Generate Locally (No Key)', savePlan:'Save Plan',
-          foot:'Progressive Web App. Media loads from multiple sources.', saveKey:'Save Key', keyHint:'Key is stored locally only.'}
-    };
-    let LANG = localStorage.getItem('lang') || 'ar';
-    function applyLang(){
-      const dict = STR[LANG];
-      document.documentElement.lang = LANG === 'ar' ? 'ar' : 'en';
-      document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
-      document.body.classList.toggle('en', LANG==='en');
-      document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = dict[el.dataset.i18n] || el.textContent; });
-      const s = document.getElementById('search'); if(s) s.placeholder = LANG==='ar'? 'ابحث باسم التمرين بالعربية أو بالإنجليزية…':'Search exercises in Arabic or English…';
-      renderGroupChips(); renderExercises();
-    }
+    <!-- ==========================================================================
+         JAVASCRIPT APPLICATION LOGIC
+         ========================================================================== -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* ---------------- Media system ---------------- */
-    const MEDIA_OVERRIDES_KEY = 'media_overrides_v1';
-    const mediaOverrides = JSON.parse(localStorage.getItem(MEDIA_OVERRIDES_KEY)||'{}');
-    const exerciseCache = {};
-
-    function slugName(name){
-      return name.replace(/\((.*?)\)/g,'').replace(/[^A-Za-z0-9 ]+/g,' ').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
-    }
-    function ytSearchUrl(name){
-      return `https://www.youtube.com/results?search_query=${encodeURIComponent(name+' form tutorial '+(LANG==='ar'?'ar':'en'))}`;
-    }
-    function ytSearchEmbedUrl(name){
-      const q = name + ' exercise form ' + (LANG==='ar'?'arabic':'english');
-      return `https://www.youtube-nocookie.com/embed?rel=0&modestbranding=1&playsinline=1&listType=search&list=${encodeURIComponent(q)}`;
-    }
-    async function getFromExerciseDB(name){
-      try{
-        const r = await fetch(`https://exercisedb.dev/api/v1/exercises/search?q=${encodeURIComponent(name)}&limit=1`, {mode:'cors'});
-        if(!r.ok) return null; const j = await r.json(); return j?.data?.[0]?.gifUrl || null;
-      }catch{ return null; }
-    }
-    function fpCandidates(name){
-      const base='https://fitnessprogramer.com/wp-content/uploads/';
-      const s = slugName(name);
-      const c = [`2021/02/${s}.gif`,`2022/02/${s}.gif`,`2021/05/${s}.gif`].map(p=>base+p);
-      const prox = c.map(u=> 'https://images.weserv.nl/?url='+encodeURIComponent(u.replace(/^https?:\/\//,'')));
-      return [...c, ...prox];
-    }
-    async function resolveMedia(name){
-      const key=name.toLowerCase(); if(exerciseCache[key]) return exerciseCache[key];
-
-      if(mediaOverrides[key]){
-        const url=mediaOverrides[key];
-        exerciseCache[key]={kind:/\.(mp4|webm)(\?|$)/i.test(url)?'video':'image', url, provider:'Custom'};
-        return exerciseCache[key];
-      }
-
-      const exdb=await getFromExerciseDB(name);
-      if(exdb){ exerciseCache[key]={kind:'image', url:exdb, provider:'ExerciseDB'}; return exerciseCache[key]; }
-
-      const fps=fpCandidates(name);
-      if(fps.length){ exerciseCache[key]={kind:'image', url:fps[0], provider:'FitnessProgramer (guess)', fallbackList:fps.slice(1)}; return exerciseCache[key]; }
-
-      exerciseCache[key]={kind:'yt', url:ytSearchEmbedUrl(name), provider:'YouTube'};
-      return exerciseCache[key];
-    }
-    function editMedia(name, onSaved){
-      const key=name.toLowerCase(); const cur=mediaOverrides[key]||'';
-      const msg = LANG==='ar'?'ألصق رابط GIF/MP4 لهذا التمرين:':'Paste GIF/MP4 URL for this exercise:';
-      const u = prompt(msg, cur);
-      if(u!==null){ const v=u.trim(); if(v) mediaOverrides[key]=v; else delete mediaOverrides[key]; localStorage.setItem(MEDIA_OVERRIDES_KEY, JSON.stringify(mediaOverrides)); onSaved&&onSaved(); }
-    }
-    function mountYTEmbed(container, name){
-  container.innerHTML='';
-
-  // Header UI
-  const prov=document.createElement('div'); prov.className='provider'; prov.textContent='YouTube';
-  const bar=document.createElement('div'); bar.style.display='flex'; bar.style.gap='8px'; bar.style.alignItems='center';
-  bar.appendChild(prov);
-
-  const setBtn=document.createElement('button'); 
-  setBtn.className='edit'; 
-  setBtn.title=LANG==='ar'?'تحديد فيديو يوتيوب مباشرة':'Set direct YouTube video';
-  setBtn.textContent='🎬';
-  setBtn.onclick=()=>{
-    const prev = localStorage.getItem(`yt:videoId:${name}`) || (window.YT_VIDEO_IDS && window.YT_VIDEO_IDS[name]) || '';
-    const val = prompt(LANG==='ar'?'ألصق رابط/معرّف YouTube':'Paste YouTube URL/ID', prev||'');
-    if(!val) return;
-    const id = extractYouTubeId(val);
-    if(id){
-      localStorage.setItem(`yt:videoId:${name}`, id);
-      mountMedia(container, name);
-    }else{
-      alert(LANG==='ar'?'تعذّر استخراج المعرف من الإدخال.':'Could not extract a video ID from your input.');
-    }
-  };
-  bar.appendChild(setBtn);
-
-  const edit=document.createElement('button'); 
-  edit.className='edit'; 
-  edit.title=LANG==='ar'?'استبدال الوسائط':'Override media';
-  edit.innerHTML='⚙️'; 
-  edit.onclick=()=>editMedia(name,()=>mountMedia(container,name)); 
-  bar.appendChild(edit);
-  container.appendChild(bar);
-
-  // Determine the best videoId to embed
-  const directId = (window.YT_VIDEO_IDS && window.YT_VIDEO_IDS[name]) || localStorage.getItem(`yt:videoId:${name}`);
-
-  function extractYouTubeId(input){
-    if(!input) return null;
-    const str = String(input).trim();
-    // plain 11-char ID
-    const idMatch = str.match(/^[a-zA-Z0-9_-]{11}$/);
-    if(idMatch) return idMatch[0];
-    // common URL patterns
-    const patterns = [
-      /[?&]v=([a-zA-Z0-9_-]{11})/,               // watch?v=
-      /youtu\.be\/([a-zA-Z0-9_-]{11})/,           // youtu.be/<id>
-      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/, // embed/<id>
-      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/ // shorts/<id>
-    ];
-    for(const p of patterns){
-      const m = str.match(p);
-      if(m) return m[1];
-    }
-    return null;
-  }
-
-  function youtubeEmbedSrcFromId(id){
-    const origin = encodeURIComponent(location.origin);
-    return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1&origin=${origin}`;
-  }
-
-  const frame = document.createElement('iframe');
-  frame.loading='lazy';
-  frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-  frame.referrerPolicy='origin';
-  frame.style.width='100%';
-  frame.style.height='100%';
-  container.appendChild(frame);
-
-  // If a direct ID is available, use it immediately (no search/fallback)
-  const directResolved = extractYouTubeId(directId);
-  if(directResolved){
-    frame.src = youtubeEmbedSrcFromId(directResolved);
-    return;
-  }
-
-  // Otherwise, best-effort search based on the exercise name
-  const q = name + ' exercise form ' + (LANG==='ar'?'arabic':'english');
-
-  async function fetchFirstYoutubeId(query){
-    const enc = encodeURIComponent(query);
-    // 1) Piped
-    try{
-      const r = await fetch(`https://piped.video/api/v1/search?q=${enc}&region=US`, {mode:'cors'});
-      if(r.ok){
-        const j = await r.json();
-        const vid = (j?.items||[]).find(x=>x.type==='video')?.id || null;
-        if(vid && typeof vid === 'string' && vid.length<=15) return vid;
-      }
-    }catch{}
-    // 2) Invidious
-    try{
-      const r = await fetch(`https://yewtu.be/api/v1/search?q=${enc}&type=video`, {mode:'cors'});
-      if(r.ok){
-        const j = await r.json();
-        const vid = (Array.isArray(j) && j.length) ? (j[0].videoId || null) : null;
-        if(vid && typeof vid === 'string' && vid.length<=15) return vid;
-      }
-    }catch{}
-    // 3) HTML proxy
-    try{
-      const r = await fetch(`https://r.jina.ai/http://www.youtube.com/results?search_query=${enc}`, {mode:'cors'});
-      if(r.ok){
-        const t = await r.text();
-        const m = t.match(/watch\\?v=([a-zA-Z0-9_-]{11})/);
-        if(m) return m[1];
-      }
-    }catch{}
-    return null;
-  }
-
-  (async ()=>{
-    try{
-      const id = await fetchFirstYoutubeId(q);
-      if(id){ frame.src = youtubeEmbedSrcFromId(id); return; }
-    }catch{}
-    // Fallback: clickable search link
-    frame.remove();
-    const link = document.createElement('a');
-    link.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`;
-    link.target = '_blank'; link.rel='noopener';
-    link.style.display='grid'; link.style.placeItems='center'; link.style.height='100%'; link.style.textDecoration='none';
-    link.textContent = LANG==='ar' ? 'فتح نتائج يوتيوب في تبويب' : 'Open YouTube results';
-    container.appendChild(link);
-  })();
-}
-
-  async function mountMedia(container, name){
-      container.innerHTML='';
-      const prov=document.createElement('div'); prov.className='provider'; prov.textContent='…'; container.appendChild(prov);
-      const edit=document.createElement('button'); edit.className='edit'; edit.title= LANG==='ar'?'استبدال الوسائط':'Override media'; edit.innerHTML='⚙️'; edit.onclick=()=>editMedia(name,()=>mountMedia(container,name)); container.appendChild(edit);
-
-      const info = await resolveMedia(name);
-      prov.textContent = info.provider;
-
-      
-      if(info.kind==='video'){
-        const v=document.createElement('video');
-        v.controls=true;
-        v.muted=true;            // allow autoplay on most browsers
-        v.autoplay=true;
-        v.loop=true;
-        v.playsInline=true;
-        v.setAttribute('playsinline','');
-        v.preload='metadata';
-        v.referrerPolicy='no-referrer';
-        v.loading='lazy';
-        v.src=info.url;
-        v.onerror=()=>mountYTEmbed(container,name);
-        container.appendChild(v);
-        return;
-      }
-      if(info.kind==='yt'){ mountYTEmbed(container,name); return; }
-
-      const img=document.createElement('img'); img.referrerPolicy='no-referrer'; img.loading='lazy';
-      const list=[info.url,...(info.fallbackList||[])]; let i=0;
-      img.onerror=()=>{ i++; if(i<list.length){ img.src=list[i]; try{prov.textContent=new URL(list[i].split('?')[0]).hostname.replace('www.','');}catch{} } else { mountYTEmbed(container,name); } };
-      img.onload = ()=>{ try{prov.textContent=new URL(list[i].split('?')[0]).hostname.replace('www.','');}catch{} };
-      img.src=list[i]; container.appendChild(img);
-    }
-
-    /* -------------- Groups & Exercises (70+ items) -------------- */
-    const TYPE_META = {
-      compound:{ sets:'4×6–8', tempo:'2-1-2', rest:'120s', tip:'شد لوحي الكتف وثبّت الجذع', warn:'تجنّب تقوّس أسفل الظهر' },
-      strength:{ sets:'5×3–5', tempo:'2-0-2', rest:'150s', tip:'ادفع بالأقدام وأبقِ العمود محايدًا', warn:'لا تستخدم الاندفاع' },
-      isolation:{ sets:'3×10–15', tempo:'2-1-2', rest:'60–75s', tip:'تحكّم بالمجال الكامل واعصر في القمة', warn:'لا ترفع كتفيك' }
-    };
-    const GROUPS = [
-      {id:'chest', ar:'الصدر', en:'Chest'},
-      {id:'back', ar:'الظهر', en:'Back'},
-      {id:'legs', ar:'الأرجل', en:'Legs'},
-      {id:'shoulders', ar:'الكتف', en:'Shoulders'},
-      {id:'arms', ar:'الذراع', en:'Arms'},
-      {id:'core', ar:'الجذع', en:'Core'},
-      {id:'bonus', ar:'أرداف/منزلي', en:'Glutes & Home'}
-    ];
-    function groupIdFrom(ar){ return GROUPS.find(g=>g.ar===ar)?.id || 'other'; }
-    function ex(groupAr, groupEn, nameAr, nameEn, type='compound', badges=['مهم'], sourcePath='', equip=['gym']){
-      const meta = TYPE_META[type] || TYPE_META.compound;
-      return {
-        groupId: groupIdFrom(groupAr), groupAr, groupEn, nameAr, nameEn,
-        sets: meta.sets, reps: '', tempo: meta.tempo, rest: meta.rest, type, badges,
-        equip, source: sourcePath ? `https://fitnessprogramer.com/${sourcePath}` : '#'
-      };
-    }
-
-    const EX = [
-      /* --- Chest --- */ ex('الصدر','Chest','ضغط الصدر بالبار','Barbell Bench Press','compound',['الأفضل'],'exercise/bench-press/'),
-      ex('الصدر','Chest','ضغط مائل بالدمبل','Incline Dumbbell Press','compound',['مهم'],'exercise/incline-dumbbell-press/',['gym','dumbbells']),
-      ex('الصدر','Chest','ضغط الصدر بالآلة','Machine Chest Press','compound',['مهم'],'exercise/chest-press-machine/'),
-      ex('الصدر','Chest','ضغط مائل بالبار','Incline Barbell Bench Press','compound',['مهم'],'exercise/incline-bench-press/'),
-      ex('الصدر','Chest','ضغط منحدر بالدمبل','Decline Dumbbell Press','compound',['مهم'],'exercise/decline-dumbbell-bench-press/',['gym','dumbbells']),
-      ex('الصدر','Chest','فلاي بالدمبل','Dumbbell Chest Fly','isolation',['عزل'],'exercise/dumbbell-fly/',['gym','dumbbells']),
-      ex('الصدر','Chest','فلاي كابل','Cable Crossover','isolation',['عزل'],'exercise/cable-crossover/'),
-      ex('الصدر','Chest','ضغط أرضي بالدمبل','Dumbbell Floor Press','compound',['منزلي'], '', ['dumbbells']),
-      ex('الصدر','Chest','تمرين الضغط','Push-Up','compound',['منزلي','جسمك'], '', ['bodyweight']),
-      ex('الصدر','Chest','تمرين الضغط مائل','Incline Push-Up','compound',['منزلي','جسمك'], '', ['bodyweight']),
-      ex('الصدر','Chest','تمرين الضغط ديكلين','Decline Push-Up','compound',['منزلي','جسمك'], '', ['bodyweight']),
-      ex('الصدر','Chest','ديبس للصدر','Chest Dips','compound',['مهم'], 'exercise/chest-dips/',['gym','bodyweight']),
-      ex('الصدر','Chest','بولوفر دمبل','Dumbbell Pullover','isolation',['عزل'], 'exercise/dumbbell-pullover/',['gym','dumbbells']),
-      ex('الصدر','Chest','فلاي آلة','Pec Deck Fly','isolation',['عزل'],'exercise/pec-deck/'),
-
-      /* --- Back --- */ ex('الظهر','Back','الرفعة الميتة','Conventional Deadlift','strength',['الأفضل'],'exercise/deadlift/'),
-      ex('الظهر','Back','سحب أرضي بالبار','Barbell Bent-Over Row','compound',['مهم'],'exercise/bent-over-row/'),
-      ex('الظهر','Back','سحب علوي','Lat Pulldown','compound',['مهم'],'exercise/lat-pulldown/'),
-      ex('الظهر','Back','عقلة عريضة','Wide-Grip Pull-Up','compound',['جسمك'], '', ['bodyweight','gym']),
-      ex('الظهر','Back','عقلة معكوسة','Chin-Up','compound',['جسمك'], '', ['bodyweight','gym']),
-      ex('الظهر','Back','سحب جالس كابل','Seated Cable Row','compound',['مهم'],'exercise/seated-cable-row/'),
-      ex('الظهر','Back','T-Bar رو','T-Bar Row','compound',['مهم'],'exercise/t-bar-row/'),
-      ex('الظهر','Back','سحب ذراع واحدة دمبل','One-Arm Dumbbell Row','compound',['منزلي'],'exercise/one-arm-dumbbell-row/',['gym','dumbbells']),
-      ex('الظهر','Back','سحب ذراع مستقيمة','Straight-Arm Pulldown','isolation',['عزل'],'exercise/straight-arm-pulldown/'),
-      ex('الظهر','Back','سحب صدر مدعّم','Chest-Supported Row','compound',['مهم'],'exercise/chest-supported-row/'),
-      ex('الظهر','Back','رو معكوسة','Inverted Row','compound',['جسمك'], '', ['bodyweight','gym']),
-      ex('الظهر','Back','جود مورنينج','Good Morning','strength',['تقوية'], 'exercise/good-morning/'),
-      ex('الظهر','Back','رو ميدوز','Meadows Row','compound',['متقدم'], '', ['gym','dumbbells']),
-      ex('الظهر','Back','سحب حبل للوجه','Face Pull','isolation',['عزل'],'exercise/face-pull/'),
-
-      /* --- Legs --- */ ex('الأرجل','Legs','سكوات ظهر','Back Squat','strength',['الأفضل'],'exercise/squat/'),
-      ex('الأرجل','Legs','سكوات أمامي','Front Squat','strength',['مهم'],'exercise/front-squat/'),
-      ex('الأرجل','Legs','سومو ديد لفت','Sumo Deadlift','strength',['مهم'],'exercise/sumo-deadlift/'),
-      ex('الأرجل','Legs','لانجز مشي','Walking Lunges','compound',['مهم'],'exercise/walking-lunge/',['gym','dumbbells','bodyweight']),
-      ex('الأرجل','Legs','لانجز بلغاري','Bulgarian Split Squat','compound',['منزلي'],'exercise/bulgarian-split-squat/',['gym','dumbbells','bodyweight']),
-      ex('الأرجل','Legs','هاك سكوات','Hack Squat','strength',['مهم'],'exercise/hack-squat/'),
-      ex('الأرجل','Legs','ليج برس','Leg Press','compound',['مهم'],'exercise/leg-press/'),
-      ex('الأرجل','Legs','رومانيان ديدلفت','Romanian Deadlift','strength',['مهم'],'exercise/romanian-deadlift/'),
-      ex('الأرجل','Legs','اكستنشن الأرجل','Leg Extension','isolation',['عزل'],'exercise/leg-extension/'),
-      ex('الأرجل','Legs','كيرل هامسترنج','Lying Leg Curl','isolation',['عزل'],'exercise/lying-leg-curl/'),
-      ex('الأرجل','Legs','كيرل هامسترنج جالس','Seated Leg Curl','isolation',['عزل'],'exercise/seated-leg-curl/'),
-      ex('الأرجل','Legs','رفع السمانة واقف','Standing Calf Raise','isolation',['عزل'],'exercise/standing-calf-raise/'),
-      ex('الأرجل','Legs','رفع السمانة جالس','Seated Calf Raise','isolation',['عزل'],'exercise/seated-calf-raise/'),
-      ex('الأرجل','Legs','نوردك كيرل','Nordic Hamstring Curl','strength',['جسمك'], '', ['bodyweight','gym']),
-      ex('الأرجل','Legs','قفزة الصندوق','Box Jump','compound',['منزلي'], '', ['bodyweight']),
-      ex('الأرجل','Legs','سيسي سكوات','Sissy Squat','isolation',['منزلي'], '', ['bodyweight','gym']),
-
-      /* --- Shoulders --- */ ex('الكتف','Shoulders','ضغط كتف بار','Barbell Overhead Press','compound',['الأفضل'],'exercise/overhead-press/'),
-      ex('الكتف','Shoulders','ضغط كتف دمبل','Dumbbell Shoulder Press','compound',['مهم'],'exercise/dumbbell-shoulder-press/',['gym','dumbbells']),
-      ex('الكتف','Shoulders','رفرفة جانبية','Lateral Raise','isolation',['عزل'],'exercise/dumbbell-lateral-raise/',['gym','dumbbells']),
-      ex('الكتف','Shoulders','رفرفة خلفية','Rear Delt Fly','isolation',['عزل'],'exercise/reverse-pec-deck/',['gym','dumbbells']),
-      ex('الكتف','Shoulders','فرونت ريز','Front Raise','isolation',['عزل'],'exercise/front-raise/',['gym','dumbbells']),
-      ex('الكتف','Shoulders','أرنولد برس','Arnold Press','compound',['متوسط'],'exercise/arnold-press/',['gym','dumbbells']),
-      ex('الكتف','Shoulders','كابل رفرفة جانبية','Cable Lateral Raise','isolation',['عزل'],'exercise/cable-lateral-raise/'),
-      ex('الكتف','Shoulders','سحب للوجه (كابل)','Face Pull (Cable)','isolation',['عزل'],'exercise/face-pull/'),
-      ex('الكتف','Shoulders','يو برايت رو','Upright Row','compound',['مهم'],'exercise/upright-row/'),
-      ex('الكتف','Shoulders','رفرفة جانبية واقف باكتل بيل','KB Lateral Raise','isolation',['منزلي'], '', ['kettlebell']),
-      ex('الكتف','Shoulders','دوران كتف كوبي','Cuban Rotation','isolation',['صحة كتف'], '', ['dumbbells','bands','gym']),
-      ex('الكتف','Shoulders','ضغط كتف كاتل بيل','Kettlebell Press','compound',['منزلي'], '', ['kettlebell']),
-
-      /* --- Arms --- */ ex('الذراع','Arms','باربل كورل','Barbell Curl','isolation',['عزل'],'exercise/barbell-curl/'),
-      ex('الذراع','Arms','كورل دمبل تبادلي','Alternating DB Curl','isolation',['عزل'],'exercise/alternating-dumbbell-curl/',['gym','dumbbells']),
-      ex('الذراع','Arms','هامر كورل','Hammer Curl','isolation',['عزل'],'exercise/hammer-curl/',['gym','dumbbells']),
-      ex('الذراع','Arms','كونسنترشن كورل','Concentration Curl','isolation',['عزل'],'exercise/concentration-curl/',['gym','dumbbells']),
-      ex('الذراع','Arms','زوتمن كورل','Zottman Curl','isolation',['عزل'], '', ['dumbbells']),
-      ex('الذراع','Arms','كورل كابل','Cable Curl','isolation',['عزل'],'exercise/cable-curl/'),
-      ex('الذراع','Arms','سكول كراشر','Skull Crushers','isolation',['مهم'],'exercise/skull-crusher/'),
-      ex('الذراع','Arms','ضغط ثلاثي حبل','Rope Pushdown','isolation',['عزل'],'exercise/triceps-pushdown/'),
-      ex('الذراع','Arms','أوفرهيد اكستنشن','Overhead Triceps Extension','isolation',['عزل'],'exercise/overhead-cable-triceps-extension/',['gym','dumbbells']),
-      ex('الذراع','Arms','ديبس للعضد الخلفية','Triceps Dips','compound',['جسمك'],'exercise/triceps-dips/',['bodyweight','gym']),
-      ex('الذراع','Arms','ضغط ضيق بالبار','Close-Grip Bench Press','compound',['مهم'],'exercise/close-grip-bench-press/'),
-      ex('الذراع','Arms','بنش ديبس','Bench Dips','compound',['منزلي','جسمك'], '', ['bodyweight']),
-
-      /* --- Core --- */ ex('الجذع','Core','بلانك','Plank','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','بلانك جانبي','Side Plank','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','كرنش','Crunch','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','رفع أرجل معلّق','Hanging Leg Raise','isolation',['مهم'], '', ['bodyweight','gym']),
-      ex('الجذع','Core','بايسكل كرنش','Bicycle Crunch','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','روسيان تويست','Russian Twist','isolation',['منزلي'], '', ['bodyweight','dumbbells','kettlebell']),
-      ex('الجذع','Core','رول آوت Ab Wheel','Ab Wheel Rollout','isolation',['متوسط'], '', ['gym']),
-      ex('الجذع','Core','ديد بغ','Dead Bug','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','هولو هولد','Hollow Hold','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','بيرد دوغ','Bird Dog','isolation',['جسمك'], '', ['bodyweight']),
-      ex('الجذع','Core','بالوف برس','Pallof Press','isolation',['عزل'], '', ['bands','gym']),
-      ex('الجذع','Core','وود تشوب كابل','Cable Woodchop','isolation',['عزل'],'exercise/wood-chop/'),
-
-      /* --- Glutes & Home --- */ ex('أرداف/منزلي','Glutes & Home','هيب ثرست','Barbell Hip Thrust','compound',['الأفضل'],'exercise/hip-thrust/'),
-      ex('أرداف/منزلي','Glutes & Home','جلووت بريدج','Glute Bridge','compound',['منزلي'], '', ['bodyweight','dumbbells','gym']),
-      ex('أرداف/منزلي','Glutes & Home','رفعة رومانية رجل واحدة','Single-Leg RDL','isolation',['منزلي'], '', ['dumbbells','kettlebell','bodyweight']),
-      ex('أرداف/منزلي','Glutes & Home','كيك باك','Glute Kickback','isolation',['عزل'], '', ['bands','gym']),
-      ex('أرداف/منزلي','Glutes & Home','فاير هايدرانت','Fire Hydrant','isolation',['منزلي'], '', ['bodyweight','bands']),
-      ex('أرداف/منزلي','Glutes & Home','كلامشيل','Clamshell','isolation',['منزلي'], '', ['bands']),
-      ex('أرداف/منزلي','Glutes & Home','ستيب أب','Step-Up','compound',['منزلي'], '', ['dumbbells','bodyweight']),
-      ex('أرداف/منزلي','Glutes & Home','غوبلت سكوات','Goblet Squat','compound',['منزلي'], '', ['dumbbells','kettlebell']),
-      ex('أرداف/منزلي','Glutes & Home','كاتل بيل سوينغ','Kettlebell Swing','compound',['منزلي'], '', ['kettlebell']),
-      ex('أرداف/منزلي','Glutes & Home','مشي جانبي بالرباط','Banded Lateral Walk','isolation',['منزلي'], '', ['bands']),
-      ex('أرداف/منزلي','Glutes & Home','وال سِت','Wall Sit','isolation',['جسمك'], '', ['bodyweight']),
-      ex('أرداف/منزلي','Glutes & Home','لانجس كيرتسي','Curtsy Lunge','compound',['منزلي'], '', ['bodyweight','dumbbells'])
-    ];
-
-    /* ---------------- UI State ---------------- */
-    let currentGroup = 'all';
-    let searchTerm = '';
-    const yearEl = document.getElementById('year'); yearEl.textContent = new Date().getFullYear();
-
-    // Group chips
-    function renderGroupChips(){
-      const wrap = document.getElementById('groupChips'); wrap.innerHTML='';
-      const all = document.createElement('div'); all.className='chip'+(currentGroup==='all'?' active':''); all.textContent = (LANG==='ar'?'الكل':'All');
-      all.onclick=()=>{currentGroup='all'; renderGroupChips(); renderExercises();};
-      wrap.appendChild(all);
-      GROUPS.forEach(g=>{
-        const count = EX.filter(e=>e.groupId===g.id).length;
-        const chip=document.createElement('div'); chip.className='chip'+(currentGroup===g.id?' active':'');
-        chip.textContent = (LANG==='ar'? g.ar:g.en) + ` (${count})`;
-        chip.onclick=()=>{currentGroup=g.id; renderGroupChips(); renderExercises();};
-        wrap.appendChild(chip);
-      });
-    }
-
-    // Exercise cards
-    function renderExercises(){
-      const grid = document.getElementById('exerciseGrid'); grid.innerHTML='';
-      const q = searchTerm.trim().toLowerCase();
-      let list = EX.filter(e => currentGroup==='all' || e.groupId===currentGroup);
-      if(q){
-        list = list.filter(e=>
-          e.nameAr.toLowerCase().includes(q) ||
-          e.nameEn.toLowerCase().includes(q) ||
-          e.groupAr.toLowerCase().includes(q) ||
-          e.groupEn.toLowerCase().includes(q)
-        );
-      }
-      list.forEach(item=>{
-        const card=document.createElement('div'); card.className='card fadeIn';
-
-        const media=document.createElement('div'); media.className='media'; card.appendChild(media);
-        mountMedia(media, item.nameEn);
-        const overlay=document.createElement('div'); overlay.className='overlay';
-        overlay.innerHTML = `<div class="name">${item.nameAr}<span class="en"> | ${item.nameEn}</span></div>
-                             <div class="muscle">${item.groupAr}<span class="en"> | ${item.groupEn}</span></div>`;
-        media.appendChild(overlay);
-
-        const content=document.createElement('div'); content.className='content';
-        const title=document.createElement('div'); title.className='title';
-        title.innerHTML = `<strong>${item.nameAr}</strong> <span class="en">| ${item.nameEn}</span>`;
-        content.appendChild(title);
-
-        const badges=document.createElement('div'); badges.className='badges';
-        item.badges.forEach(b=>{
-          const s=document.createElement('span'); s.className='badge'+(b==='الأفضل'?' best':(b==='منزلي'?' home':'')); s.textContent=b; badges.appendChild(s);
-        });
-        const t=document.createElement('span'); t.className='badge'; t.textContent = item.type==='compound'?(LANG==='ar'?'أساسي':'Compound'): item.type==='strength'?(LANG==='ar'?'قوة':'Strength'):(LANG==='ar'?'عزل':'Isolation');
-        badges.appendChild(t);
-        content.appendChild(badges);
-
-        const meta=document.createElement('div'); meta.className='meta';
-        meta.textContent = `${LANG==='ar'?'المجموعات':'Sets'}: ${item.sets} • ${LANG==='ar'?'التمبو':'Tempo'}: ${item.tempo} • ${LANG==='ar'?'راحة':'Rest'}: ${item.rest}`;
-        content.appendChild(meta);
-
-        const actions=document.createElement('div'); actions.className='actions';
-        const yt = document.createElement('a'); yt.href=ytSearchUrl(item.nameEn); yt.target='_blank'; yt.rel='noopener'; yt.className='btn'; yt.innerHTML='<i class="fa-brands fa-youtube"></i> YouTube';
-        const src = document.createElement('a'); src.href=item.source||'#'; src.target='_blank'; src.rel='noopener'; src.className='btn'; src.innerHTML='<i class="fa-solid fa-book-open"></i> Source';
-        actions.appendChild(yt); actions.appendChild(src);
-        content.appendChild(actions);
-
-        card.appendChild(content);
-        grid.appendChild(card);
-      });
-    }
-
-    // Search
-    document.getElementById('search').addEventListener('input', e=>{ searchTerm=e.target.value; renderExercises(); });
-    document.getElementById('clearSearch').addEventListener('click', ()=>{ document.getElementById('search').value=''; searchTerm=''; renderExercises(); });
-
-    // Tabs
-    document.querySelectorAll('.tab').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-        document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
-      });
-    });
-
-    // Theme toggle
-    const THEME_KEY='stp_theme';
-    function applyTheme(){
-      const t=localStorage.getItem(THEME_KEY)||'dark';
-      document.documentElement.setAttribute('data-theme', t==='light'?'light':'dark');
-      document.querySelector('#themeBtn span').textContent = LANG==='ar'?(t==='light'?'وضع داكن':'وضع فاتح'):(t==='light'?'Dark Mode':'Light Mode');
-    }
-    document.getElementById('themeBtn').addEventListener('click', ()=>{
-      const cur=localStorage.getItem(THEME_KEY)||'dark';
-      localStorage.setItem(THEME_KEY, cur==='light'?'dark':'light'); applyTheme();
-    });
-
-    // Lang toggle
-    document.getElementById('langBtn').addEventListener('click', ()=>{ LANG = (LANG==='ar'?'en':'ar'); localStorage.setItem('lang',LANG); applyLang(); });
-
-    // API key
-    const KEY_STORE='gemini_api_key';
-    document.getElementById('saveKey').addEventListener('click', ()=>{
-      localStorage.setItem(KEY_STORE, document.getElementById('apiKey').value.trim());
-      alert(LANG==='ar'?'تم حفظ المفتاح محليًا.':'Key saved locally.');
-    });
-    const savedKey = localStorage.getItem(KEY_STORE); if(savedKey) document.getElementById('apiKey').value = savedKey;
-
-    /* -------------- Planner (AI or local) -------------- */
-    function getPlannerOptions(){
-      const equipment = Array.from(document.getElementById('equipment').selectedOptions).map(o=>o.value);
-      return {
-        goal: document.getElementById('goal').value,
-        days: parseInt(document.getElementById('days').value,10),
-        level: document.getElementById('level').value,
-        focusArea: document.getElementById('focusArea').value.trim(),
-        equipment: equipment.length? equipment : ['gym'],
-        lang: LANG
-      };
-    }
-    function buildPrompt(opts){
-      const label = (LANG==='ar'
-        ? `أنت مدرّب محترف. أنشئ خطة تدريب لمدة ${opts.days} أيام/أسبوع لهدف "${opts.goal}" ومستوى "${opts.level}"` + (opts.focusArea? ` مع تركيز على: ${opts.focusArea}.`:'') + ` المعدات المتاحة: ${opts.equipment.join(', ')}. أعط أسماء التمارين بالعربية والإنجليزية، مجموعات×تكرارات، تمبو وراحة، وملاحظات تقنية قصيرة.`
-        : `You are a pro coach. Create a ${opts.days}-day/week plan for goal "${opts.goal}" and level "${opts.level}"` + (opts.focusArea? ` with focus on: ${opts.focusArea}.`:'') + ` Available equipment: ${opts.equipment.join(', ')}. Return exercise names in Arabic & English, sets×reps, tempo, rest, and brief technique notes.`
-      );
-      return label + (LANG==='ar' ? `\nصيغة منظمة:\nاليوم 1 — العنوان\n• تمرين — 4×8–12 | تمبو: 2-1-2 | راحة: 90s\n…` : `\nFormat:\nDay 1 — Title\n• Exercise — 4×8–12 | Tempo: 2-1-2 | Rest: 90s\n…`);
-    }
-    function repRange(goal, type){
-      if(goal==='strength') return (type==='isolation')?'3×6–8':'5×3–5';
-      if(goal==='endurance') return '3×15–20';
-      if(goal==='fatloss') return '3–4×10–15';
-      if(goal==='focus') return (type==='isolation')?'3×12–15':'4×8–12';
-      return (type==='isolation')?'3×12–15':'4×8–12';
-    }
-    function findGroupIdFromText(text){
-      const t=text.toLowerCase();
-      if(/صدر|chest/.test(t)) return 'chest';
-      if(/ظهر|back/.test(t)) return 'back';
-      if(/ساق|رجل|legs|quads|hamstring|calf/.test(t)) return 'legs';
-      if(/كتف|shoulder/.test(t)) return 'shoulders';
-      if(/ذراع|arm|bicep|tricep/.test(t)) return 'arms';
-      if(/بطن|كور|جذع|abs|core/.test(t)) return 'core';
-      if(/أرداف|glute|منزل/.test(t)) return 'bonus';
-      return null;
-    }
-    function pickExercises(groupIds, count, equipSet, biasId){
-      let pool = EX.filter(e=> groupIds.includes(e.groupId) && e.equip.some(t=>equipSet.has(t) || equipSet.has('gym')));
-      if(biasId){ const biased = pool.filter(e=>e.groupId===biasId); pool = [...biased, ...pool]; }
-      const best = pool.filter(e=>e.badges.includes('الأفضل'));
-      const rest = pool.filter(e=>!e.badges.includes('الأفضل'));
-      const chosen=[];
-      function take(arr){ while(arr.length && chosen.length<count){ const i=Math.floor(Math.random()*arr.length); chosen.push(arr.splice(i,1)[0]); } }
-      take(best); take(rest);
-      return chosen.slice(0,count);
-    }
-    function dayTitle(id){ const d=id+1; return LANG==='ar' ? `اليوم ${d}` : `Day ${d}`; }
-    function buildLocalPlan(opts){
-      const eq = new Set(opts.equipment);
-      const bias = findGroupIdFromText(opts.focusArea||'');
-      const blocks = [];
-      let split;
-
-      if(opts.days===3){ split = ['push','pull','legs']; }
-      else if(opts.days===4){ split = ['upper','lower','upper','lower']; }
-      else if(opts.days===5){ split = ['upper','lower','push','pull','full']; }
-      else { split = ['push','pull','legs','push','pull','legs']; }
-
-      split.forEach((type, i)=>{
-        let groups, title;
-        if(type==='push'){ groups=['chest','shoulders','arms']; title = LANG==='ar'?'دفع (صدر/كتف/تراي)':'Push (Chest/Shoulders/Triceps)'; }
-        else if(type==='pull'){ groups=['back','shoulders','arms']; title = LANG==='ar'?'سحب (ظهر/بايسبس)':'Pull (Back/Biceps)'; }
-        else if(type==='legs'){ groups=['legs','bonus','core']; title = LANG==='ar'?'أرجل وأرداف':'Legs & Glutes'; }
-        else if(type==='upper'){ groups=['chest','back','shoulders','arms']; title = LANG==='ar'?'الجزء العلوي':'Upper'; }
-        else if(type==='lower'){ groups=['legs','bonus','core']; title = LANG==='ar'?'الجزء السفلي':'Lower'; }
-        else { groups=['chest','back','legs','shoulders','arms','core']; title = LANG==='ar'?'فل بودي':'Full Body'; }
-
-        const main = pickExercises(groups, 5, eq, bias);
-        const lines = [];
-        lines.push((LANG==='ar'?`— ${title}`:`— ${title}`));
-        main.forEach(exe=>{
-          const r = repRange(opts.goal, exe.type);
-          const tempo = exe.tempo;
-          const rest = exe.rest;
-          const name = `${exe.nameAr} | ${exe.nameEn}`;
-          lines.push(`• ${name} — ${r} | ${LANG==='ar'?'تمبو':'Tempo'}: ${tempo} | ${LANG==='ar'?'راحة':'Rest'}: ${rest}`);
-        });
-        if(!groups.includes('core')){
-          const corePick = pickExercises(['core'], 1, eq, bias)[0];
-          if(corePick){
-            lines.push(`• ${LANG==='ar'?'منهيّة كور':'Core Finisher'}: ${corePick.nameAr} | ${corePick.nameEn} — ${repRange(opts.goal, corePick.type)}`);
-          }
-        }
-        blocks.push(`${dayTitle(i)} ${lines.join('\n')}`);
-      });
-
-      const head = (LANG==='ar'
-        ? `خطة تدريب (${opts.days} أيام/الأسبوع) — الهدف: ${opts.goal}${opts.focusArea?` — تركيز: ${opts.focusArea}`:''}\nالمعدات: ${opts.equipment.join('، ')}\n`
-        : `Training Plan (${opts.days} days/week) — Goal: ${opts.goal}${opts.focusArea?` — Focus: ${opts.focusArea}`:''}\nEquipment: ${opts.equipment.join(', ')}\n`
-      );
-      const notes = (LANG==='ar'
-        ? `\nملاحظات:\n• ابدأ إحماء عام 5–10 دقائق + إحماء خاص للتمرين الأول.\n• زِد الأحمال تدريجيًا مع الحفاظ على التقنية.\n• سجّل التقدّم أسبوعيًا.`
-        : `\nNotes:\n• Begin with 5–10 min general warm-up + ramp-up sets.\n• Progressive overload with clean form.\n• Log progress weekly.`
-      );
-      return head + blocks.join('\n\n') + notes;
-    }
-
-    const planOut = document.getElementById('planOutput');
-
-    document.getElementById('genLocal').addEventListener('click', ()=>{
-      const opts = getPlannerOptions();
-      planOut.textContent = LANG==='ar'?'جاري التوليد محليًا…':'Generating locally…';
-      setTimeout(()=>{ planOut.textContent = buildLocalPlan(opts); }, 50);
-    });
-
-    document.getElementById('genGemini').addEventListener('click', async ()=>{
-      const opts = getPlannerOptions();
-      const apiKey = (document.getElementById('apiKey').value||'').trim();
-      const prompt = buildPrompt(opts);
-
-      if(!window.AI || typeof window.AI.generatePlan!=='function'){
-        planOut.textContent = (LANG==='ar'
-          ? 'لم يتم العثور على ملف ai.js. أضف ملفًا باسم "ai.js" في نفس المجلد لتعريف window.AI.generatePlan(). يمكنك استخدام القالب المرفق في التعليمات.'
-          : 'ai.js not found. Add a local "ai.js" next to this file that defines window.AI.generatePlan(). Use the template provided below.');
-        return;
-      }
-      if(!apiKey){
-        planOut.textContent = LANG==='ar'?'الرجاء إدخال مفتاح API (أو استخدم التوليد المحلي).':'Please enter an Gemini API key (or use local generation).';
-        return;
-      }
-      planOut.textContent = LANG==='ar'?'يتم التوليد عبر الذكاء الاصطناعي…':'Generating via AI…';
-      try{
-        const text = await window.AI.generatePlan({opts, prompt, apiKey});
-        planOut.textContent = (text && typeof text==='string') ? text : (LANG==='ar'?'تعذر تفسير استجابة الذكاء الاصطناعي.':'Could not parse AI response.');
-      }catch(err){
-        console.error(err);
-        planOut.textContent = (LANG==='ar'?'حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.':'AI request failed.') + ' ' + (err?.message||'');
-      }
-    });
-
-    // Save / Load Plans
-    const PLANS_KEY='plans_v1';
-    function loadPlans(){ return JSON.parse(localStorage.getItem(PLANS_KEY)||'[]'); }
-    function savePlans(lst){ localStorage.setItem(PLANS_KEY, JSON.stringify(lst)); }
-    function renderPlans(){
-      const wrap=document.getElementById('plansList'); wrap.innerHTML='';
-      const lst=loadPlans().sort((a,b)=>b.created-a.created);
-      if(!lst.length){ wrap.innerHTML = `<div class="meta">${LANG==='ar'?'لا توجد خطط محفوظة بعد.':'No saved plans yet.'}</div>`; return; }
-      lst.forEach(p=>{
-        const card=document.createElement('div'); card.className='card fadeIn';
-        const content=document.createElement('div'); content.className='content';
-        const title=document.createElement('div'); title.className='title';
-        title.innerHTML=`<strong>${p.name}</strong>`;
-        const meta=document.createElement('div'); meta.className='meta';
-        meta.textContent = new Date(p.created).toLocaleString();
-        const text=document.createElement('pre'); text.style.whiteSpace='pre-wrap'; text.textContent=p.text;
-        const actions=document.createElement('div'); actions.className='actions';
-        const copy=document.createElement('button'); copy.className='btn'; copy.innerHTML='<i class="fa-regular fa-copy"></i> Copy'; copy.onclick=()=>{ navigator.clipboard.writeText(p.text); };
-        const del=document.createElement('button'); del.className='btn'; del.innerHTML='<i class="fa-regular fa-trash-can"></i> Delete'; del.onclick=()=>{ const all=loadPlans().filter(x=>x.id!==p.id); savePlans(all); renderPlans(); };
-        actions.appendChild(copy); actions.appendChild(del);
-        content.appendChild(title); content.appendChild(meta); content.appendChild(text); content.appendChild(actions);
-        card.appendChild(content); wrap.appendChild(card);
-      });
-    }
-    document.getElementById('savePlan').addEventListener('click', ()=>{
-      const txt = planOut.textContent.trim();
-      if(!txt){ alert(LANG==='ar'?'لا توجد خطة لحفظها.':'Nothing to save.'); return; }
-      const opts = getPlannerOptions();
-      const id = Date.now().toString(36);
-      const name = (LANG==='ar'?'خطة ':'Plan ') + `${opts.days}d-${opts.goal}`;
-      const lst=loadPlans(); lst.push({id, name, text:txt, created:Date.now(), opts}); savePlans(lst); renderPlans();
-      alert(LANG==='ar'?'تم الحفظ.':'Saved.');
-    });
-
-    // PWA install
-    let deferredPrompt=null;
-    window.addEventListener('beforeinstallprompt', (e)=>{
-      e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='inline-flex';
-    });
-    document.getElementById('installBtn').addEventListener('click', async ()=>{
-      if(!deferredPrompt) return;
-      deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; deferredPrompt=null;
-    });
-
-    // Offline SW
-    (function registerSW(){
-      if(!('serviceWorker' in navigator)) return;
-      const code = `
-        const CACHE='stp-v1';
-        self.addEventListener('install', e=>{ self.skipWaiting(); });
-        self.addEventListener('activate', e=>{ e.waitUntil(self.clients.claim()); });
-        self.addEventListener('message', e=>{ if(e.data&&e.data.type==='CACHE_URLS'){ caches.open(CACHE).then(c=>c.addAll(e.data.urls)); } });
-        self.addEventListener('fetch', e=>{
-          const req=e.request;
-          if(req.method!=='GET') return;
-          if(req.mode==='navigate'){
-            e.respondWith(fetch(req).then(r=>{ const c=r.clone(); caches.open(CACHE).then(cc=>cc.put(req,c)); return r; }).catch(()=>caches.match(req)));
-            return;
-          }
-          const url=new URL(req.url);
-          if(url.origin===location.origin){
-            e.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(r=>{ const c=r.clone(); caches.open(CACHE).then(cc=>cc.put(req,c)); return r; }).catch(()=>hit)));
-          }else{
-            e.respondWith(fetch(req).catch(()=>caches.match(req)));
-          }
-        });
-      `;
-      const blob = new Blob([code], {type:'text/javascript'});
-      navigator.serviceWorker.register(URL.createObjectURL(blob)).then(()=>{
-        if(navigator.serviceWorker.controller){
-          navigator.serviceWorker.controller.postMessage({type:'CACHE_URLS', urls:[location.href]});
-        }else{
-          navigator.serviceWorker.addEventListener('controllerchange', ()=>{
-            if(navigator.serviceWorker.controller){
-              navigator.serviceWorker.controller.postMessage({type:'CACHE_URLS', urls:[location.href]});
+        /**
+         * 1. TRANSLATION DICTIONARY (i18n)
+         */
+        const translations = {
+            en: {
+                brandName: "Smart Trainer Pro",
+                tabLibrary: "Exercise Library",
+                tabPlanner: "AI Planner",
+                tabSaved: "Saved Plans",
+                heroTitle: "Elevate Your Training",
+                heroSub: "Your ultimate AI-powered fitness companion. Browse exercises, generate intelligent plans, and track your growth.",
+                searchPlaceholder: "Search exercises...",
+                filterAll: "All Muscles",
+                btnYT: "Watch Tutorial",
+                plannerTitle: "Plan Parameters",
+                lblGoal: "Fitness Goal",
+                optMuscle: "Build Muscle",
+                optFatloss: "Fat Loss",
+                optStrength: "Strength",
+                lblLevel: "Experience Level",
+                optBeginner: "Beginner",
+                optIntermediate: "Intermediate",
+                optAdvanced: "Advanced",
+                lblDays: "Days Per Week",
+                lblFocus: "Focus Area",
+                optFullBody: "Full Body",
+                optUpper: "Upper Body",
+                optLower: "Lower Body",
+                lblEngine: "Generation Engine",
+                optLocal: "Local Algorithm (Fast)",
+                optGemini: "Gemini AI (Smart)",
+                lblApiKey: "Gemini API Key",
+                apiHelp: "Required for AI generation. Stored safely in your browser.",
+                btnGenerate: "Generate Plan",
+                outputTitle: "Your Plan",
+                btnSave: "Save Plan",
+                emptyOutput: "Set your parameters and click Generate to create a structured fitness plan.",
+                noSaved: "You have no saved plans yet.",
+                btnCopy: "Copy",
+                btnDelete: "Delete",
+                generating: "Analyzing data...",
+                errorApiKey: "Please enter a valid API Key.",
+                errorNetwork: "Failed to connect to AI. Trying local fallback..."
+            },
+            ar: {
+                brandName: "مدربك الذكي",
+                tabLibrary: "مكتبة التمارين",
+                tabPlanner: "الخطة الذكية",
+                tabSaved: "الخطط المحفوظة",
+                heroTitle: "ارتقِ بتدريبك",
+                heroSub: "رفيقك الرياضي المدعوم بالذكاء الاصطناعي. تصفح التمارين، استخرج خطط ذكية، وتابع تطورك.",
+                searchPlaceholder: "ابحث عن تمرين...",
+                filterAll: "جميع العضلات",
+                btnYT: "شرح الفيديو",
+                plannerTitle: "إعدادات الخطة",
+                lblGoal: "الهدف الرياضي",
+                optMuscle: "بناء عضلات",
+                optFatloss: "حرق الدهون",
+                optStrength: "قوة بدنية",
+                lblLevel: "مستوى الخبرة",
+                optBeginner: "مبتدئ",
+                optIntermediate: "متوسط",
+                optAdvanced: "متقدم",
+                lblDays: "أيام التدريب في الأسبوع",
+                lblFocus: "منطقة التركيز",
+                optFullBody: "الجسم كامل",
+                optUpper: "الجزء العلوي",
+                optLower: "الجزء السفلي",
+                lblEngine: "محرك الذكاء",
+                optLocal: "خوارزمية محلية (سريع)",
+                optGemini: "ذكاء Gemini (دقيق)",
+                lblApiKey: "مفتاح API لـ Gemini",
+                apiHelp: "مطلوب لتوليد الخطط بالذكاء الاصطناعي. يُحفظ في متصفحك بأمان.",
+                btnGenerate: "توليد الخطة",
+                outputTitle: "خطتك الرياضية",
+                btnSave: "حفظ الخطة",
+                emptyOutput: "حدد الإعدادات واضغط على توليد لإنشاء خطة رياضية متكاملة.",
+                noSaved: "لا توجد خطط محفوظة حالياً.",
+                btnCopy: "نسخ",
+                btnDelete: "حذف",
+                generating: "جاري تحليل البيانات...",
+                errorApiKey: "الرجاء إدخال مفتاح API صحيح.",
+                errorNetwork: "فشل الاتصال بالذكاء الاصطناعي. جاري استخدام الخوارزمية المحلية..."
             }
-          });
+        };
+
+        /**
+         * 2. MOCK EXERCISE DATABASE
+         */
+        const exercises = [
+            // CHEST
+            { id: 1, nameEn: "Barbell Bench Press", nameAr: "ضغط الصدر بالبار", groupEn: "Chest", groupAr: "صدر", sets: "4x8-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 2, nameEn: "Incline Dumbbell Press", nameAr: "ضغط صدر عالي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 3, nameEn: "Push-ups", nameAr: "تمرين الضغط", groupEn: "Chest", groupAr: "صدر", sets: "3x15-20", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 4, nameEn: "Cable Crossover", nameAr: "تفتيح بالكيبل", groupEn: "Chest", groupAr: "صدر", sets: "4x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 5, nameEn: "Dumbbell Flyes", nameAr: "تفتيح بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 6, nameEn: "Decline Bench Press", nameAr: "ضغط صدر سفلي", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 7, nameEn: "Chest Dips", nameAr: "متوازي صدر", groupEn: "Chest", groupAr: "صدر", sets: "3x10-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 8, nameEn: "Machine Chest Press", nameAr: "جهاز ضغط الصدر", groupEn: "Chest", groupAr: "صدر", sets: "4x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 9, nameEn: "Pec Deck Machine", nameAr: "جهاز الفراشة", groupEn: "Chest", groupAr: "صدر", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+            { id: 10, nameEn: "Dumbbell Pullover", nameAr: "بلوفر بالدمبل", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
+
+            // BACK
+            { id: 11, nameEn: "Lat Pulldown", nameAr: "سحب ظهر واسع", groupEn: "Back", groupAr: "ظهر", sets: "4x12", icon: "fa-arrows-down-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 12, nameEn: "Barbell Row", nameAr: "تجديف بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 13, nameEn: "Pull-ups", nameAr: "عقلة", groupEn: "Back", groupAr: "ظهر", sets: "4x8-12", icon: "fa-arrows-up-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 14, nameEn: "Seated Cable Row", nameAr: "سحب أرضي", groupEn: "Back", groupAr: "ظهر", sets: "4x10-12", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 15, nameEn: "T-Bar Row", nameAr: "تجديف تي بار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 16, nameEn: "Single-Arm Dumbbell Row", nameAr: "تجديف دمبل ذراع واحدة", groupEn: "Back", groupAr: "ظهر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 17, nameEn: "Straight-Arm Pulldown", nameAr: "سحب مستقيم بالكيبل", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 18, nameEn: "Face Pulls", nameAr: "سحب للوجه", groupEn: "Back", groupAr: "ظهر", sets: "4x12-15", icon: "fa-arrow-left", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 19, nameEn: "Deadlift", nameAr: "رفعة مميتة", groupEn: "Back", groupAr: "ظهر", sets: "4x5-8", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 20, nameEn: "Hyperextensions", nameAr: "قطنية", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-person-praying", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+
+            // SHOULDERS
+            { id: 21, nameEn: "Overhead Press", nameAr: "ضغط أكتاف بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 22, nameEn: "Lateral Raises", nameAr: "رفرفة جانبية دمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 23, nameEn: "Front Raises", nameAr: "رفرفة أمامية", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 24, nameEn: "Reverse Pec Deck", nameAr: "فراشة عكسي للأكتاف", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 25, nameEn: "Arnold Press", nameAr: "ضغط أرنولد", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 26, nameEn: "Upright Row", nameAr: "سحب عمودي بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 27, nameEn: "Cable Lateral Raises", nameAr: "رفرفة جانبية بالكيبل", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 28, nameEn: "Dumbbell Shrugs", nameAr: "ترابيس دمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 29, nameEn: "Seated Dumbbell Press", nameAr: "ضغط أكتاف بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 30, nameEn: "Push Press", nameAr: "دفع بالبار للأكتاف", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x6-8", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+
+            // LEGS
+            { id: 31, nameEn: "Barbell Squat", nameAr: "سكوات بالبار", groupEn: "Legs", groupAr: "أرجل", sets: "4x8-10", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 32, nameEn: "Leg Press", nameAr: "ضغط الأرجل بالجهاز", groupEn: "Legs", groupAr: "أرجل", sets: "4x12-15", icon: "fa-child-reaching", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 33, nameEn: "Romanian Deadlift", nameAr: "رفعة رومانية مميتة", groupEn: "Legs", groupAr: "أرجل", sets: "4x10-12", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 34, nameEn: "Leg Extensions", nameAr: "رفرفة أرجل أمامية", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 35, nameEn: "Lying Leg Curls", nameAr: "رفرفة أرجل خلفية", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 36, nameEn: "Walking Lunges", nameAr: "طعن متحرك", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 37, nameEn: "Standing Calf Raises", nameAr: "سمانة وقوف", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 38, nameEn: "Hack Squat", nameAr: "هاك سكوات", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 39, nameEn: "Bulgarian Split Squat", nameAr: "سكوات بلغاري", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 40, nameEn: "Seated Calf Raises", nameAr: "سمانة جلوس", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+
+            // ARMS (Biceps + Triceps)
+            { id: 41, nameEn: "Tricep Pushdown", nameAr: "سحب تراي بالحبل", groupEn: "Arms", groupAr: "أذرع", sets: "4x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 42, nameEn: "Bicep Curls", nameAr: "مرجحة باي دمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "4x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 43, nameEn: "Skull Crushers", nameAr: "تكسير جمجمة", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 44, nameEn: "Hammer Curls", nameAr: "مرجحة مطرقة", groupEn: "Arms", groupAr: "أذرع", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 45, nameEn: "Overhead Tricep Extension", nameAr: "تراي خلف الرأس", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 46, nameEn: "Preacher Curls", nameAr: "مرجحة ارتكاز", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 47, nameEn: "Tricep Dips", nameAr: "متوازي تراي", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 48, nameEn: "Cable Bicep Curl", nameAr: "مرجحة باي بالكيبل", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 49, nameEn: "Close-Grip Bench Press", nameAr: "ضغط صدر ضيق للتراي", groupEn: "Arms", groupAr: "أذرع", sets: "3x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 50, nameEn: "Concentration Curls", nameAr: "مرجحة تركيز", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" }
+        ];
+
+        /**
+         * 3. STATE MANAGEMENT
+         */
+        const AppState = {
+            lang: localStorage.getItem('stp_lang') || 'en',
+            theme: localStorage.getItem('stp_theme') || 'dark',
+            apiKey: localStorage.getItem('stp_apiKey') || '',
+            savedPlans: JSON.parse(localStorage.getItem('stp_plans')) || [],
+            activeFilter: 'All'
+        };
+
+        // DOM Elements
+        const DOM = {
+            html: document.documentElement,
+            langBtn: document.getElementById('langToggle'),
+            themeBtn: document.getElementById('themeToggle'),
+            tabs: document.querySelectorAll('.tab-btn'),
+            panels: document.querySelectorAll('.tab-content'),
+            
+            // Library
+            grid: document.getElementById('exerciseGrid'),
+            filterContainer: document.getElementById('filterContainer'),
+            searchInput: document.getElementById('searchInput'),
+            
+            // Planner
+            engineSelect: document.getElementById('planEngine'),
+            apiPanel: document.getElementById('apiPanel'),
+            apiKeyInput: document.getElementById('apiKeyInput'),
+            generateBtn: document.getElementById('generateBtn'),
+            outputContent: document.getElementById('outputContent'),
+            saveBtn: document.getElementById('savePlanBtn'),
+            
+            // Saved
+            savedContainer: document.getElementById('savedContainer')
+        };
+
+        /**
+         * 4. CORE UI FUNCTIONS
+         */
+        function applyTranslations() {
+            const dict = translations[AppState.lang];
+            
+            // Update direction
+            DOM.html.setAttribute('dir', AppState.lang === 'ar' ? 'rtl' : 'ltr');
+            DOM.html.setAttribute('lang', AppState.lang);
+            
+            // Update data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.textContent = dict[key];
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (dict[key]) el.placeholder = dict[key];
+            });
+
+            // Re-render dynamic content
+            renderFilters();
+            renderExercises();
+            renderSavedPlans();
         }
-      }).catch(console.warn);
-    })();
 
-    // Initial render
-    applyTheme(); applyLang(); renderPlans();
-  </script>
+        function toggleLanguage() {
+            AppState.lang = AppState.lang === 'en' ? 'ar' : 'en';
+            localStorage.setItem('stp_lang', AppState.lang);
+            applyTranslations();
+        }
 
-  <!-- Inline AI (Gemini): provides window.AI.generatePlan({opts, prompt, apiKey}) -->
-  <script>
-  (function(){
-    function t(s){ return (document.documentElement.lang === 'ar') ? s.ar : s.en; }
-    async function geminiCall(apiKey, systemText, userText, model){
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model || 'gemini-1.5-flash'}:generateContent`;
-      const body = {
-        systemInstruction: { role: "system", parts: [{ text: systemText }] },
-        contents: [{ role: "user", parts: [{ text: userText }]}],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 1200 }
-      };
-      const r = await fetch(url + `?key=${encodeURIComponent(apiKey)}`, {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
-      });
-      if(!r.ok){
-        const txt = await r.text().catch(()=>'');
-        throw new Error(t({
-          ar: "فشل الاتصال بـ Gemini. تأكد من المفتاح والطراز. التفاصيل: " + txt,
-          en: "Failed calling Gemini. Check key/model. Details: " + txt
-        }));
-      }
-      const j = await r.json();
-      const parts = j?.candidates?.[0]?.content?.parts || [];
-      const text = parts.map(p=>p.text||"").join("").trim();
-      if(!text) throw new Error(t({ar:"لم أتلقَّ نصًا من النموذج.", en:"No content returned by model."}));
-      return text;
-    }
+        function applyTheme() {
+            DOM.html.setAttribute('data-theme', AppState.theme);
+            const icon = DOM.themeBtn.querySelector('i');
+            icon.className = AppState.theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        }
 
-    window.AI = window.AI || {};
-    window.AI.generatePlan = async function({opts, prompt, apiKey}){
-      if(!apiKey || typeof apiKey!=='string'){
-        throw new Error(t({ar:"مطلوب مفتاح Gemini API.", en:"Gemini API key is required."}));
-      }
-      const sys = t({
-        ar: "أنت مدرب لياقة يكتب خططًا واضحة بالعربية والإنجليزية، منظمة حسب الأيام، مع مجموعات×تكرارات، تمبو، راحة، وملاحظات تقنية قصيرة. استخدم نقاطًا مرتبة وسهلة القراءة.",
-        en: "You are a fitness coach producing clear, day-structured plans with sets×reps, tempo, rest, and brief technique notes, bilingual (Arabic & English). Use tidy bullet lists."
-      });
-      return await geminiCall(apiKey, sys, prompt, "gemini-1.5-flash");
-    };
-  })();
-  </script>
+        function toggleTheme() {
+            AppState.theme = AppState.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('stp_theme', AppState.theme);
+            applyTheme();
+        }
+
+        function handleTabs(e) {
+            const targetBtn = e.currentTarget;
+            const targetId = targetBtn.getAttribute('data-target');
+
+            DOM.tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            DOM.panels.forEach(p => p.classList.remove('active'));
+
+            targetBtn.classList.add('active');
+            targetBtn.setAttribute('aria-selected', 'true');
+            document.getElementById(targetId).classList.add('active');
+        }
+
+        /**
+         * 5. LIBRARY LOGIC
+         */
+        function getUniqueGroups() {
+            const prop = AppState.lang === 'ar' ? 'groupAr' : 'groupEn';
+            const groups = new Set(exercises.map(e => e[prop]));
+            return Array.from(groups);
+        }
+
+        function renderFilters() {
+            DOM.filterContainer.innerHTML = '';
+            const allText = translations[AppState.lang].filterAll;
+            
+            const btnAll = document.createElement('button');
+            btnAll.className = `chip ${AppState.activeFilter === 'All' ? 'active' : ''}`;
+            btnAll.textContent = allText;
+            btnAll.onclick = () => { AppState.activeFilter = 'All'; renderFilters(); renderExercises(); };
+            DOM.filterContainer.appendChild(btnAll);
+
+            getUniqueGroups().forEach(group => {
+                const btn = document.createElement('button');
+                btn.className = `chip ${AppState.activeFilter === group ? 'active' : ''}`;
+                btn.textContent = group;
+                btn.onclick = () => { AppState.activeFilter = group; renderFilters(); renderExercises(); };
+                DOM.filterContainer.appendChild(btn);
+            });
+        }
+
+        function renderExercises() {
+            const searchTerm = DOM.searchInput.value.toLowerCase();
+            const groupProp = AppState.lang === 'ar' ? 'groupAr' : 'groupEn';
+            const nameProp = AppState.lang === 'ar' ? 'nameAr' : 'nameEn';
+            const ytText = translations[AppState.lang].btnYT;
+
+            const filtered = exercises.filter(ex => {
+                const matchSearch = ex[nameProp].toLowerCase().includes(searchTerm) || ex.nameEn.toLowerCase().includes(searchTerm);
+                const matchGroup = AppState.activeFilter === 'All' || ex[groupProp] === AppState.activeFilter;
+                return matchSearch && matchGroup;
+            });
+
+            DOM.grid.innerHTML = '';
+            
+            filtered.forEach(ex => {
+                const ytLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(ex.nameEn + ' exercise form')}`;
+                const card = `
+                    <article class="card glass-panel">
+                        <div class="card-media">
+                            ${ex.image ? `<img src="${ex.image}" alt="${ex[nameProp]}" loading="lazy">` : ''}
+                            <i class="fa-solid ${ex.icon}"></i>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${ex[nameProp]}</h3>
+                            <div class="card-meta">
+                                <span class="badge">${ex[groupProp]}</span>
+                                <span><i class="fa-solid fa-rotate-right"></i> ${ex.sets}</span>
+                            </div>
+                            <div class="card-footer">
+                                <a href="${ytLink}" target="_blank" rel="noopener" class="btn btn-secondary">
+                                    <i class="fa-brands fa-youtube" style="color:var(--danger)"></i> ${ytText}
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                DOM.grid.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        /**
+         * 6. AI PLANNER LOGIC
+         */
+        DOM.engineSelect.addEventListener('change', (e) => {
+            DOM.apiPanel.style.display = e.target.value === 'gemini' ? 'block' : 'none';
+        });
+
+        DOM.apiKeyInput.value = AppState.apiKey;
+        DOM.apiKeyInput.addEventListener('change', (e) => {
+            AppState.apiKey = e.target.value;
+            localStorage.setItem('stp_apiKey', AppState.apiKey);
+        });
+
+        // Local Algorithm Fallback
+        function generateLocalPlan(params) {
+            const { goal, level, days, focus } = params;
+            const isAr = AppState.lang === 'ar';
+            
+            let plan = isAr 
+                ? `خطة التدريب المحلية\n\nالهدف: ${goal}\nالمستوى: ${level}\nالأيام: ${days}\nالتركيز: ${focus}\n\n`
+                : `Local Training Plan\n\nGoal: ${goal}\nLevel: ${level}\nDays: ${days}\nFocus: ${focus}\n\n`;
+
+            for(let i=1; i<=days; i++) {
+                plan += isAr ? `### اليوم ${i} - تمرين عام\n` : `### Day ${i} - General Workout\n`;
+                // Grab 3-4 random exercises based on focus
+                const shuffled = [...exercises].sort(() => 0.5 - Math.random());
+                const dailyEx = shuffled.slice(0, 4);
+                dailyEx.forEach(ex => {
+                    const name = isAr ? ex.nameAr : ex.nameEn;
+                    plan += `- ${name} (${ex.sets})\n`;
+                });
+                plan += '\n';
+            }
+            return plan;
+        }
+
+        async function handleGenerate() {
+            const params = {
+                goal: document.getElementById('planGoal').options[document.getElementById('planGoal').selectedIndex].text,
+                level: document.getElementById('planLevel').options[document.getElementById('planLevel').selectedIndex].text,
+                days: document.getElementById('planDays').value,
+                focus: document.getElementById('planFocus').options[document.getElementById('planFocus').selectedIndex].text,
+                engine: DOM.engineSelect.value
+            };
+
+            const dict = translations[AppState.lang];
+
+            if (params.engine === 'gemini' && !AppState.apiKey) {
+                alert(dict.errorApiKey);
+                return;
+            }
+
+            // UI Loading
+            DOM.generateBtn.disabled = true;
+            DOM.outputContent.innerHTML = `<div class="empty-state"><div class="spinner"></div><p style="margin-top:16px;">${dict.generating}</p></div>`;
+            DOM.saveBtn.disabled = true;
+
+            let finalPlan = "";
+
+            try {
+                if (params.engine === 'gemini') {
+                    const prompt = `Act as an elite personal trainer. Create a ${params.days}-day weekly workout plan for a ${params.level} aiming for ${params.goal} with a focus on ${params.focus}. Language must be strictly ${AppState.lang === 'ar' ? 'Arabic' : 'English'}. Format using clean text with markdown headers and bullet points. Include exercises, sets, reps, and brief rest instructions. Keep it professional and direct.`;
+                    
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${AppState.apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('API Error');
+                    const data = await response.json();
+                    finalPlan = data.candidates?.[0]?.content?.parts?.[0]?.text || "No content generated.";
+                } else {
+                    // Simulate processing time
+                    await new Promise(r => setTimeout(r, 800));
+                    finalPlan = generateLocalPlan(params);
+                }
+            } catch (err) {
+                console.error(err);
+                alert(dict.errorNetwork);
+                finalPlan = generateLocalPlan(params);
+            }
+
+            // Clean Output Display
+            DOM.outputContent.innerHTML = `<div>${finalPlan.replace(/\n/g, '<br>')}</div>`;
+            DOM.outputContent.dataset.rawPlan = finalPlan;
+            
+            DOM.generateBtn.disabled = false;
+            DOM.saveBtn.disabled = false;
+        }
+
+        DOM.generateBtn.addEventListener('click', handleGenerate);
+
+        /**
+         * 7. SAVED PLANS LOGIC
+         */
+        DOM.saveBtn.addEventListener('click', () => {
+            const rawPlan = DOM.outputContent.dataset.rawPlan;
+            if(!rawPlan) return;
+
+            const title = AppState.lang === 'ar' ? `خطة جديدة - ${new Date().toLocaleDateString()}` : `New Plan - ${new Date().toLocaleDateString()}`;
+            
+            const newPlan = {
+                id: Date.now(),
+                title: title,
+                date: new Date().toLocaleDateString(),
+                content: rawPlan
+            };
+
+            AppState.savedPlans.unshift(newPlan);
+            localStorage.setItem('stp_plans', JSON.stringify(AppState.savedPlans));
+            
+            renderSavedPlans();
+            
+            // Provide visual feedback
+            const originalIcon = DOM.saveBtn.innerHTML;
+            DOM.saveBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+            setTimeout(() => { DOM.saveBtn.innerHTML = originalIcon; }, 2000);
+        });
+
+        window.deletePlan = function(id) {
+            AppState.savedPlans = AppState.savedPlans.filter(p => p.id !== id);
+            localStorage.setItem('stp_plans', JSON.stringify(AppState.savedPlans));
+            renderSavedPlans();
+        };
+
+        window.copyPlan = function(id) {
+            const plan = AppState.savedPlans.find(p => p.id === id);
+            if(plan) {
+                navigator.clipboard.writeText(plan.content).then(() => {
+                    alert(AppState.lang === 'ar' ? 'تم النسخ!' : 'Copied to clipboard!');
+                });
+            }
+        };
+
+        function renderSavedPlans() {
+            DOM.savedContainer.innerHTML = '';
+            const dict = translations[AppState.lang];
+
+            if (AppState.savedPlans.length === 0) {
+                DOM.savedContainer.innerHTML = `
+                    <div class="glass-panel" style="padding: 60px 20px; text-align: center; color: var(--text-muted);">
+                        <i class="fa-regular fa-folder-open" style="font-size: 3rem; margin-bottom: 16px;"></i>
+                        <p>${dict.noSaved}</p>
+                    </div>`;
+                return;
+            }
+
+            AppState.savedPlans.forEach(plan => {
+                const snippet = plan.content.substring(0, 80) + '...';
+                const card = `
+                    <div class="saved-plan-card glass-panel">
+                        <div class="saved-plan-info">
+                            <h3>${plan.title}</h3>
+                            <p>${snippet}</p>
+                        </div>
+                        <div class="saved-plan-actions">
+                            <button onclick="copyPlan(${plan.id})" class="btn btn-secondary" title="${dict.btnCopy}">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                            <button onclick="deletePlan(${plan.id})" class="btn btn-secondary" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.3);" title="${dict.btnDelete}">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                DOM.savedContainer.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        /**
+         * 8. PWA LOGIC
+         */
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('installBtn');
+            installBtn.style.display = 'flex';
+            
+            installBtn.addEventListener('click', async () => {
+                installBtn.style.display = 'none';
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            });
+        });
+
+        // Dummy Service Worker Registration for PWA compliance
+        if ('serviceWorker' in navigator) {
+            // navigator.serviceWorker.register('/sw.js');
+        }
+
+        /**
+         * 9. INITIALIZATION
+         */
+        function init() {
+            // Bind Events
+            DOM.langBtn.addEventListener('click', toggleLanguage);
+            DOM.themeBtn.addEventListener('click', toggleTheme);
+            DOM.tabs.forEach(t => t.addEventListener('click', handleTabs));
+            DOM.searchInput.addEventListener('input', renderExercises);
+
+            // Set Initial State
+            applyTheme();
+            applyTranslations();
+            
+            // Show engine selection based on saved key
+            if (AppState.apiKey) {
+                DOM.engineSelect.value = 'gemini';
+                DOM.apiPanel.style.display = 'block';
+            }
+        }
+
+        // Run App
+        init();
+
+    </script>
 </body>
 </html>
