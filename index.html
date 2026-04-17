@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Smart Trainer Pro | مدربك الذكي - Your ultimate AI fitness companion.">
+    <meta name="description" content="Abu Fowzan Trainer | مدرب أبو فوزان - Customized Home Gym AI Companion.">
     <meta name="theme-color" content="#0b0f19">
-    <title>Smart Trainer Pro | مدربك الذكي</title>
+    <title>Abu Fowzan Trainer | مدرب أبو فوزان</title>
     
     <!-- Google Fonts: Inter for English, Cairo for Arabic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,7 +99,6 @@
             transition: background var(--transition-smooth), color var(--transition-smooth);
         }
 
-        /* Arabic Typography Override */
         html[dir="rtl"] body { font-family: var(--font-ar); }
         html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 { letter-spacing: 0; }
 
@@ -120,6 +119,29 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
             transition: var(--transition-smooth);
+        }
+
+        .warning-card {
+            padding: 24px;
+            border-left: 4px solid var(--danger);
+            background: rgba(239, 68, 68, 0.05);
+            border-radius: var(--radius-md);
+            margin-bottom: 30px;
+        }
+        
+        html[dir="rtl"] .warning-card {
+            border-left: none;
+            border-right: 4px solid var(--danger);
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--danger);
         }
 
         /* ==========================================================================
@@ -194,7 +216,6 @@
            MAIN CONTENT & TABS
            ========================================================================== */
         main {
-            padding-top: 40px;
             padding-bottom: 80px;
         }
 
@@ -204,7 +225,7 @@
             margin-bottom: 40px;
             overflow-x: auto;
             padding-bottom: 8px;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
         .nav-tabs::-webkit-scrollbar { display: none; }
 
@@ -256,7 +277,7 @@
            ========================================================================== */
         .hero {
             text-align: center;
-            padding: 40px 0 60px;
+            padding: 40px 0 40px;
             position: relative;
         }
         
@@ -278,7 +299,7 @@
         }
 
         /* ==========================================================================
-           EXERCISE LIBRARY (CARDS & FILTERS)
+           EXERCISE LIBRARY
            ========================================================================== */
         .toolbar {
             display: flex;
@@ -416,6 +437,29 @@
             color: var(--text-secondary);
         }
 
+        .card-alert {
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 3px solid var(--danger);
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.85rem;
+            color: #f87171;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            line-height: 1.4;
+        }
+        
+        html[data-theme="light"] .card-alert { color: #b91c1c; }
+        html[dir="rtl"] .card-alert {
+            border-left: none;
+            border-right: 3px solid var(--danger);
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+        }
+
+        .card-alert i { color: var(--danger); margin-top: 2px; }
+
         .badge {
             background: rgba(0, 242, 254, 0.1);
             color: var(--accent-primary);
@@ -449,7 +493,7 @@
 
         .btn-primary {
             background: var(--accent-gradient);
-            color: #fff;
+            color: #000;
         }
 
         .btn-primary:hover {
@@ -471,171 +515,80 @@
         /* ==========================================================================
            AI PLANNER SECTION
            ========================================================================== */
-        .planner-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        @media (min-width: 992px) {
-            .planner-grid { grid-template-columns: 350px 1fr; }
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
+        .planner-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 992px) { .planner-grid { grid-template-columns: 350px 1fr; } }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary); }
         .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--surface-2);
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition-fast);
+            width: 100%; padding: 12px 16px; background: var(--surface-2);
+            border: 1px solid var(--surface-border); border-radius: var(--radius-md);
+            color: var(--text-primary); font-family: inherit; font-size: 1rem; transition: var(--transition-fast);
         }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-
+        .form-control:focus { outline: none; border-color: var(--accent-primary); }
         select.form-control {
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 16px;
+            background-repeat: no-repeat; background-position: right 16px center; background-size: 16px;
         }
-        html[dir="rtl"] select.form-control {
-            background-position: left 16px center;
-        }
+        html[dir="rtl"] select.form-control { background-position: left 16px center; }
+        
+        .api-key-panel { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px; }
+        .planner-output { background: var(--surface-1); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); min-height: 400px; display: flex; flex-direction: column; overflow: hidden; }
+        .output-header { padding: 20px; border-bottom: 1px solid var(--surface-border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-2); }
+        .output-content { padding: 24px; flex: 1; overflow-y: auto; white-space: pre-wrap; font-size: 1.05rem; line-height: 1.8; }
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); text-align: center; padding: 40px; opacity: 0.6; }
+        .empty-state i { font-size: 4rem; margin-bottom: 16px; }
 
-        .api-key-panel {
-            background: rgba(239, 68, 68, 0.05);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 16px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-        }
-
-        .planner-output {
-            background: var(--surface-1);
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius-lg);
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .output-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--surface-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--surface-2);
-        }
-
-        .output-content {
-            padding: 24px;
-            flex: 1;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            font-size: 1.05rem;
-            line-height: 1.8;
-        }
-
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 40px;
-            opacity: 0.6;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 16px;
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
+        .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ==========================================================================
            SAVED PLANS SECTION
            ========================================================================== */
         .saved-plan-card {
+            display: flex;
+            flex-direction: column;
             padding: 24px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .saved-plan-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .saved-plan-info h3 {
-            margin-bottom: 4px;
-        }
-        
-        .saved-plan-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
-        .saved-plan-actions {
-            display: flex;
-            gap: 10px;
+        .saved-plan-info h3 { margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .saved-plan-actions { display: flex; gap: 10px; }
+        
+        .saved-plan-body {
+            background: var(--bg-base);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--surface-border);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
         }
 
         /* ==========================================================================
            FOOTER
            ========================================================================== */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid var(--surface-border);
-            color: var(--text-muted);
-            margin-top: 40px;
-        }
-
+        footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--surface-border); color: var(--text-muted); margin-top: 40px; }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-         HEADER
-         ========================================================================== -->
+    <!-- HEADER -->
     <header>
         <div class="container header-content">
             <a href="#" class="brand">
                 <i class="fa-solid fa-dumbbell brand-icon"></i>
-                <span data-i18n="brandName">Smart Trainer Pro</span>
+                <span data-i18n="brandName">Abu Fowzan Trainer</span>
             </a>
-            
             <div class="header-controls">
                 <button class="icon-btn" id="langToggle" title="Toggle Language" aria-label="Toggle Language">
                     <i class="fa-solid fa-language"></i>
@@ -643,23 +596,30 @@
                 <button class="icon-btn" id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <button class="icon-btn" id="installBtn" style="display: none;" title="Install App" aria-label="Install App">
-                    <i class="fa-solid fa-download"></i>
-                </button>
             </div>
         </div>
     </header>
 
-    <!-- ==========================================================================
-         MAIN CONTENT
-         ========================================================================== -->
+    <!-- MAIN CONTENT -->
     <main class="container">
         
         <!-- Hero Section -->
         <section class="hero" aria-labelledby="hero-title">
-            <h1 id="hero-title" data-i18n="heroTitle">Elevate Your Training</h1>
-            <p data-i18n="heroSub">Your ultimate AI-powered fitness companion. Browse exercises, generate intelligent plans, and track your growth.</p>
+            <h1 id="hero-title" data-i18n="heroTitle">Customized for Abu Fowzan</h1>
+            <p data-i18n="heroSub">Your ultimate home fitness companion. Plans perfectly matched to your Multi-Gym, Bench, Bar, and Dumbbells.</p>
         </section>
+
+        <!-- CLINICAL MEDICAL WARNING CARD -->
+        <div class="warning-card glass-panel">
+            <div class="warning-header">
+                <i class="fa-solid fa-notes-medical"></i> <span data-i18n="medicalAlert">Medical Protocol (L4-L5 & Kidneys)</span>
+            </div>
+            <ul style="margin-inline-start: 24px; margin-top: 10px; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8;">
+                <li data-i18n="l4l5Rule1">Strictly NO standing overhead presses. Always sit with back support.</li>
+                <li data-i18n="l4l5Rule2">Strictly NO standard Barbell Squats or Deadlifts. Use Dumbbell Goblet Squats and Core stabilization.</li>
+                <li data-i18n="kidneyRule">Drink 3-4 Liters of water daily to prevent kidney stones.</li>
+            </ul>
+        </div>
 
         <!-- Navigation Tabs -->
         <nav class="nav-tabs" role="tablist" aria-label="Main Navigation">
@@ -681,21 +641,14 @@
                     <i class="fa-solid fa-search"></i>
                     <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="searchPlaceholder" placeholder="Search exercises...">
                 </div>
-                <div class="filter-chips" id="filterContainer">
-                    <!-- Filters generated by JS -->
-                </div>
+                <div class="filter-chips" id="filterContainer"></div>
             </div>
-            
-            <div class="grid-layout" id="exerciseGrid" aria-live="polite">
-                <!-- Cards generated by JS -->
-            </div>
+            <div class="grid-layout" id="exerciseGrid" aria-live="polite"></div>
         </section>
 
         <!-- TAB: AI PLANNER -->
         <section id="planner" class="tab-content" role="tabpanel">
             <div class="planner-grid">
-                
-                <!-- Planner Controls -->
                 <aside class="glass-panel" style="padding: 24px;">
                     <h2 style="margin-bottom: 24px;" data-i18n="plannerTitle">Plan Parameters</h2>
                     
@@ -739,7 +692,7 @@
                     <div class="form-group">
                         <label class="form-label" data-i18n="lblEngine">Generation Engine</label>
                         <select id="planEngine" class="form-control">
-                            <option value="local" data-i18n="optLocal">Local Algorithm (Fast)</option>
+                            <option value="local" data-i18n="optLocal">Local Protocol (PDF Schedule)</option>
                             <option value="gemini" data-i18n="optGemini">Gemini AI (Smart)</option>
                         </select>
                     </div>
@@ -755,7 +708,6 @@
                     </button>
                 </aside>
 
-                <!-- Planner Output -->
                 <article class="planner-output">
                     <div class="output-header">
                         <h3 data-i18n="outputTitle">Your Plan</h3>
@@ -770,7 +722,6 @@
                         </div>
                     </div>
                 </article>
-
             </div>
         </section>
 
@@ -783,19 +734,15 @@
 
     </main>
 
-    <!-- ==========================================================================
-         FOOTER
-         ========================================================================== -->
+    <!-- FOOTER -->
     <footer>
         <div class="container">
-            <p>&copy; <span id="year"></span> Smart Trainer Pro | مدربك الذكي</p>
+            <p>&copy; <span id="year"></span> Abu Fowzan Trainer | مدرب أبو فوزان</p>
             <p style="font-size: 0.85rem; margin-top: 8px; opacity: 0.7;">Powered by Local Algorithms & Gemini AI</p>
         </div>
     </footer>
 
-    <!-- ==========================================================================
-         JAVASCRIPT APPLICATION LOGIC
-         ========================================================================== -->
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -810,6 +757,10 @@
                 tabSaved: "Saved Plans",
                 heroTitle: "Customized for Abu Fowzan",
                 heroSub: "Your ultimate home fitness companion. Plans perfectly matched to your Multi-Gym, Bench, Bar, and Dumbbells.",
+                medicalAlert: "Medical Protocol (L4-L5 & Kidneys)",
+                l4l5Rule1: "Strictly NO standing overhead presses. Always sit with back support.",
+                l4l5Rule2: "Strictly NO standard Barbell Squats or Deadlifts. Use Dumbbell Goblet Squats and Core stabilization.",
+                kidneyRule: "Drink 3-4 Liters of water daily to prevent kidney stones.",
                 searchPlaceholder: "Search exercises...",
                 filterAll: "All Muscles",
                 btnYT: "Watch Tutorial",
@@ -828,7 +779,7 @@
                 optUpper: "Upper Body",
                 optLower: "Lower Body",
                 lblEngine: "Generation Engine",
-                optLocal: "Local Algorithm (Fast)",
+                optLocal: "Local Protocol (PDF Schedule)",
                 optGemini: "Gemini AI (Smart)",
                 lblApiKey: "Gemini API Key",
                 apiHelp: "Required for AI generation. Stored safely in your browser.",
@@ -850,6 +801,10 @@
                 tabSaved: "الخطط المحفوظة",
                 heroTitle: "مخصص لأبو فوزان",
                 heroSub: "رفيقك الرياضي المنزلي. خطط مخصصة تتناسب تماماً مع أجهزتك المنزلية والدمبلز.",
+                medicalAlert: "البروتوكول الطبي (ديسك L4-L5 والكلى)",
+                l4l5Rule1: "يُمنع تماماً ضغط الأكتاف وقوفاً. اجلس دائماً مع إسناد الظهر.",
+                l4l5Rule2: "يُمنع تماماً السكوات والرفعة المميتة بالبار. استخدم Goblet Squat وتمارين الكور كبديل آمن.",
+                kidneyRule: "اشرب 3-4 لتر من الماء يومياً لمنع ترسب حصوات الكلى.",
                 searchPlaceholder: "ابحث عن تمرين...",
                 filterAll: "جميع العضلات",
                 btnYT: "شرح الفيديو",
@@ -868,7 +823,7 @@
                 optUpper: "الجزء العلوي",
                 optLower: "الجزء السفلي",
                 lblEngine: "محرك الذكاء",
-                optLocal: "خوارزمية محلية (سريع)",
+                optLocal: "جدول PDF المحلي (مخصص)",
                 optGemini: "ذكاء Gemini (دقيق)",
                 lblApiKey: "مفتاح API لـ Gemini",
                 apiHelp: "مطلوب لتوليد الخطط بالذكاء الاصطناعي. يُحفظ في متصفحك بأمان.",
@@ -886,10 +841,10 @@
         };
 
         /**
-         * 2. MOCK EXERCISE DATABASE
+         * 2. MOCK EXERCISE DATABASE (53 Exercises)
          */
         const exercises = [
-            // CHEST (Using Bench, Dumbbells, Machine)
+            // CHEST
             { id: 1, nameEn: "Dumbbell Flat Bench Press", nameAr: "ضغط صدر مستوي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "4x8-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
             { id: 2, nameEn: "Dumbbell Incline Press", nameAr: "ضغط صدر عالي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
             { id: 3, nameEn: "Dumbbell Flat Flyes", nameAr: "تفتيح صدر مستوي بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
@@ -901,53 +856,58 @@
             { id: 9, nameEn: "Close-Grip Dumbbell Press", nameAr: "ضغط صدر ضيق بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
             { id: 10, nameEn: "Dumbbell Floor Press", nameAr: "ضغط صدر على الأرض بالدمبلز", groupEn: "Chest", groupAr: "صدر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80" },
 
-            // BACK (Using Doorway bar, Dumbbells, Barbell, Machine)
+            // BACK
             { id: 11, nameEn: "Doorway Bar Pull-ups", nameAr: "عقلة بالبار المنزلي", groupEn: "Back", groupAr: "ظهر", sets: "4x8-12", icon: "fa-arrows-up-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
             { id: 12, nameEn: "Doorway Bar Chin-ups", nameAr: "عقلة قبضة ضيقة", groupEn: "Back", groupAr: "ظهر", sets: "4x8-12", icon: "fa-arrows-up-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
             { id: 13, nameEn: "Machine Lat Pulldown", nameAr: "سحب ظهر واسع بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "4x12", icon: "fa-arrows-down-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 14, nameEn: "Dumbbell Bent-Over Row", nameAr: "تجديف بالدمبلز", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 15, nameEn: "Barbell Bent-Over Row", nameAr: "تجديف بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 16, nameEn: "Single-Arm Dumbbell Row", nameAr: "تجديف دمبل ذراع واحدة على البنش", groupEn: "Back", groupAr: "ظهر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 14, nameEn: "Dumbbell Bent-Over Row", nameAr: "تجديف بالدمبلز", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80", warningEn: "High Risk for L4-L5: Keep back completely straight. Stop if you feel lower back pressure.", warningAr: "تنبيه مهم: حافظ على ظهرك مستقيماً تماماً. توقف فوراً عند الشعور بضغط على أسفل الظهر لحماية الديسك." },
+            { id: 15, nameEn: "Barbell Bent-Over Row", nameAr: "تجديف بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80", warningEn: "High Risk for L4-L5: Avoid heavy weight. Keep spine neutral and avoid rounding.", warningAr: "تنبيه مهم: تجنب الأوزان الثقيلة في هذا التمرين. حافظ على استقامة العمود الفقري وتجنب التقويس نهائياً." },
+            { id: 16, nameEn: "Single-Arm Dumbbell Row", nameAr: "تجديف دمبل ذراع واحدة (دعم على البنش)", groupEn: "Back", groupAr: "ظهر", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
             { id: 17, nameEn: "Machine Seated Cable Row", nameAr: "سحب أرضي بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "4x10-12", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 18, nameEn: "Barbell Deadlift", nameAr: "رفعة مميتة بالبار", groupEn: "Back", groupAr: "ظهر", sets: "4x5-8", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 19, nameEn: "Dumbbell Deadlift", nameAr: "رفعة مميتة بالدمبلز", groupEn: "Back", groupAr: "ظهر", sets: "4x8-10", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
-            { id: 20, nameEn: "Machine Straight-Arm Pulldown", nameAr: "سحب مستقيم بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 18, nameEn: "Machine Straight-Arm Pulldown", nameAr: "سحب مستقيم بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 19, nameEn: "Reverse-Grip Lat Pulldown", nameAr: "سحب ظهر مقلوب بالجهاز", groupEn: "Back", groupAr: "ظهر", sets: "4x10-12", icon: "fa-arrows-down-to-line", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
+            { id: 20, nameEn: "Chest-Supported Dumbbell Row", nameAr: "تجديف دمبلز مع الاستناد على البنش", groupEn: "Back", groupAr: "ظهر", sets: "4x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=600&q=80" },
 
-            // SHOULDERS (Using Bench, Dumbbells, Barbell, Machine)
-            { id: 21, nameEn: "Seated Dumbbell Shoulder Press", nameAr: "ضغط أكتاف بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 22, nameEn: "Standing Barbell Overhead Press", nameAr: "ضغط أكتاف بالبار وقوفاً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            // SHOULDERS
+            { id: 21, nameEn: "Seated Dumbbell Shoulder Press", nameAr: "ضغط أكتاف بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80", warningEn: "Always sit with your back fully supported against the bench. Do NOT arch lower back.", warningAr: "تنبيه لسلامتك: اجلس دائماً مع إسناد ظهرك بالكامل على البنش. يُمنع تماماً تقويس أسفل الظهر لرفع وزن أعلى." },
+            { id: 22, nameEn: "Seated Barbell Overhead Press", nameAr: "ضغط أكتاف بالبار جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x8-10", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80", warningEn: "Always sit with your back fully supported against the bench. Do NOT arch lower back.", warningAr: "تنبيه لسلامتك: اجلس دائماً مع إسناد ظهرك بالكامل على البنش. يُمنع تماماً تقويس أسفل الظهر لرفع وزن أعلى." },
             { id: 23, nameEn: "Dumbbell Lateral Raises", nameAr: "رفرفة جانبية بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
             { id: 24, nameEn: "Dumbbell Front Raises", nameAr: "رفرفة أمامية بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 25, nameEn: "Barbell Upright Row", nameAr: "سحب عمودي بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 25, nameEn: "Barbell Upright Row", nameAr: "سحب عمودي بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80", warningEn: "Keep weights close to body. Avoid if you feel shoulder impingement.", warningAr: "أبقِ الوزن قريباً من جسمك. تجنب التمرين إذا شعرت بألم في مفصل الكتف." },
             { id: 26, nameEn: "Seated Dumbbell Rear Delt Flyes", nameAr: "رفرفة خلفي بالدمبلز جلوساً", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrows-left-right", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
             { id: 27, nameEn: "Dumbbell Shrugs", nameAr: "ترابيس بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
             { id: 28, nameEn: "Barbell Shrugs", nameAr: "ترابيس بالبار", groupEn: "Shoulders", groupAr: "أكتاف", sets: "4x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
             { id: 29, nameEn: "Cable Upright Row", nameAr: "سحب عمودي بالكيبل", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
-            { id: 30, nameEn: "Dumbbell Arnold Press", nameAr: "ضغط أرنولد بالدمبلز", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80" },
+            { id: 30, nameEn: "Seated Arnold Press", nameAr: "ضغط أرنولد جالس", groupEn: "Shoulders", groupAr: "أكتاف", sets: "3x10-12", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80", warningEn: "Requires strong core control. Keep back pressed against pad to avoid spinal load.", warningAr: "يتطلب تحكم قوي بالكور. أبقِ ظهرك مسنداً لتجنب التحميل الخاطئ على العمود الفقري." },
 
-            // LEGS (Using Bench Leg Developer, Dumbbells, Barbell)
-            { id: 31, nameEn: "Dumbbell Goblet Squat", nameAr: "سكوات أمامي بالدمبل", groupEn: "Legs", groupAr: "أرجل", sets: "4x8-10", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            // LEGS
+            { id: 31, nameEn: "Dumbbell Goblet Squat", nameAr: "سكوات أمامي بالدمبل", groupEn: "Legs", groupAr: "أرجل", sets: "4x8-10", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80", warningEn: "Keep torso upright. Do NOT round your lower back at the bottom of the movement.", warningAr: "توصية هامة: حافظ على استقامة الجذع تماماً. لا تقم بتقويس أسفل ظهرك (Butt wink) في أدنى نقطة من النزول لتجنب انضغاط الديسك." },
             { id: 32, nameEn: "Dumbbell Lunges", nameAr: "طعن بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "4x12-15", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
             { id: 33, nameEn: "Bench Leg Extensions", nameAr: "رفرفة أرجل أمامية على البنش", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
             { id: 34, nameEn: "Bench Lying Leg Curls", nameAr: "رفرفة أرجل خلفية على البنش", groupEn: "Legs", groupAr: "أرجل", sets: "3x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
             { id: 35, nameEn: "Dumbbell Bulgarian Split Squat", nameAr: "سكوات بلغاري بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 36, nameEn: "Barbell Romanian Deadlift", nameAr: "رفعة رومانية بالبار", groupEn: "Legs", groupAr: "أرجل", sets: "4x10-12", icon: "fa-person-arrow-up-from-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 37, nameEn: "Standing Calf Raises with Dumbbells", nameAr: "سمانة وقوف بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 38, nameEn: "Dumbbell Step-ups on Bench", nameAr: "صعود على البنش بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x12", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 39, nameEn: "Dumbbell Sumo Squat", nameAr: "سومو سكوات بالدمبل", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-            { id: 40, nameEn: "Dumbbell Glute Bridges", nameAr: "كوبري بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x15", icon: "fa-person-praying", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 36, nameEn: "Standing Calf Raises with Dumbbells", nameAr: "سمانة وقوف بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 37, nameEn: "Dumbbell Step-ups on Bench", nameAr: "صعود على البنش بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x12", icon: "fa-person-walking", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 38, nameEn: "Dumbbell Sumo Squat", nameAr: "سومو سكوات بالدمبل", groupEn: "Legs", groupAr: "أرجل", sets: "3x10-12", icon: "fa-person-arrow-down-to-line", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 39, nameEn: "Dumbbell Glute Bridges", nameAr: "كوبري بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "3x15", icon: "fa-person-praying", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+            { id: 40, nameEn: "Seated Calf Raises (Dumbbells on Knees)", nameAr: "سمانة جلوس بالدمبلز", groupEn: "Legs", groupAr: "أرجل", sets: "4x15-20", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
 
-            // ARMS (Using Bench Preacher Pad, Dumbbells, Barbell, Machine)
+            // ARMS
             { id: 41, nameEn: "Barbell Bicep Curl", nameAr: "مرجحة باي بالبار", groupEn: "Arms", groupAr: "أذرع", sets: "4x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
             { id: 42, nameEn: "Dumbbell Alternate Bicep Curl", nameAr: "مرجحة باي تبادلي بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "4x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
             { id: 43, nameEn: "Bench Preacher Curl", nameAr: "مرجحة ارتكاز على البنش", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
             { id: 44, nameEn: "Machine Tricep Pushdown", nameAr: "سحب تراي بالجهاز", groupEn: "Arms", groupAr: "أذرع", sets: "4x12-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 45, nameEn: "Dumbbell Overhead Tricep Extension", nameAr: "تراي خلف الرأس بالدمبل", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+            { id: 45, nameEn: "Seated Overhead Tricep Extension", nameAr: "تراي خلف الرأس جالس", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80", warningEn: "Sit back completely against the bench pad. Maintain a neutral spine.", warningAr: "اسند ظهرك بالكامل على البنش أثناء التمرين. حافظ على العمود الفقري في وضع محايد." },
             { id: 46, nameEn: "Dumbbell Concentration Curls", nameAr: "مرجحة تركيز بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
             { id: 47, nameEn: "Dumbbell Hammer Curls", nameAr: "مرجحة مطرقة بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "3x12", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
             { id: 48, nameEn: "Dumbbell Tricep Kickbacks", nameAr: "رفس تراي بالدمبلز", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-dumbbell", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
             { id: 49, nameEn: "Low Pulley Cable Bicep Curl", nameAr: "مرجحة باي بالكيبل السفلي", groupEn: "Arms", groupAr: "أذرع", sets: "3x12-15", icon: "fa-arrow-up", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
-            { id: 50, nameEn: "Bench Dips", nameAr: "متوازي تراي على البنش", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" }
+            { id: 50, nameEn: "Bench Dips", nameAr: "متوازي تراي على البنش", groupEn: "Arms", groupAr: "أذرع", sets: "3x10-15", icon: "fa-arrow-down", image: "https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=600&q=80" },
+
+            // CORE
+            { id: 51, nameEn: "Plank", nameAr: "بلانك (ثابت)", groupEn: "Core", groupAr: "كور", sets: "45-60 sec", icon: "fa-person", image: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=600&q=80" },
+            { id: 52, nameEn: "Bird Dog", nameAr: "تمرين الطائر (Bird Dog)", groupEn: "Core", groupAr: "كور", sets: "3x12", icon: "fa-child-reaching", image: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=600&q=80" },
+            { id: 53, nameEn: "Dead Bug", nameAr: "الحشرة الميتة (Dead Bug)", groupEn: "Core", groupAr: "كور", sets: "3x15", icon: "fa-bug", image: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=600&q=80", warningEn: "Press your lower back completely flat into the floor to protect your spine.", warningAr: "توصية هامة: اضغط أسفل ظهرك بالكامل على الأرض ولا تترك أي فراغ تحته لحماية فقرات L4-L5." }
         ];
 
         /**
@@ -961,28 +921,31 @@
             activeFilter: 'All'
         };
 
-        // DOM Elements
+        // Inject Plan A if it doesn't exist
+        if (!AppState.savedPlans.find(p => p.id === 'plan-a-default')) {
+            AppState.savedPlans.push({
+                id: 'plan-a-default',
+                title: 'Plan A: Back & Triceps (Custom)',
+                date: 'Permanent Plan'
+            });
+            localStorage.setItem('stp_plans', JSON.stringify(AppState.savedPlans));
+        }
+
         const DOM = {
             html: document.documentElement,
             langBtn: document.getElementById('langToggle'),
             themeBtn: document.getElementById('themeToggle'),
             tabs: document.querySelectorAll('.tab-btn'),
             panels: document.querySelectorAll('.tab-content'),
-            
-            // Library
             grid: document.getElementById('exerciseGrid'),
             filterContainer: document.getElementById('filterContainer'),
             searchInput: document.getElementById('searchInput'),
-            
-            // Planner
             engineSelect: document.getElementById('planEngine'),
             apiPanel: document.getElementById('apiPanel'),
             apiKeyInput: document.getElementById('apiKeyInput'),
             generateBtn: document.getElementById('generateBtn'),
             outputContent: document.getElementById('outputContent'),
             saveBtn: document.getElementById('savePlanBtn'),
-            
-            // Saved
             savedContainer: document.getElementById('savedContainer')
         };
 
@@ -991,24 +954,19 @@
          */
         function applyTranslations() {
             const dict = translations[AppState.lang];
-            
-            // Update direction
             DOM.html.setAttribute('dir', AppState.lang === 'ar' ? 'rtl' : 'ltr');
             DOM.html.setAttribute('lang', AppState.lang);
             
-            // Update data-i18n elements
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (dict[key]) el.textContent = dict[key];
             });
 
-            // Update placeholders
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-i18n-placeholder');
                 if (dict[key]) el.placeholder = dict[key];
             });
 
-            // Re-render dynamic content
             renderFilters();
             renderExercises();
             renderSavedPlans();
@@ -1036,10 +994,7 @@
             const targetBtn = e.currentTarget;
             const targetId = targetBtn.getAttribute('data-target');
 
-            DOM.tabs.forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
+            DOM.tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
             DOM.panels.forEach(p => p.classList.remove('active'));
 
             targetBtn.classList.add('active');
@@ -1059,7 +1014,6 @@
         function renderFilters() {
             DOM.filterContainer.innerHTML = '';
             const allText = translations[AppState.lang].filterAll;
-            
             const btnAll = document.createElement('button');
             btnAll.className = `chip ${AppState.activeFilter === 'All' ? 'active' : ''}`;
             btnAll.textContent = allText;
@@ -1088,9 +1042,11 @@
             });
 
             DOM.grid.innerHTML = '';
-            
             filtered.forEach(ex => {
                 const ytLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(ex.nameEn + ' exercise form')}`;
+                const warningProp = AppState.lang === 'ar' ? 'warningAr' : 'warningEn';
+                const alertHTML = ex[warningProp] ? `<div class="card-alert"><i class="fa-solid fa-triangle-exclamation"></i><span>${ex[warningProp]}</span></div>` : '';
+
                 const card = `
                     <article class="card glass-panel">
                         <div class="card-media">
@@ -1103,6 +1059,7 @@
                                 <span class="badge">${ex[groupProp]}</span>
                                 <span><i class="fa-solid fa-rotate-right"></i> ${ex.sets}</span>
                             </div>
+                            ${alertHTML}
                             <div class="card-footer">
                                 <a href="${ytLink}" target="_blank" rel="noopener" class="btn btn-secondary">
                                     <i class="fa-brands fa-youtube" style="color:var(--danger)"></i> ${ytText}
@@ -1128,27 +1085,13 @@
             localStorage.setItem('stp_apiKey', AppState.apiKey);
         });
 
-        // Local Algorithm Fallback
         function generateLocalPlan(params) {
-            const { goal, level, days, focus } = params;
             const isAr = AppState.lang === 'ar';
-            
-            let plan = isAr 
-                ? `خطة التدريب المحلية\n\nالهدف: ${goal}\nالمستوى: ${level}\nالأيام: ${days}\nالتركيز: ${focus}\n\n`
-                : `Local Training Plan\n\nGoal: ${goal}\nLevel: ${level}\nDays: ${days}\nFocus: ${focus}\n\n`;
-
-            for(let i=1; i<=days; i++) {
-                plan += isAr ? `### اليوم ${i} - تمرين عام\n` : `### Day ${i} - General Workout\n`;
-                // Grab 3-4 random exercises based on focus
-                const shuffled = [...exercises].sort(() => 0.5 - Math.random());
-                const dailyEx = shuffled.slice(0, 4);
-                dailyEx.forEach(ex => {
-                    const name = isAr ? ex.nameAr : ex.nameEn;
-                    plan += `- ${name} (${ex.sets})\n`;
-                });
-                plan += '\n';
+            if (isAr) {
+                return `خطة إعادة تكوين الجسم المتخصصة (تضخم العضلات وحرق الدهون)\nبروتوكول آمن لديسك L4-L5 وصحة الكلى\n\nالجمعة (سحب ظهر + بايسيبس):\n- سحب علوي واسع (Lat Pulldown): 4 × 10-12 (تمديد الفقرات)\n- تجديف جالس بالجهاز (Seated Row): 4 × 12 (ظهر مستقيم)\n- تجديف فردي بالدمبل (One Arm DB Row): 3 × 12 (دعم على البنش)\n- مرجحة بايسيبس بالبار: 3 × 12 (شد عضلات البطن)\n- هامر بالدمبلز: 3 × 12 (سماكة الذراع)\n\nالسبت (دفع صدر + أكتاف + تراي):\n- ضغط صدر بالجهاز: 4 × 10-12 (سند الظهر بالكامل)\n- صدر منحدر بالدمبلز: 3 × 10 (زاوية 45 درجة)\n- فراشة بالجهاز (Pec Deck): 3 × 15 (عصر العضلة)\n- أكتاف جالس بالدمبلز: 3 × 10 (حماية الفقرات)\n- رفرفة جانبي بالدمبلز: 4 × 15 (عرض الأكتاف)\n- تراي بالكيبل (Pushdown): 4 × 12 (ثبات المرفقين)\n\nالأحد (أرجل + كور):\n- رفرفة أمامي (Leg Extensions): 4 × 15-20 (عزل الفخذ)\n- رفرفة خلفي جالس (Leg Curls): 4 × 15 (عضلات خلفية)\n- سكوات بالدمبل (Goblet Squat): 3 × 12 (دمبل أمام الصدر)\n- بلانك (Plank) ثابت: 45-60 ثانية (تقوية الحزام)\n- تمرين الطائر (Bird Dog): 3 × 12 (استقرار الديسك)\n\nالاثنين (راحة إيجابية):\n- مشي سريع 30-45 دقيقة (شرب 4 لتر ماء)\n\nالثلاثاء (علوي شامل):\n- سحب ضيق (Close-grip Pulldown): 4 × 10 (سماكة الظهر)\n- صدر مسطح بالدمبلز: 4 × 10 (توازن القوة)\n- رفرفة جانبي جالس: 3 × 15 (تركيز على الأكتاف)\n- ترابيس بالدمبلز (Shrugs): 3 × 12 (تحسين القوام)\n- تبادل تركيز بالدمبل (Concentration Curls): 3 × 12 (رسم البايسيبس)\n- تراي خلف الرأس جالس: 3 × 12 (سند الظهر بالبنش)\n\nالأربعاء (أرجل + كور + كارديو):\n- سكوات بلغاري بالدمبلز: 3 × 10 لكل رجل (تشكيل الأرجل)\n- بطات جالس (Calf Raises): 4 × 20 (عضلات السمانة)\n- الحشرة الميتة (Dead Bug): 3 × 15 (أهم تمرين للديسك)\n- مشي منحدر: 20 دقيقة (حرق دهون)\n\nالخميس (راحة تامة):\n- استشفاء عضلي كامل، ترطيب وتغذية\n`;
+            } else {
+                return `Specialized Body Recomposition Plan (Hypertrophy & Fat Loss)\nSafe Protocol for L4-L5 Disc & Kidney Health\n\nFriday (Back + Biceps):\n- Lat Pulldown: 4 x 10-12 (Extend vertebrae)\n- Seated Machine Row: 4 x 12 (Straight back)\n- One Arm DB Row: 3 x 12 (Bench Supported)\n- Barbell Bicep Curls: 3 x 12 (Tight core)\n- Hammer Curls: 3 x 12 (Arm thickness)\n\nSaturday (Chest + Shoulders + Triceps):\n- Machine Chest Press: 4 x 10-12 (Full back support)\n- Incline DB Press: 3 x 10 (45-degree angle)\n- Pec Deck Flye: 3 x 15 (Squeeze muscle)\n- Seated DB Shoulder Press: 3 x 10 (Protect spine)\n- Lateral Raise: 4 x 15 (Shoulder width)\n- Triceps Pushdown: 4 x 12 (Fixed elbows)\n\nSunday (Legs + Core):\n- Leg Extensions: 4 x 15-20 (Quad isolation)\n- Seated Leg Curls: 4 x 15 (Hamstrings)\n- DB Goblet Squat: 3 x 12 (DB at chest)\n- Plank: 45-60 seconds (Core belt strength)\n- Bird Dog: 3 x 12 (Disc stabilization)\n\nMonday (Active Rest):\n- Brisk Walk 30-45 mins (Drink 4L of water)\n\nTuesday (Upper Body Mix):\n- Close-grip Lat Pulldown: 4 x 10 (Back thickness)\n- DB Flat Bench Press: 4 x 10 (Strength balance)\n- Seated DB Side Raise: 3 x 15 (Shoulder focus)\n- DB Shrugs: 3 x 12 (Posture improvement)\n- Concentration Curls: 3 x 12 (Bicep peak)\n- Seated Overhead DB Extension: 3 x 12 (Bench supported)\n\nWednesday (Legs + Core + Cardio):\n- Bulgarian Split Squats: 3 x 10 per leg (Leg shaping)\n- Seated Calf Raises: 4 x 20 (Calves)\n- Dead Bug: 3 x 15 (Crucial disc exercise)\n- Incline Walk: 20 mins (Fat burning)\n\nThursday (Total Rest):\n- Full muscle recovery, hydration, and nutrition\n`;
             }
-            return plan;
         }
 
         async function handleGenerate() {
@@ -1163,11 +1106,9 @@
             const dict = translations[AppState.lang];
 
             if (params.engine === 'gemini' && !AppState.apiKey) {
-                alert(dict.errorApiKey);
-                return;
+                alert(dict.errorApiKey); return;
             }
 
-            // UI Loading
             DOM.generateBtn.disabled = true;
             DOM.outputContent.innerHTML = `<div class="empty-state"><div class="spinner"></div><p style="margin-top:16px;">${dict.generating}</p></div>`;
             DOM.saveBtn.disabled = true;
@@ -1176,21 +1117,16 @@
 
             try {
                 if (params.engine === 'gemini') {
-                    const prompt = `Act as an elite personal trainer. Create a ${params.days}-day weekly workout plan for a ${params.level} aiming for ${params.goal} with a focus on ${params.focus}. Language must be strictly ${AppState.lang === 'ar' ? 'Arabic' : 'English'}. Format using clean text with markdown headers and bullet points. Include exercises, sets, reps, and brief rest instructions. Keep it professional and direct.`;
+                    const prompt = `Act as an elite personal trainer for Abu Fowzan. Create a ${params.days}-day weekly workout plan aiming for ${params.goal}. CRITICAL CLINICAL RULES: Patient has L4-L5 disc herniation and history of kidney stones. STRICTLY FORBIDDEN: Standing overhead presses, conventional barbell squats, and conventional deadlifts. MUST USE: Seated overhead presses, DB Goblet Squats, and core stabilization (Plank, Bird Dog, Dead Bug). MUST MENTION: Drinking 3-4L of water daily. Language must be strictly ${AppState.lang === 'ar' ? 'Arabic' : 'English'}. Format using clean text with markdown headers and bullet points. Keep it professional.`;
                     
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${AppState.apiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: prompt }] }]
-                        })
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                     });
-
                     if (!response.ok) throw new Error('API Error');
                     const data = await response.json();
                     finalPlan = data.candidates?.[0]?.content?.parts?.[0]?.text || "No content generated.";
                 } else {
-                    // Simulate processing time
                     await new Promise(r => setTimeout(r, 800));
                     finalPlan = generateLocalPlan(params);
                 }
@@ -1200,10 +1136,8 @@
                 finalPlan = generateLocalPlan(params);
             }
 
-            // Clean Output Display
             DOM.outputContent.innerHTML = `<div>${finalPlan.replace(/\n/g, '<br>')}</div>`;
             DOM.outputContent.dataset.rawPlan = finalPlan;
-            
             DOM.generateBtn.disabled = false;
             DOM.saveBtn.disabled = false;
         }
@@ -1211,27 +1145,80 @@
         DOM.generateBtn.addEventListener('click', handleGenerate);
 
         /**
-         * 7. SAVED PLANS LOGIC
+         * 7. SAVED PLANS LOGIC & PLAN A GENERATOR
          */
+        
+        // This dynamically builds the beautiful HTML for Plan A in the correct language with YouTube URLs
+        function getPlanAContent() {
+            const isAr = AppState.lang === 'ar';
+            const mainTitle = isAr ? "التمارين الأساسية لليوم" : "Today's Main Workout";
+            const optTitle = isAr ? "تمارين اختيارية" : "Optional Exercises";
+            const noteTitle = isAr ? "ملاحظة لسلامة الظهر:" : "Back-safety note:";
+            const noteText = isAr ? "لحالتك الصحية، يُفضل الجلوس مع إسناد الظهر والتحكم بالحركة. توقف فوراً إذا شعرت بألم في الظهر، أو خدر. الراحة: 45-75 ثانية بين المجموعات." : "For your condition, seated support and controlled motion are preferred. Stop if a movement causes back pain, radiating pain, or numbness. Rest: 45–75 seconds between sets.";
+            const btnText = isAr ? "شرح" : "Tutorial";
+
+            const planA_Exercises = [
+                { nEn: "Machine Lat Pulldown", nAr: "سحب ظهر واسع بالجهاز", mEn: "Back", mAr: "ظهر", s: "4 × 12", cEn: "Pull to upper chest; do not pull behind the neck.", cAr: "اسحب لأعلى الصدر، لا تسحب خلف الرقبة.", q: "Machine+Lat+Pulldown+form" },
+                { nEn: "Machine Seated Cable Row", nAr: "سحب أرضي بالجهاز", mEn: "Back", mAr: "ظهر", s: "4 × 12", cEn: "Chest up, back straight, pull to lower chest or upper stomach.", cAr: "الصدر لأعلى، الظهر مستقيم، اسحب لأسفل الصدر.", q: "Seated+Cable+Row+form" },
+                { nEn: "Single-Arm Dumbbell Row", nAr: "تجديف دمبل ذراع واحدة", mEn: "Back", mAr: "ظهر", s: "4 × 12 each", cEn: "Support one hand on bench; do not twist the back.", cAr: "ادعم يدك على البنش، لا تلف ظهرك.", q: "One-Arm+Dumbbell+Row+bench" },
+                { nEn: "Machine Straight-Arm Pulldown", nAr: "سحب مستقيم بالجهاز", mEn: "Back", mAr: "ظهر", s: "4 × 12", cEn: "Small lean only; move from lats, not from body swing.", cAr: "ميل خفيف فقط، الحركة من الظهر وليس مرجحة الجسم.", q: "Straight-Arm+Pulldown" },
+                { nEn: "Face Pull (Cable)", nAr: "سحب للوجه (أكتاف خلفية)", mEn: "Upper back", mAr: "أكتاف خلفية", s: "4 × 12", cEn: "Pull rope to face with elbows high; slow and controlled.", cAr: "اسحب الحبل للوجه والمرفقين لأعلى، ببطء وتحكم.", q: "Face+Pull+cable+machine" },
+                { nEn: "Machine Tricep Pushdown", nAr: "سحب تراي بالجهاز", mEn: "Triceps", mAr: "ترايسبس", s: "4 × 12", cEn: "Keep elbows close; do not swing the body.", cAr: "أبقِ المرفقين قريبين، لا تمرجح جسمك.", q: "Tricep+Rope+Pushdown" },
+                { nEn: "Seated Overhead DB Triceps Ext.", nAr: "ترايسبس خلف الرأس بالدمبل جالس", mEn: "Triceps", mAr: "ترايسبس", s: "4 × 12", cEn: "Sit with back support; use light to moderate weight.", cAr: "اجلس مع إسناد الظهر، وزن خفيف إلى متوسط.", q: "Seated+Overhead+Dumbbell+Triceps+Extension" },
+                { nEn: "Single-Arm Overhead DB Extension", nAr: "ترايسبس خلف الرأس دمبل ذراع واحدة", mEn: "Triceps", mAr: "ترايسبس", s: "4 × 12 each", cEn: "Good single-arm variation; keep torso stable.", cAr: "حافظ على استقرار الجذع.", q: "Single-Arm+Overhead+Dumbbell+Triceps+Extension" },
+                { nEn: "Machine Cable Overhead Extension", nAr: "ترايسبس بالكيبل خلف الرأس", mEn: "Triceps", mAr: "ترايسبس", s: "4 × 12", cEn: "Lean slightly forward and extend fully without back strain.", cAr: "مِل للأمام قليلاً ومد ذراعك بالكامل دون إجهاد الظهر.", q: "Cable+Rope+Overhead+Extension" }
+            ];
+
+            let html = `<h4 style="color: var(--accent-primary); margin-bottom: 16px; font-family: var(--font-heading); font-size: 1.1rem;"><i class="fa-solid fa-list-ol"></i> ${mainTitle}</h4><div style="display: grid; gap: 12px; margin-bottom: 24px;">`;
+
+            planA_Exercises.forEach((ex, idx) => {
+                if(idx === 7) {
+                    html += `</div><h4 style="color: #f59e0b; margin-bottom: 16px; font-family: var(--font-heading); font-size: 1.1rem;"><i class="fa-solid fa-plus-circle"></i> ${optTitle}</h4><div style="display: grid; gap: 12px; margin-bottom: 24px;">`;
+                }
+
+                const title = isAr ? ex.nAr : ex.nEn;
+                const muscle = isAr ? ex.mAr : ex.mEn;
+                const cue = isAr ? ex.cAr : ex.cEn;
+
+                html += `
+                    <div style="background: var(--surface-2); border: 1px solid var(--surface-border); padding: 14px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <strong style="color: var(--text-primary); font-size: 1.05rem;">${idx + 1}. ${title}</strong> 
+                            <span style="color: var(--text-muted); font-size: 0.85rem; margin-inline-start: 6px;">(${muscle})</span>
+                            <div style="color: var(--accent-secondary); font-weight: 700; font-size: 0.95rem; margin: 6px 0;"><i class="fa-solid fa-rotate-right" style="font-size:0.8rem; margin-inline-end:4px;"></i> ${ex.s}</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
+                                <i class="fa-solid fa-lightbulb" style="color: #f59e0b;"></i> ${cue}
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/results?search_query=${ex.q}" target="_blank" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem; white-space: nowrap; width: auto;">
+                            <i class="fa-brands fa-youtube" style="color: var(--danger);"></i> ${btnText}
+                        </a>
+                    </div>
+                `;
+            });
+
+            html += `</div>
+                <div style="background: rgba(239, 68, 68, 0.05); border-inline-start: 4px solid var(--danger); padding: 16px; border-radius: var(--radius-sm);">
+                    <strong style="color: var(--danger); display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <i class="fa-solid fa-notes-medical"></i> ${noteTitle}
+                    </strong>
+                    <span style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">${noteText}</span>
+                </div>
+            `;
+            return html;
+        }
+
         DOM.saveBtn.addEventListener('click', () => {
             const rawPlan = DOM.outputContent.dataset.rawPlan;
             if(!rawPlan) return;
 
-            const title = AppState.lang === 'ar' ? `خطة جديدة - ${new Date().toLocaleDateString()}` : `New Plan - ${new Date().toLocaleDateString()}`;
-            
-            const newPlan = {
-                id: Date.now(),
-                title: title,
-                date: new Date().toLocaleDateString(),
-                content: rawPlan
-            };
+            const title = AppState.lang === 'ar' ? `خطة ذكية - ${new Date().toLocaleDateString()}` : `AI Plan - ${new Date().toLocaleDateString()}`;
+            const newPlan = { id: Date.now(), title: title, date: new Date().toLocaleDateString(), content: rawPlan.replace(/\n/g, '<br>') };
 
             AppState.savedPlans.unshift(newPlan);
             localStorage.setItem('stp_plans', JSON.stringify(AppState.savedPlans));
-            
             renderSavedPlans();
             
-            // Provide visual feedback
             const originalIcon = DOM.saveBtn.innerHTML;
             DOM.saveBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
             setTimeout(() => { DOM.saveBtn.innerHTML = originalIcon; }, 2000);
@@ -1246,7 +1233,9 @@
         window.copyPlan = function(id) {
             const plan = AppState.savedPlans.find(p => p.id === id);
             if(plan) {
-                navigator.clipboard.writeText(plan.content).then(() => {
+                // If it's the dynamic Plan A, grab the plain text roughly, else raw content
+                const contentToCopy = (plan.id === 'plan-a-default') ? "Plan A: Back & Triceps Workout (Refer to Dashboard for full links and media)" : plan.content.replace(/<br>/g, '\n');
+                navigator.clipboard.writeText(contentToCopy).then(() => {
                     alert(AppState.lang === 'ar' ? 'تم النسخ!' : 'Copied to clipboard!');
                 });
             }
@@ -1266,20 +1255,31 @@
             }
 
             AppState.savedPlans.forEach(plan => {
-                const snippet = plan.content.substring(0, 80) + '...';
+                const isPlanA = plan.id === 'plan-a-default';
+                const contentHTML = isPlanA ? getPlanAContent() : plan.content;
+                const displayTitle = isPlanA ? (AppState.lang === 'ar' ? "الخطة أ: ظهر وترايسبس (مخصصة)" : "Plan A: Back & Triceps (Custom)") : plan.title;
+
                 const card = `
                     <div class="saved-plan-card glass-panel">
-                        <div class="saved-plan-info">
-                            <h3>${plan.title}</h3>
-                            <p>${snippet}</p>
+                        <div class="saved-plan-header">
+                            <div>
+                                <h3 style="margin-bottom: 8px; display:flex; align-items:center; gap:8px;">
+                                    <i class="fa-solid ${isPlanA ? 'fa-star' : 'fa-file-contract'}" style="color: var(--accent-primary)"></i> 
+                                    ${displayTitle}
+                                </h3>
+                                <span class="badge" style="background: var(--surface-2); border: 1px solid var(--surface-border); color: var(--text-secondary);">${plan.date}</span>
+                            </div>
+                            <div class="saved-plan-actions">
+                                <button onclick="copyPlan('${plan.id}')" class="btn btn-secondary" style="padding: 8px 12px;" title="${dict.btnCopy}">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                                ${!isPlanA ? `<button onclick="deletePlan(${plan.id})" class="btn btn-secondary" style="padding: 8px 12px; color: var(--danger); border-color: rgba(239, 68, 68, 0.3);" title="${dict.btnDelete}">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>` : ''}
+                            </div>
                         </div>
-                        <div class="saved-plan-actions">
-                            <button onclick="copyPlan(${plan.id})" class="btn btn-secondary" title="${dict.btnCopy}">
-                                <i class="fa-regular fa-copy"></i>
-                            </button>
-                            <button onclick="deletePlan(${plan.id})" class="btn btn-secondary" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.3);" title="${dict.btnDelete}">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                        <div class="saved-plan-body">
+                            ${contentHTML}
                         </div>
                     </div>
                 `;
@@ -1291,49 +1291,27 @@
          * 8. PWA LOGIC
          */
         let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const installBtn = document.getElementById('installBtn');
-            installBtn.style.display = 'flex';
-            
-            installBtn.addEventListener('click', async () => {
-                installBtn.style.display = 'none';
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-            });
-        });
-
-        // Dummy Service Worker Registration for PWA compliance
-        if ('serviceWorker' in navigator) {
-            // navigator.serviceWorker.register('/sw.js');
-        }
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
 
         /**
          * 9. INITIALIZATION
          */
         function init() {
-            // Bind Events
             DOM.langBtn.addEventListener('click', toggleLanguage);
             DOM.themeBtn.addEventListener('click', toggleTheme);
             DOM.tabs.forEach(t => t.addEventListener('click', handleTabs));
             DOM.searchInput.addEventListener('input', renderExercises);
 
-            // Set Initial State
             applyTheme();
             applyTranslations();
             
-            // Show engine selection based on saved key
             if (AppState.apiKey) {
                 DOM.engineSelect.value = 'gemini';
                 DOM.apiPanel.style.display = 'block';
             }
         }
 
-        // Run App
         init();
-
     </script>
 </body>
 </html>
