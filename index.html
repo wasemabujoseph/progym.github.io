@@ -880,8 +880,8 @@
             },
             {
                 id: 'plan-c-default',
-                titleEn: 'Plan C: Back & Triceps (Updated)',
-                titleAr: 'الخطة ج: ظهر وترايسبس محدثة',
+                titleEn: 'Plan C: Chest & Biceps (Custom)',
+                titleAr: 'الخطة ج: صدر وبايسبس مخصصة',
                 date: 'Permanent Plan'
             },
             {
@@ -1072,14 +1072,14 @@
                 return `خطة إعادة تكوين الجسم المتخصصة
 بروتوكول آمن لديسك L4-L5 وصحة الكلى
 
-الجمعة - سحب ظهر + بايسيبس
+التمرين 1 - سحب ظهر + بايسيبس
 - سحب علوي واسع 4 × 10-12
 - تجديف جالس بالجهاز 4 × 12
 - تجديف فردي بالدمبل 3 × 12
 - مرجحة بايسيبس بالبار 3 × 12
 - هامر بالدمبلز 3 × 12
 
-السبت - دفع صدر + اكتاف + تراي
+التمرين 2 - دفع صدر + اكتاف + تراي
 - ضغط صدر بالجهاز 4 × 10-12
 - صدر مائل بالدمبلز 3 × 10
 - فراشة بالجهاز 3 × 15
@@ -1087,18 +1087,18 @@
 - رفرفة جانبي 4 × 15
 - تراي بالكيبل 4 × 12
 
-الاحد - ارجل + كور
+التمرين 3 - ارجل + كور
 - Leg Extensions 4 × 15-20
 - Leg Curls 4 × 15
 - Goblet Squat 3 × 12
 - Plank 45-60 ثانية
 - Bird Dog 3 × 12
 
-الاثنين - راحة ايجابية
+الجلسة 4 - راحة ايجابية
 - مشي سريع 30-45 دقيقة
 - شرب 3-4 لتر ماء
 
-الثلاثاء - علوي شامل
+التمرين 5 - علوي شامل
 - سحب ضيق 4 × 10
 - صدر مستوي بالدمبلز 4 × 10
 - رفرفة جانبي جالس 3 × 15
@@ -1106,26 +1106,26 @@
 - Concentration Curls 3 × 12
 - Seated Overhead Extension 3 × 12
 
-الاربعاء - ارجل + كور + كارديو
+التمرين 6 - ارجل + كور + كارديو
 - Bulgarian Split Squat 3 × 10 لكل رجل
 - Seated Calf Raises 4 × 20
 - Dead Bug 3 × 15
 - مشي مائل 20 دقيقة
 
-الخميس - راحة تامة
+الجلسة 7 - راحة تامة
 - استشفاء عضلي كامل وترطيب وتغذية`;
             } else {
                 return `Specialized Body Recomposition Plan
 Safe Protocol for L4-L5 Disc and Kidney Health
 
-Friday - Back + Biceps
+Workout 1 - Back + Biceps
 - Lat Pulldown 4 × 10-12
 - Seated Machine Row 4 × 12
 - One Arm DB Row 3 × 12
 - Barbell Bicep Curls 3 × 12
 - Hammer Curls 3 × 12
 
-Saturday - Chest + Shoulders + Triceps
+Workout 2 - Chest + Shoulders + Triceps
 - Machine Chest Press 4 × 10-12
 - Incline DB Press 3 × 10
 - Pec Deck Flye 3 × 15
@@ -1133,18 +1133,18 @@ Saturday - Chest + Shoulders + Triceps
 - Lateral Raise 4 × 15
 - Triceps Pushdown 4 × 12
 
-Sunday - Legs + Core
+Workout 3 - Legs + Core
 - Leg Extensions 4 × 15-20
 - Seated Leg Curls 4 × 15
 - DB Goblet Squat 3 × 12
 - Plank 45-60 seconds
 - Bird Dog 3 × 12
 
-Monday - Active Rest
+Session 4 - Active Rest
 - Brisk Walk 30-45 mins
 - Drink 3-4L of water
 
-Tuesday - Upper Body Mix
+Workout 5 - Upper Body Mix
 - Close-grip Lat Pulldown 4 × 10
 - DB Flat Bench Press 4 × 10
 - Seated DB Side Raise 3 × 15
@@ -1152,13 +1152,13 @@ Tuesday - Upper Body Mix
 - Concentration Curls 3 × 12
 - Seated Overhead DB Extension 3 × 12
 
-Wednesday - Legs + Core + Cardio
+Workout 6 - Legs + Core + Cardio
 - Bulgarian Split Squats 3 × 10 per leg
 - Seated Calf Raises 4 × 20
 - Dead Bug 3 × 15
 - Incline Walk 20 mins
 
-Thursday - Total Rest
+Session 7 - Total Rest
 - Full muscle recovery, hydration, and nutrition`;
             }
         }
@@ -1187,7 +1187,7 @@ Thursday - Total Rest
 
             try {
                 if (params.engine === 'gemini') {
-                    const prompt = `Act as an elite personal trainer for Abu Fowzan. Create a ${params.days}-day weekly workout plan aiming for ${params.goal}. CRITICAL CLINICAL RULES: Patient has L4-L5 disc herniation and history of kidney stones. STRICTLY FORBIDDEN: Standing overhead presses, conventional barbell squats, and conventional deadlifts. MUST USE: Seated overhead presses, DB Goblet Squats, and core stabilization (Plank, Bird Dog, Dead Bug). MUST MENTION: Drinking 3-4L of water daily. Language must be strictly ${AppState.lang === 'ar' ? 'Arabic' : 'English'}. Format using clean text with markdown headers and bullet points. Keep it professional.`;
+                    const prompt = `Act as an elite personal trainer for Abu Fowzan. Create a ${params.days}-session workout plan aiming for ${params.goal}. Do NOT use weekday names. Label sections as Workout 1, Workout 2, Session 3, etc. CRITICAL CLINICAL RULES: Patient has L4-L5 disc herniation and history of kidney stones. STRICTLY FORBIDDEN: Standing overhead presses, conventional barbell squats, and conventional deadlifts. MUST USE: Seated overhead presses, DB Goblet Squats, and core stabilization (Plank, Bird Dog, Dead Bug). MUST MENTION: Drinking 3-4L of water daily. Language must be strictly ${AppState.lang === 'ar' ? 'Arabic' : 'English'}. Format using clean text with markdown headers and bullet points. Keep it professional.`;
 
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${AppState.apiKey}`, {
                         method: 'POST',
@@ -1218,7 +1218,7 @@ Thursday - Total Rest
 
         function getPlanAContent() {
             const isAr = AppState.lang === 'ar';
-            const mainTitle = isAr ? "التمارين الاساسية لليوم" : "Today's Main Workout";
+            const mainTitle = isAr ? "التمارين الاساسية" : "Main Workout";
             const optTitle = isAr ? "تمارين اختيارية" : "Optional Exercises";
             const noteTitle = isAr ? "ملاحظة لسلامة الظهر" : "Back-safety note:";
             const noteText = isAr ? "لحالتك الصحية يفضل الجلوس مع اسناد الظهر والتحكم بالحركة. توقف فورا اذا شعرت بالم في الظهر او خدر. الراحة 45-75 ثانية بين المجموعات." : "For your condition, seated support and controlled motion are preferred. Stop if a movement causes back pain, radiating pain, or numbness. Rest: 45-75 seconds between sets.";
@@ -1277,8 +1277,8 @@ Thursday - Total Rest
 
         function getPlanBContent() {
             const isAr = AppState.lang === 'ar';
-            const mainTitle = isAr ? "التمارين الاساسية لليوم" : "Today's Main Workout";
-            const optTitle = isAr ? "تمارين غير مطلوبة اليوم" : "Not Included Today";
+            const mainTitle = isAr ? "التمارين الاساسية" : "Main Workout";
+            const optTitle = isAr ? "تمارين غير مطلوبة" : "Not Included";
             const noteTitle = isAr ? "ملاحظة لسلامة الكتف" : "Shoulder safety note:";
             const noteText = isAr
                 ? "استخدم حركة متحكم بها وتجنب المرجحة وتوقف فورا عند وجود الم حاد او وخز او خدر او الم ممتد الى الرقبة او الذراع والتمرين الاخير يستخدم فقط اذا كان مريحا للكتف"
@@ -1337,8 +1337,8 @@ Thursday - Total Rest
 
         function getPlanCContent() {
             const isAr = AppState.lang === 'ar';
-            const mainTitle = isAr ? "التمارين الاساسية لليوم" : "Today's Main Workout";
-            const optTitle = isAr ? "تمارين اختيارية او غير داخلة اليوم" : "Optional / Not Included Today";
+            const mainTitle = isAr ? "التمارين الاساسية" : "Main Workout";
+            const optTitle = isAr ? "تمارين اختيارية او غير داخلة" : "Optional / Not Included";
             const noteTitle = isAr ? "ملاحظة لسلامة الظهر" : "Back-safety note:";
             const noteText = isAr
                 ? "لحالتك الصحية يفضل السند الجالس والتحكم الكامل بالحركة وتوقف فورا اذا سبب التمرين الما في الظهر او الما ممتدا او خدر"
@@ -1401,7 +1401,7 @@ Thursday - Total Rest
 
         function getPlanDContent() {
             const isAr = AppState.lang === 'ar';
-            const mainTitle = isAr ? "التمارين الاساسية لليوم" : "Today's Main Workout";
+            const mainTitle = isAr ? "التمارين الاساسية" : "Main Workout";
             const noteTitle = isAr ? "ملاحظة مهمة" : "Important note:";
             const noteText = isAr
                 ? "هذه الخطة مضافة كما ارسلتها تماما. انتبه ان Hack Squat او Back Squat و Romanian Deadlift قد لا تكون مناسبة اذا كنت تطبق قيود اسفل الظهر المذكورة في التطبيق. استخدم وزنا مناسبا وتوقف عند اي الم حاد."
